@@ -63,9 +63,6 @@ vector<int> Array::Multiply(const vector<int>& v1, const vector<int>& v2)
     {
         for (int j = m - 1; j >= 0; --j)
         {
-            // result[i + j + 1] += v1[i] * v2[j];
-            // result[i + j] = result[i + j + 1] / 10;
-            // result[i + j + 1] %= 10;
             int product = v1[i] * v2[j];
             int sum = product + result[i + j + 1]; // Add to current position
             result[i + j + 1] = sum % 10;         // Set the digit at this position
