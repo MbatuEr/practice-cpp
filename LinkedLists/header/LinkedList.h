@@ -46,4 +46,22 @@ class LinkedList
 
         // Seperate values that greater than x from the values that less than x  
         void partition(int x);
+
+        // Adds values ​​in two lists in reverse order 
+        static LinkedList add_numbers_reverse(Node* l1, Node* l2);
+
+        // Adds values ​​in two lists in forward order
+        static LinkedList add_numbers_forward(Node* l1, Node* l2); 
+        
+        // Checks the lists if it's palindrome
+        bool is_palindrome() const;
+        
+        // Gets the lenght of a list
+        int get_length(Node* head);
+
+        // Finds if there is an interaction between two lists.
+        Node* first_intersection(Node* head1, Node* head2);
+
+        // Detecs if there is a loop in the list
+        Node* detect_loop_start(Node* head);
 };
