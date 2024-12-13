@@ -1,5 +1,7 @@
 #include "../header/setofstacks.h"
 
+    SetOfStacks::SetOfStacks() {}  
+    
     SetOfStacks::SetOfStacks(int capacity) 
     {
         if (capacity <= 0) 
@@ -9,7 +11,6 @@
         this->capacity = capacity;
     }
 
-    // Push an element onto the stack
     void SetOfStacks::push(int value) 
     {
         if (stacks.empty() || stacks.back().size() == capacity) 
@@ -20,7 +21,6 @@
         stacks.back().push(value);
     }
 
-    // Pop an element from the stack
     int SetOfStacks::pop() 
     {
         if (stacks.empty()) 
@@ -39,7 +39,6 @@
         return value;
     }
 
-    // Pop an element from a specific stack
     int SetOfStacks::popAt(int index) 
     {
         if (index < 0 || index >= stacks.size()) 
@@ -63,13 +62,11 @@
         return value;
     }
 
-    // Check if the set of stacks is empty
     bool SetOfStacks::isEmpty() const 
     {
         return stacks.empty();
     }
 
-    // Print all stacks for debugging purposes
     void SetOfStacks::printStacks() const 
     {
         for (size_t i = 0; i < stacks.size(); ++i) 
@@ -89,6 +86,30 @@
                 std::cout << *it << " ";
             }
             std::cout << std::endl;
+        }
+    }
+
+    void SetOfStacks::sortstack(std::stack<int>& s)
+    {
+        std::stack<int> tempstack;
+
+        while (!s.empty())
+        {
+            int current = s.top();
+            s.pop();
+
+            while (!tempstack.empty() && tempstack.top() > current)
+            {
+                s.push(tempstack.top());
+                tempstack.pop();
+            }
+
+            tempstack.push(current);
+        }
+        while (!tempstack.empty())
+        {
+            s.push(tempstack.top());
+            tempstack.pop();
         }
     }
 
@@ -123,6 +144,37 @@ int main()
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
     }
+
+    std::cout << "---------------------------------------------------" << std::endl;
+    
+    std::stack<int> s;
+
+    s.push(34);
+    s.push(3);
+    s.push(31);
+    s.push(98);
+    s.push(92);
+    s.push(23);
+    
+    std::cout << "Original Stack: ";
+    std::stack<int> temp = s;
+    
+    while (!temp.empty()) 
+    {
+        std::cout << temp.top() << " ";
+        temp.pop();
+    }
+    std::cout << std::endl;
+
+    SetOfStacks sorter;
+    sorter.sortstack(s);
+
+    std::cout << "Sorted Stack: ";
+    while (!s.empty()) {
+        std::cout << s.top() << " ";
+        s.pop();
+    }
+    std::cout << std::endl;
 
     return 0;
 }
