@@ -16,9 +16,9 @@ int main()
     cout << "--------------------------------------------------------------" << endl;
 
     st.push(1,10);
-    st.push(1,5);
     st.push(1,7);
-    
+    st.push(1,5);
+
     cout << "Pop from stack 1: " << st.getmin(1) << endl;
     st.pop(1);
     cout << "Pop from stack 2: " << st.getmin(1) << endl;
