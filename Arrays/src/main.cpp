@@ -2,7 +2,6 @@
 
 int main() 
 {
-    /*------------------------------------------------------*/
     std::vector<int> nums = {3, 5, 2, 1, 7, 3};
     int i =0;
     int pivot = 3;
@@ -15,7 +14,7 @@ int main()
     }
     std::cout << std::endl;
     std::cout << "------------------------------------------------------" << std::endl;
-    /*------------------------------------------------------*/
+
     std::string s, t;
     std::cout << "Enter the first binary number: ";
     std::cin >> s;
@@ -25,7 +24,7 @@ int main()
     std::string sum = obj.AddBinary(s,t);
     std::cout << "The sum is: " << sum << std::endl; 
     std::cout << "------------------------------------------------------" << std::endl;
-    /*------------------------------------------------------*/
+
     std::vector<int> num1 = {1,2,3};
     std::vector<int> num2 = {9,8,7};
     std::vector<int> result = obj.Multiply(num1, num2);
@@ -36,7 +35,7 @@ int main()
     }
     std::cout << std::endl;
     std::cout << "------------------------------------------------------" << std::endl;
-    /*------------------------------------------------------*/
+
     std::vector<int> vec = {2,1,2,0,2,0,1,3,0,1,2,2,0,1};
     bool final = obj.CanReachEnd(vec);
     std::cout << "The end is reachable?" << std::endl;
@@ -48,7 +47,7 @@ int main()
         cout << "false" << endl;
     }
     std::cout << "------------------------------------------------------" << std::endl;
-    /*------------------------------------------------------*/
+
     std::vector<int> v = {3,3,2,1,5,2};
     std::vector<int> removed = obj.DeleteDuplicates(v);
     for (int i : removed)
@@ -57,11 +56,11 @@ int main()
     }
     std::cout << std::endl;
     std::cout << "------------------------------------------------------" << std::endl;
-    /*------------------------------------------------------*/
+
     std::vector<int> stocklist = {310,325,275,295,260,270,290,330,355,350};
     std::cout << "Highest profit for one buy and sell: " << obj.ProfitFromStock(stocklist) << std::endl;
     std::cout << "------------------------------------------------------" << std::endl;
-    /*------------------------------------------------------*/
+
     int key;
     std::cout << "Enter a key value: " << std::endl;
     std::cin >> key;
@@ -73,7 +72,7 @@ int main()
     }
     std::cout << std::endl;
     std::cout << "------------------------------------------------------" << std::endl;
-    /*------------------------------------------------------*/
+
     std::vector<int> original = {3,1,2,4,8,6,5,7};
     std::vector<int> order_input = {2,0,1,3,7,5,4,6};
     obj.PermutingElements(original,order_input); 
@@ -84,7 +83,7 @@ int main()
     }
     std::cout << std::endl;
     std::cout << "------------------------------------------------------" << std::endl;
-    /*------------------------------------------------------*/
+
     std::vector<int> orig = {3,4,0,2,1};
     obj.FindNextPermutation(orig);
     std::cout << "Next permutation of the original array: ";
@@ -94,7 +93,7 @@ int main()
     }
     std::cout << std::endl;
     std::cout << "------------------------------------------------------" << std::endl;
-    /*------------------------------------------------------*/
+
     std::vector<int> samples = {3,4,10,21,13,38,56,89,22};
     obj.OfflineRandomSampling(6,samples);
     std::cout << "Sampled version: ";
@@ -104,7 +103,7 @@ int main()
     }
     std::cout << std::endl;
     std::cout << "------------------------------------------------------" << std::endl;
-    /*------------------------------------------------------*/
+
     std::vector<int> arr = {3,5,7,11};
     std::vector<double> probabilities = {9.0/18.0, 6.0/18.0, 2.0/18.0, 1.0/18.0};
     int size = 18;
@@ -116,7 +115,7 @@ int main()
     }
     std::cout << std::endl;
     std::cout << "------------------------------------------------------" << std::endl;
-    /*------------------------------------------------------*/
+
     std::vector<std::vector<int>> board = {
         {0, 3, 5, 0, 7, 0, 0, 0, 0},
         {6, 0, 0, 1, 9, 5, 0, 0, 0},
@@ -137,7 +136,7 @@ int main()
         std::cout << "The Sudoku board is invalid." << std::endl;
     }
     std::cout << "------------------------------------------------------" << std::endl;
-    /*------------------------------------------------------*/
+
     std::vector<std::vector<int>> spiral_input = {
         {1, 2, 3, 4},
         {5, 6, 7, 8},
@@ -152,7 +151,7 @@ int main()
     }
     std::cout << std::endl;
     std::cout << "------------------------------------------------------" << std::endl;
-    /*------------------------------------------------------*/
+
     std::vector<std::vector<int>> not_rotated_array = {
         {1, 2, 3, 4},
         {5, 6, 7, 8},
@@ -171,7 +170,7 @@ int main()
     }
     std::cout << std::endl;
     std::cout << "------------------------------------------------------" << std::endl;
-    /*------------------------------------------------------*/
+
     int n;
     int row;
     int column;
@@ -190,6 +189,12 @@ int main()
             std::cout << value << " ";
         }
     }
-    /*------------------------------------------------------*/
+    std::cout << std::endl;
+    std::cout << "------------------------------------------------------" << std::endl;
+
+    std::string str = "Mr John Smith    ";
+    int truelength = 13;
+    std::string replaced = obj.ReplaceSpaces(str, truelength);
+    std::cout << "The string after replacing spaces: " << replaced << std::endl;
     return 0;
 }

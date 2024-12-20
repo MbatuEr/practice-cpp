@@ -330,3 +330,34 @@ vector<int> Array::GeneratePascalTriangle(int n, int row, int column)
     }
     return result;
 }
+
+string Array::ReplaceSpaces(string& str, int truelength)
+{
+    int space_count = 0;
+    for (int i = 0; i < truelength; i++)
+    {
+        if (str[i] == ' ')
+        {
+            space_count++;
+        }
+    }
+    int newlength = truelength + space_count * 2;
+    str.resize(newlength);
+    int index = newlength - 1;
+    for (int i = truelength - 1; i >= 0; i--)
+    {
+        if (str[i] == ' ')
+        {
+            str[index] = '0';
+            str[index - 1] = '2';
+            str[index - 2] = '%';
+            index -= 3;
+        }
+        else
+        {
+            str[index] = str[i];
+            index--;
+        }
+    }
+    return str;
+}
