@@ -33,5 +33,7 @@ class Array
         vector<vector<int>> Rotating2DArray(vector<vector<int>>& vec);
         vector<int> GeneratePascalTriangle(int n, int row, int column);
         static string ReplaceSpaces(string& str, int truelength);
+        string StringCompression(string& str);
+        bool IsSubString(string& s1, string& s2);
 };
 #endif

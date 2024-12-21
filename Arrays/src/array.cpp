@@ -361,3 +361,32 @@ string Array::ReplaceSpaces(string& str, int truelength)
     }
     return str;
 }
+
+string Array::StringCompression(string& str)
+{
+    string result;
+    int count = 1;
+    for (int i = 0; i < str.size(); i++)
+    {
+        if (str[i] == str[i+1])
+        {
+            count++;
+        }
+        else
+        {
+            result += str[i] + to_string(count);
+            count = 1;
+        }
+    }
+    return result.size() < str.size() ? result : str;
+}
+
+bool Array::IsSubString(string& s1, string& s2)
+{
+    if (s1.size() != s2.size())
+    {
+        return false;
+    }
+    string temp = s1 + s1;
+    return temp.find(s2) != string::npos;
+}
