@@ -75,7 +75,7 @@ int main()
     std::cout << "List 2: ";
     list2.print_list();
 
-    LinkedList result = LinkedList::add_numbers_reverse(list1.get_head(), list2.get_head());
+    LinkedList result = LinkedList::add_reverse_order(list1.get_head(), list2.get_head());
 
     std::cout << "Sum of list1 and list2 (reverse order): ";
     result.print_list();
@@ -130,7 +130,7 @@ int main()
         std::cout << "\nThe list does not loop " << std::endl;
     }
 
-    loop_start->next = nullptr; // Breaks the loop
+    loop_start->next = nullptr; // to break the loop
 
     return 0;
 }

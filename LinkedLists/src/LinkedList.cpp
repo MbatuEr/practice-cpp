@@ -61,7 +61,6 @@ void LinkedList::remove_duplicates()
             prev = current;
         }
         current = prev->next;
-        
     }
 }
 
@@ -197,11 +196,6 @@ LinkedList LinkedList::add_reverse_order(Node* l1, Node* l2)
     }
 
     return result;   
-}
-
-LinkedList LinkedList::add_numbers_reverse(Node* l1, Node* l2) 
-{
-    return add_reverse_order(l1, l2);
 }
 
 Node* LinkedList::reverse(Node* head)

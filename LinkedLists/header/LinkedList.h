@@ -17,14 +17,11 @@ class LinkedList
 
         // Sorts values of a list in reverse order
         static Node* reverse(Node* head);
-        static LinkedList add_reverse_order(Node* l1, Node* l2);
-
+        
     public:
         LinkedList();
 
         ~LinkedList();
-
-        //LinkedList(const LinkedList& other);
 
         // Getter for head
         Node* get_head() const;
@@ -48,7 +45,7 @@ class LinkedList
         void partition(int x);
 
         // Adds values ​​in two lists in reverse order 
-        static LinkedList add_numbers_reverse(Node* l1, Node* l2);
+        static LinkedList add_reverse_order(Node* l1, Node* l2);
 
         // Adds values ​​in two lists in forward order
         static LinkedList add_numbers_forward(Node* l1, Node* l2); 
