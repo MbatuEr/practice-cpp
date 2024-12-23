@@ -1,5 +1,5 @@
 #include "../header/HashTables.h"
-
+#include <algorithm>
 
 bool HashTables::hasAllUniqueCharacters(std::string& str)
 {
@@ -103,4 +103,88 @@ bool HashTables::isOneAway(const std::string& str1, const std::string& str2)
     return diffCount <= 1;
 }
 
+std::unordered_map<char, int> HashTables::mostFrequentWord(const std::string& str)
+{
+    charcount.clear();
+    for (char c : str)
+    {
+        charcount[c]++;
+    }
+
+    int maxCount = 0;
+    char maxChar = ' ';
+    for (auto& it : charcount)
+    {
+        if (it.second > maxCount)
+        {
+            maxCount = it.second;
+            maxChar = it.first;
+        }
+    }
+    return {{maxChar, maxCount}};
+}    
+
+std::unordered_map<int, std::string> HashTables::nearestRepetition(const std::vector<std::string>& str)
+{
+    wordIndex.clear();
+    int minDist = __INT_MAX__;
+    int dist = 0;
+    std::string word;
+    for (int i = 0; i < str.size(); i++)
+    {
+        if (wordIndex.find(str[i]) != wordIndex.end())
+        {
+            dist = i - wordIndex[str[i]];
+            if (dist < minDist)
+            {
+                minDist = dist;
+                word = str[i];
+            }
+        }
+        wordIndex[str[i]] = i;
+    }
     
+    return {{minDist, word}};
+}    
+
+std::pair<int, int> HashTables::findShortestSubarray(const std::vector<std::string>& paragraph, const std::unordered_set<std::string>& keywords) 
+{ 
+    int start = 0; 
+    int matched_keywords = 0; 
+    std::pair<int, int> result = {-1, -1}; 
+    int min_length = __INT_MAX__; 
+
+    for (int end = 0; end < paragraph.size(); ++end) 
+    {
+        const std::string& word = paragraph[end]; 
+        if (keywords.count(word)) 
+        { 
+            wordIndex[word]++;
+            if (wordIndex[word] == 1) 
+            { 
+                ++matched_keywords;
+            }
+        }
+
+        while (matched_keywords == keywords.size()) 
+        {
+            int window_length = end - start + 1;
+            if (window_length < min_length) {
+                min_length = window_length;
+                result = {start, end};
+            }
+
+            const std::string& start_word = paragraph[start]; 
+            if (keywords.count(start_word)) 
+            { 
+                wordIndex[start_word]--;
+                if (wordIndex[start_word] == 0) 
+                { 
+                    --matched_keywords;
+                }
+            }
+            ++start; 
+        }
+    }
+    return result;
+}
