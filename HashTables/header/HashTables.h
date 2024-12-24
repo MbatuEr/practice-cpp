@@ -43,5 +43,6 @@ class HashTables
         // find the length of the longest contained interval
         int longestContainedInterval(const std::vector<int>& arr);
 
+        // find the average of top three scores
         std::unordered_map<std::string, double> averageOfTopThreeScores( std::vector<std::pair<std::string, int>>& scores);
 };
