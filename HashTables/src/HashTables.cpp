@@ -147,7 +147,7 @@ std::unordered_map<int, std::string> HashTables::nearestRepetition(const std::ve
     return {{minDist, word}};
 }    
 
-std::pair<int, int> HashTables::findShortestSubarray(const std::vector<std::string>& paragraph, const std::unordered_set<std::string>& keywords) 
+std::pair<int, int> HashTables::findShortestSequentialSubarray(const std::vector<std::string>& paragraph, const std::unordered_set<std::string>& keywords) 
 { 
     int start = 0; 
     int matched_keywords = 0; 
@@ -184,6 +184,85 @@ std::pair<int, int> HashTables::findShortestSubarray(const std::vector<std::stri
                 }
             }
             ++start; 
+        }
+    }
+    return result;
+}
+
+std::pair<int,int> HashTables::longestSubarrayWithDistinctEntries(const std::vector<std::string>& arr)
+{
+    wordIndex.clear();
+    int start = 0;
+    std::pair<int, int> result = {-1, -1};
+    for (int end = 0; end < arr.size(); end++)
+    {
+        if (wordIndex.find(arr[end]) == wordIndex.end())
+        {
+            wordIndex[arr[end]]++; 
+        }
+        else
+        {
+            while (wordIndex.find(arr[end]) != wordIndex.end())
+            {
+                wordIndex.erase(arr[start]);
+                start++;
+            }
+            wordIndex[arr[end]]++;
+        }
+        if (end - start > result.second - result.first)
+        {
+            result = {start, end};
+        }
+    }
+    return result;
+}
+
+int HashTables::longestContainedInterval(const std::vector<int>& arr)
+{
+    lengthIndex.clear();
+    int max_length = 0;
+    for (int num : arr)
+    {
+        if (lengthIndex.find(num) == lengthIndex.end())
+        {
+            int left = lengthIndex.find(num - 1) != lengthIndex.end() ? lengthIndex[num - 1] : 0;
+            int right = lengthIndex.find(num + 1) != lengthIndex.end() ? lengthIndex[num + 1] : 0;
+            int length = left + right + 1;
+            lengthIndex[num] = length;
+            lengthIndex[num - left] = length;
+            lengthIndex[num + right] = length;
+            max_length = std::max(max_length, length);
+        }
+    }
+    return max_length;
+}
+
+std::unordered_map<std::string, double> HashTables::averageOfTopThreeScores( std::vector<std::pair<std::string, int>>& scores)
+{
+    std::unordered_map<std::string, double> result;
+    std::unordered_map<std::string, int> notes;
+    int maxScore = 0;
+
+    for (auto& score : scores)
+    {
+        notes[score.first]++;
+    }
+
+    for (auto& score : scores)
+    {
+        wordIndex[score.first] += score.second;
+    }
+    
+    for (auto& it : wordIndex)
+    {
+        if(notes.find(it.first) != notes.end() && notes[it.first] >= 3)
+        {
+            if (wordIndex[it.first] > maxScore)
+            {
+                result.clear();
+                maxScore = it.second;
+                result[it.first] = it.second / 3.0;
+            }    
         }
     }
     return result;

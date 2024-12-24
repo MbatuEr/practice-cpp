@@ -67,17 +67,17 @@ int main()
 
     // check for shortest subarray  
     std::vector<std::string> text = {
-        "Given", "a", "string,", "write", "a", "function", "to", "check", "if", "it", "is", "a", 
-        "permutation", "of", "a", "palindrome", "A", "palindrome", "is", "a", "word", "or", 
-        "phrase", "that", "is", "the", "same", "forwards", "and", "backwards.", "A", "permutation", 
-        "is", "a", "rearrangement", "of", "letters.", "The", "palindrome", "does", "not", 
-        "need", "to", "be", "limited", "to", "just", "dictionary", "words"
+        "Given", "permutation", "string,", "write", "a", "palindrome", "to", "check", "if", "it", "is", "a", 
+        "palindrome", "of", "a", "permutation", "A", "check", "is", "a", "word", "or", 
+        "phrase", "that", "is", "the", "same", "forwards", "and", "backwards.", "A", "palindrome", 
+        "is", "just", "rearrangement", "of", "permutation", "The", "palindrome", "does", "not", 
+        "need", "to", "be", "limited", "to", "permutation", "just", "does"
     };
 
-    std::unordered_set<std::string> keywords = {"permutation", "palindrome"};
-    std::pair<int, int> result = hashTable.findShortestSubarray(text, keywords);
+    std::unordered_set<std::string> keywords = {"palindrome", "permutation"};
+    std::pair<int, int> result = hashTable.findShortestSequentialSubarray(text, keywords);
 
-    if (result.first != -1 && result.second != -1) 
+    if (result.first != -1) 
     {
         std::cout << "Shortest subarray: ";
         for (int i = result.first; i <= result.second; ++i) 
@@ -89,6 +89,50 @@ int main()
     {
         std::cout << "No subarray contains all the keywords." << std::endl;
     }
+    std::cout << "--------------------------------------------------------" <<std::endl;
 
+    // check for longest subarray with distinct entries
+    std::vector<std::string> arr = {"f", "s", "s", "e", "t", "w", "e", "n", "a", "e"};
+    std::pair<int, int> longestSubarray = hashTable.longestSubarrayWithDistinctEntries(arr);
+    std::cout << "Input: ";
+    for (auto& word : arr)
+    {
+        std::cout << word << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "Longest subarray with distinct entries: ";
+    for (int i = longestSubarray.first; i <= longestSubarray.second; ++i) 
+    {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "--------------------------------------------------------" <<std::endl;
+
+    // check for length of longest contained interval
+    std::vector<int> intArr = {3, -2, 7, 9, 8, 1, 6, 0, -1, 5, 4};
+    int length = hashTable.longestContainedInterval(intArr);
+    std::cout << "Input: ";
+    for (auto& num : intArr)
+    {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "Length of longest contained interval: " << length << std::endl;
+    std::cout << "--------------------------------------------------------" <<std::endl;
+
+    // check for average of top three scores
+    std::vector<std::pair<std::string, int>> scores = {{"John", 60}, {"Jane", 90}, {"John", 35}, {"Jane", 20}, {"Jane", 50}, {"John", 15}, {"jack", 80}, {"jack", 95}, {"aby", 100}, {"aby", 95}};
+    std::unordered_map<std::string, double> avgScores = hashTable.averageOfTopThreeScores(scores);
+    std::cout << "Input: ";
+    for (auto& score : scores)
+    {
+        std::cout << score.first << " " << score.second << ", ";
+    }
+    std::cout << std::endl;
+    for (auto& avgScore : avgScores)
+    {
+        std::cout << avgScore.first << " " << avgScore.second << std::endl;
+    }
+    std::cout << "--------------------------------------------------------" <<std::endl;
     return 0;
 }
