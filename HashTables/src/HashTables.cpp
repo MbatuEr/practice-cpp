@@ -240,7 +240,6 @@ int HashTables::longestContainedInterval(const std::vector<int>& arr)
 std::unordered_map<std::string, double> HashTables::averageOfTopThreeScores( std::vector<std::pair<std::string, int>>& scores)
 {
     std::unordered_map<std::string, double> result;
-    std::unordered_map<std::string, int> notes;
     int maxScore = 0;
 
     for (auto& score : scores)
@@ -255,7 +254,7 @@ std::unordered_map<std::string, double> HashTables::averageOfTopThreeScores( std
     
     for (auto& it : wordIndex)
     {
-        if(notes.find(it.first) != notes.end() && notes[it.first] >= 3)
+        if(notes[it.first] >= 3)
         {
             if (wordIndex[it.first] > maxScore)
             {
@@ -266,4 +265,85 @@ std::unordered_map<std::string, double> HashTables::averageOfTopThreeScores( std
         }
     }
     return result;
+}
+
+int HashTables::allStringDecompositions(const std::string& sentence, const std::vector<std::string>& words)
+{
+    int result;
+    if (words.empty() || sentence.empty()) 
+    {
+        return result;
+    }
+
+    int wordLength = words[0].size();              
+    int wordCount = words.size();                  
+    int totalLength = wordLength * wordCount;      
+    
+    for (const std::string& word : words) {
+        wordIndex[word]++;
+    }
+
+    for (int i = 0; i <= (int)sentence.size() - totalLength; ++i) 
+    {
+        std::unordered_map<std::string, int> seenWords;
+        int j = 0;
+
+        while (j < wordCount) 
+        {
+            std::string currentWord = sentence.substr(i + j * wordLength, wordLength);
+
+            if (wordIndex.find(currentWord) == wordIndex.end()) 
+            {
+                break;
+            }
+
+            seenWords[currentWord]++;
+            if (seenWords[currentWord] > wordIndex[currentWord]) 
+            {
+                break;
+            }
+
+            j++;
+        }
+
+        if (j == wordCount) 
+        {
+            result = i;
+        }
+    }
+
+    return result;
+}
+
+bool HashTables::testCollatz(int n)
+{
+    for(int i = 1; i <= n; i++)
+    {
+        if (!collatzSequence(i))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool HashTables::collatzSequence(long long n)
+{
+    if (n == 1) 
+    {
+        return true; // Reached 1
+    }
+    if (cache.find(n) != cache.end()) 
+    {
+        return cache[n]; 
+    }
+    if (n % 2 == 0) 
+    {
+        cache[n] = collatzSequence(n / 2);
+    } 
+    else 
+    {
+        cache[n] = collatzSequence(3 * n + 1);
+    }
+    return cache[n];
 }

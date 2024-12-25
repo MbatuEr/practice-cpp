@@ -11,6 +11,8 @@ class HashTables
         std::unordered_map<char, int> charcount;
         std::unordered_map<std::string, int> wordIndex;
         std::unordered_map<int, int> lengthIndex;
+        std::unordered_map<std::string, int> notes;
+        std::unordered_map<long long, bool> cache;
         
     public:
         // check if a string has all unique characters
@@ -45,4 +47,13 @@ class HashTables
 
         // find the average of top three scores
         std::unordered_map<std::string, double> averageOfTopThreeScores( std::vector<std::pair<std::string, int>>& scores);
+
+        // find all string decompositions
+        int allStringDecompositions(const std::string& s, const std::vector<std::string>& words);
+
+        // test the conjecture for the first billion integers
+        bool testCollatz(int n);
+
+        // Recursive function to compute Collatz sequence
+        bool collatzSequence(long long n);
 };

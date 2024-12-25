@@ -121,7 +121,7 @@ int main()
     std::cout << "--------------------------------------------------------" <<std::endl;
 
     // check for average of top three scores
-    std::vector<std::pair<std::string, int>> scores = {{"John", 60}, {"Jane", 90}, {"John", 35}, {"Jane", 20}, {"Jane", 50}, {"John", 15}, {"jack", 80}, {"jack", 95}, {"aby", 100}, {"aby", 95}};
+    std::vector<std::pair<std::string, int>> scores = {{"John", 60}, {"Jane", 90}, {"John", 35}, {"Jane", 20}, {"Jane", 50}, {"jack", 80}, {"jack", 95}, {"aby", 100}, {"aby", 95}, {"aby", 80}};
     std::unordered_map<std::string, double> avgScores = hashTable.averageOfTopThreeScores(scores);
     std::cout << "Input: ";
     for (auto& score : scores)
@@ -134,5 +134,31 @@ int main()
         std::cout << avgScore.first << " " << avgScore.second << std::endl;
     }
     std::cout << "--------------------------------------------------------" <<std::endl;
+
+    // check for all string decompositions
+    std::string s = "amanaplanacandl";
+    std::vector<std::string> words = {"nac", "ana", "pla"};
+    int starting_indice = hashTable.allStringDecompositions(s, words);
+    std::cout << "Input: " << s << std::endl;
+    std::cout << "All string decompositions: ";
+    for (int i = starting_indice; i < starting_indice + words.size() * words[0].size(); ++i)
+    {
+        std::cout << s[i];
+    }
+    std::cout << std::endl;
+    std::cout << "--------------------------------------------------------" <<std::endl;
+
+    // check for Collatz Conjecture
+    int n = 1000000;
+    if (hashTable.testCollatz(n))
+    {
+        std::cout << "Collatz Conjecture is true for all numbers from 1 to " << n << std::endl;
+    }
+    else
+    {
+        std::cout << "Collatz Conjecture is false for all numbers from 1 to " << n << std::endl;
+    }
+    std::cout << "--------------------------------------------------------" <<std::endl;
+
     return 0;
 }
