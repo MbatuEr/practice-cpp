@@ -68,5 +68,23 @@ int main()
     std::cout << "Sum of binary numbers represented by root-to-leaf paths: "
               << tree.sumRootToLeaf(rootsum) << std::endl;
 
+    // sum of the weight of from root to a specified node
+    TreeNode* rootsumweight = new TreeNode(5);
+    rootsumweight->left = new TreeNode(4);
+    rootsumweight->right = new TreeNode(8);
+    rootsumweight->left->left = new TreeNode(11);
+    rootsumweight->right->left = new TreeNode(13);
+    rootsumweight->right->right = new TreeNode(4);
+    rootsumweight->left->left->left = new TreeNode(7);
+    rootsumweight->left->left->right = new TreeNode(2);
+    rootsumweight->right->right->right = new TreeNode(1);
+    int num = 22;
+    int currentsum = 0;
+
+    if (tree.hasPathWeight(rootsumweight, num, currentsum)) {
+        std::cout << "There exists a leaf whose path weight equals " << num << ".\n";
+    } else {
+        std::cout << "No leaf path weight equals " << num << ".\n";
+    }
     return 0;
 }

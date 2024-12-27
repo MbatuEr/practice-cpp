@@ -26,4 +26,6 @@ class BinaryTree
 
         // find the binary numbers that represented by the tree
         int sumRootToLeaf(TreeNode* root);
+
+        bool hasPathWeight(TreeNode* node, int targetWeight, int currentWeight);
 };

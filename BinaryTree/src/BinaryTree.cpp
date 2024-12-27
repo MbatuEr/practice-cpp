@@ -42,3 +42,23 @@ int BinaryTree::dfs(TreeNode* node, int currentsum)
 
     return dfs(node->left, currentsum) + dfs(node->right, currentsum);
 }
+
+bool BinaryTree::hasPathWeight(TreeNode* node, int targetWeight, int currentWeight)
+{
+    if (!node) {
+        return false;
+    }
+
+    // Update the current weight by adding the current node's value
+    currentWeight += node->val;
+
+    // Check if we are at a leaf node
+    if (!node->left && !node->right) {
+        // If the cumulative weight equals the target, return true
+        return currentWeight == targetWeight;
+    }
+
+    // Recur for left and right subtrees
+    return hasPathWeight(node->left, targetWeight, currentWeight) ||
+           hasPathWeight(node->right, targetWeight, currentWeight);
+}
