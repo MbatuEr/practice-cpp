@@ -37,7 +37,7 @@ class HashTables
         std::unordered_map<int, std::string> nearestRepetition(const std::vector<std::string>& str);
 
         // find the shortest subarray that contains all keywords in a paragraph
-        std::pair<int, int> findShortestSequentialSubarray(const std::vector<std::string>& text, const std::unordered_set<std::string>& keywords);
+        std::pair<int, int> findShortestSequentialSubarray(const std::vector<std::string>& paragraph, const std::unordered_set<std::string>& keywords);
 
         // find the longest subarray with distinct entries
         std::pair<int,int> longestSubarrayWithDistinctEntries(const std::vector<std::string>& arr);
@@ -49,7 +49,7 @@ class HashTables
         std::unordered_map<std::string, double> averageOfTopThreeScores( std::vector<std::pair<std::string, int>>& scores);
 
         // find all string decompositions
-        int allStringDecompositions(const std::string& s, const std::vector<std::string>& words);
+        int allStringDecompositions(const std::string& sentence, const std::vector<std::string>& words);
 
         // test the conjecture for the first billion integers
         bool testCollatz(int n);
@@ -57,3 +57,4 @@ class HashTables
         // Recursive function to compute Collatz sequence
         bool collatzSequence(long long n);
 };
+ 

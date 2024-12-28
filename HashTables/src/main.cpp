@@ -32,7 +32,7 @@ int main()
     std::cout << "--------------------------------------------------------" <<std::endl;
 
     // check for palindrome permutation
-    std::string str = "teco cat";
+    std::string str = "tcao cat";
     bool isPalindrome = hashTable.isPalindromePermutation(str);
     std::cout << "Input: " << str << std::endl;
     std::cout << "Is palindrome permutation: " << (isPalindrome ? "Yes" : "No") << std::endl;
