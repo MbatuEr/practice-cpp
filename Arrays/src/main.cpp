@@ -2,15 +2,15 @@
 
 int main() 
 {
+    // Dutch National Flag problem.
     std::vector<int> nums = {3, 5, 2, 1, 7, 3};
     int i =0;
     int pivot = 3;
     Array obj;
     obj.DutchNationalFlag(pivot,nums);
-    
-    // print the sorted array
     std::cout << "Sorted array: ";
-    for (int num : nums) {
+    for (int num : nums) 
+    {
         std::cout << num << " ";
     }
     std::cout << std::endl;
@@ -67,6 +67,7 @@ int main()
     std::cout << "Highest profit for one buy and sell: " << obj.ProfitFromStock(stocklist) << std::endl;
     std::cout << "------------------------------------------------------" << std::endl;
 
+    // Find prime values.
     int key;
     std::cout << "Enter a key value: " << std::endl;
     std::cin >> key;
