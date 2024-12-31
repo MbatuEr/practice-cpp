@@ -183,7 +183,6 @@ void Array::FindNextPermutation(vector<int>& vec)
 
 void Array::OfflineRandomSampling(int key, vector<int>& vec)
 {
-    int s = size(vec) - 1;
     srand(time(0));
     random_shuffle(vec.begin(), vec.end());
     vec.erase(vec.begin() + key,vec.end());
@@ -197,12 +196,9 @@ void Array::UpdateArrayWithProbabilities(int size, vector<int>& input_array, vec
     }
 
     vector<int> counts(input_array.size(),0);
-    int total = 0;
-
     for (size_t i = 0; i < probabilities.size() ; i++)
     {
         counts[i] = round(probabilities[i] * size);
-        total += counts[i];
     }
     vector<int> updated_array;
     updated_array.reserve(size);
