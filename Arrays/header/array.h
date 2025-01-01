@@ -30,7 +30,7 @@ class Array
         bool CanReachEnd(const vector <int>& vec); 
         
         // Removes duplicate elements from a vector.
-        vector<int>DeleteDuplicates(vector <int>& vec);
+        void DeleteDuplicates(vector <int>& vec);
         
         // Calculates the maximum profit that can be obtained by buying and selling a stock once.
         int ProfitFromStock(const vector <int>& stocklist);

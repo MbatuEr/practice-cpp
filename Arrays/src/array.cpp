@@ -58,7 +58,7 @@ vector<int> Array::Multiply(const vector<int>& v1, const vector<int>& v2)
     int m = size(v2);
     const int sign = v1.front() < 0 ^ v2.front() < 0 ? -1 : 1;
     vector<int> result(n + m, 0);
-    int count=0;
+   
     for (int i = n - 1; i >= 0; --i)
     {
         for (int j = m - 1; j >= 0; --j)
@@ -67,7 +67,6 @@ vector<int> Array::Multiply(const vector<int>& v1, const vector<int>& v2)
             int sum = product + result[i + j + 1]; // Add to current position
             result[i + j + 1] = sum % 10;         // Set the digit at this position
             result[i + j] += sum / 10;
-            ++count;
         }
     }
      while (result.size() > 1 && result[0] == 0) {
@@ -98,7 +97,7 @@ bool Array::CanReachEnd(const vector<int>& vec)
     return furthest_reach >= last_index;
 }
 
-vector <int> Array::DeleteDuplicates(vector <int>& vec)
+void Array::DeleteDuplicates(vector <int>& vec)
 {
     int s = size(vec);
     for (int i = 0; i < s; i++)
@@ -112,7 +111,6 @@ vector <int> Array::DeleteDuplicates(vector <int>& vec)
             }
         }
     }
-    return vec;
 }
 
 int Array::ProfitFromStock(const vector<int>& stocklist)
@@ -259,36 +257,38 @@ vector<int> Array::SpiralOrderOfArray(vector<vector<int>>& vec)
     int top = 0, bottom = row - 1;
     int left = 0, right = column - 1;
 
-    while (top <= bottom && left <= right) {
-        // Traverse from left to right across the top row
-        for (int j = left; j <= right; ++j) {
+    while (top <= bottom && left <= right) 
+    {
+        for (int j = left; j <= right; ++j) 
+        {
             arr.push_back(vec[top][j]);
         }
         ++top;
 
-        // Traverse from top to bottom along the right column
-        for (int i = top; i <= bottom; ++i) {
+        for (int i = top; i <= bottom; ++i) 
+        {
             arr.push_back(vec[i][right]);
         }
         --right;
 
-        // Traverse from right to left across the bottom row (if still valid)
-        if (top <= bottom) {
-            for (int j = right; j >= left; --j) {
+        if (top <= bottom) 
+        {
+            for (int j = right; j >= left; --j) 
+            {
                 arr.push_back(vec[bottom][j]);
             }
             --bottom;
         }
 
-        // Traverse from bottom to top along the left column (if still valid)
-        if (left <= right) {
-            for (int i = bottom; i >= top; --i) {
+        if (left <= right) 
+        {
+            for (int i = bottom; i >= top; --i) 
+            {
                 arr.push_back(vec[i][left]);
             }
             ++left;
         }
     }
-
     return arr;
 }
 
