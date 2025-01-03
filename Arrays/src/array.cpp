@@ -379,7 +379,7 @@ string Array::StringCompression(string& str)
 
 bool Array::IsSubString(string& s1, string& s2)
 {
-    if (s1.size() < s2.size())
+    if (s1.size() != s2.size())
     {
         return false;
     }
