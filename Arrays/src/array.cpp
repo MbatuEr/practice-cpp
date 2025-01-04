@@ -119,11 +119,11 @@ int Array::ProfitFromStock(const vector<int>& stocklist)
     int lowest_price = numeric_limits<int>::max();
     for (int price : stocklist)
     {
-        int temp = price - lowest_price;
         if (price < lowest_price)
         {
             lowest_price = price;
         }
+        int temp = price - lowest_price;
         highest_profit = max(highest_profit, temp);
     }
     return highest_profit;
@@ -154,9 +154,7 @@ vector <int> Array::FindPrimeValues(int key_value)
 
 void Array::PermutingElements(vector<int>& vec1, vector<int>& vec2)
 {
-    int s = size(vec1);
-     
-    for (int i = 0; i < s; i++)
+    for (int i = 0; i < vec1.size(); i++)
     {
         swap(vec1[i],vec1[vec2[i]]);
         int temp = vec2[i];

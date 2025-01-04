@@ -38,7 +38,7 @@ class Array
         // Finds all prime numbers less than a given key value.
         vector<int>FindPrimeValues(int key_value);
         
-        // Rearranges one vector based on the permutation order.
+        // Rearranges a vector based on the permutation order.
         void PermutingElements(vector<int>& vec1, vector<int>& vec2);
         
         // Computes the next lexicographical permutation of the input vector.
