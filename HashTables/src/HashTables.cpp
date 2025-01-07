@@ -244,12 +244,8 @@ std::unordered_map<std::string, double> HashTables::averageOfTopThreeScores( std
 
     for (auto& score : scores)
     {
-        notes[score.first]++;
-    }
-
-    for (auto& score : scores)
-    {
         wordIndex[score.first] += score.second;
+        notes[score.first]++;
     }
     
     for (auto& it : wordIndex)
@@ -260,7 +256,7 @@ std::unordered_map<std::string, double> HashTables::averageOfTopThreeScores( std
             {
                 result.clear();
                 maxScore = it.second;
-                result[it.first] = it.second / 3.0;
+                result[it.first] = maxScore / 3.0;
             }    
         }
     }
