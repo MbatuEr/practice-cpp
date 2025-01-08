@@ -3,7 +3,7 @@
 int main()
 {
     BinaryTree tree;
-    // check if the tree is symmetric
+    // Check if the tree is symmetric.
     TreeNode* root = new TreeNode(1);
     root->left = new TreeNode(2);
     root->right = new TreeNode(2);
@@ -22,7 +22,7 @@ int main()
     }
     std::cout << "----------------------------------------------------------" << std::endl;
 
-    // find the lowest common ancestor
+    // Find the lowest common ancestor.
     TreeNode* rootLCA = new TreeNode(3);
     rootLCA->left = new TreeNode(5);
     rootLCA->right = new TreeNode(1);
@@ -47,7 +47,7 @@ int main()
     }
     std::cout << "----------------------------------------------------------" << std::endl;
 
-    // sum of binary numbers
+    // Sum of binary numbers.
     TreeNode* rootsum = new TreeNode(1);
     rootsum->left = new TreeNode(0);
     rootsum->right = new TreeNode(1);
@@ -67,8 +67,9 @@ int main()
 
     std::cout << "Sum of binary numbers represented by root-to-leaf paths: "
               << tree.sumRootToLeaf(rootsum) << std::endl;
-
-    // sum of the weight of from root to a specified node
+    std::cout << "----------------------------------------------------------" << std::endl;
+    
+    // Sum of the weight of from root to a specified node.
     TreeNode* rootsumweight = new TreeNode(5);
     rootsumweight->left = new TreeNode(4);
     rootsumweight->right = new TreeNode(8);
@@ -86,5 +87,77 @@ int main()
     } else {
         std::cout << "No leaf path weight equals " << num << ".\n";
     }
+    std::cout << "----------------------------------------------------------" << std::endl;
+
+    // Inorder traversal without recursion.
+    TreeNode* root_inorder = new TreeNode(8);
+    root_inorder->left = new TreeNode(5);
+    root_inorder->right = new TreeNode(10);
+    root_inorder->left->left = new TreeNode(4);
+    root_inorder->left->left->right = new TreeNode(6);
+    root_inorder->left->right = new TreeNode(7);
+    root_inorder->right->right = new TreeNode(13);
+    root_inorder->right->left = new TreeNode(9);
+    root_inorder->right->right->right = new TreeNode(14);
+    root_inorder->right->right->left = new TreeNode(12);
+
+    /*
+    // Constructed binary tree:
+               8
+             /   \
+            /     \
+           5      10
+          / \    /   \  
+         4   7  9     13
+          \          /  \
+           6       12    14    
+    */
+    int k = 7;
+    std::vector<int> inorder_traversal = tree.inorderTraversal(root_inorder, k);
+    std::cout << "The inorder traversal of the binary tree: ";
+    for (int val : inorder_traversal)
+    {
+        std::cout << val << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "----------------------------------------------------------" << std::endl;
+    
+    // Preorder traversal without recursion.
+    TreeNode* root_preorder = new TreeNode(8);
+    root_preorder->left = new TreeNode(5);
+    root_preorder->right = new TreeNode(10);
+    root_preorder->left->left = new TreeNode(4);
+    root_preorder->left->right = new TreeNode(6);
+    root_preorder->right->right = new TreeNode(13);
+    root_preorder->right->left = new TreeNode(7);
+    root_preorder->right->right->right = new TreeNode(14);
+    root_preorder->right->right->left = new TreeNode(12);
+
+    std::vector<int> preorder_traversal = tree.preorderTraversal(root_preorder);
+    std::cout << "The preorder traversal of the binary tree: ";
+    for (int val : preorder_traversal)
+    {
+        std::cout << val << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "----------------------------------------------------------" << std::endl;
+
+    // Compute the successor.
+    TreeNode* root_successor = new TreeNode(8);
+    root_successor->left = new TreeNode(5);
+    root_successor->right = new TreeNode(10);
+    root_successor->left->parent = root_successor;
+    root_successor->right->parent = root_successor;
+    root_successor->left->left = new TreeNode(4);
+    root_successor->left->right = new TreeNode(7);
+    root_successor->left->left->parent = root_successor->left;
+    root_successor->left->right->parent = root_successor->left;
+    root_successor->right->left = new TreeNode(9);
+    root_successor->right->left->parent = root_successor->right;
+    root_successor->left->left->right = new TreeNode(6);
+    root_successor->left->left->right->parent = root_successor->left->left;
+    
+    tree.computeTheSuccessor(root_successor, root_successor->left->right);
+
     return 0;
 }
