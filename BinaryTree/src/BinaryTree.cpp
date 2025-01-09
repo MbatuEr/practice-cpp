@@ -169,3 +169,41 @@ void BinaryTree::computeTheSuccessor(TreeNode* root, TreeNode* wanted)
         current = current->right;
     }
 }
+
+void BinaryTree::inorderTraversalWithO1Space(TreeNode* root)
+{
+    if(!root) return;
+
+    TreeNode* current = root;
+    TreeNode* prev = nullptr;
+
+    while (current) 
+    {
+        if (prev == current->parent) 
+        {
+            if (current->left) 
+            {
+                prev = current;
+                current = current->left;
+            } 
+            else 
+            {
+                std::cout << current->val << " ";
+                prev = current;
+                current = current->right ? current->right : current->parent;
+            }
+        } 
+        else if (prev == current->left) 
+        {
+            std::cout << current->val << " ";
+            prev = current;
+            current = current->right ? current->right : current->parent;
+        } 
+        else 
+        {
+            prev = current;
+            current = current->parent;
+        }
+    }
+}
+

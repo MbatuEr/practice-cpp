@@ -94,10 +94,10 @@ int main()
     root_inorder->left = new TreeNode(5);
     root_inorder->right = new TreeNode(10);
     root_inorder->left->left = new TreeNode(4);
-    root_inorder->left->left->right = new TreeNode(6);
     root_inorder->left->right = new TreeNode(7);
     root_inorder->right->right = new TreeNode(13);
     root_inorder->right->left = new TreeNode(9);
+    root_inorder->left->left->right = new TreeNode(6);
     root_inorder->right->right->right = new TreeNode(14);
     root_inorder->right->right->left = new TreeNode(12);
 
@@ -127,9 +127,10 @@ int main()
     root_preorder->left = new TreeNode(5);
     root_preorder->right = new TreeNode(10);
     root_preorder->left->left = new TreeNode(4);
-    root_preorder->left->right = new TreeNode(6);
+    root_preorder->left->right = new TreeNode(7);
     root_preorder->right->right = new TreeNode(13);
-    root_preorder->right->left = new TreeNode(7);
+    root_preorder->right->left = new TreeNode(9);
+    root_preorder->left->left->right = new TreeNode(6);
     root_preorder->right->right->right = new TreeNode(14);
     root_preorder->right->right->left = new TreeNode(12);
 
@@ -158,6 +159,24 @@ int main()
     root_successor->left->left->right->parent = root_successor->left->left;
     
     tree.computeTheSuccessor(root_successor, root_successor->left->right);
+    std::cout << "----------------------------------------------------------" << std::endl;
 
+    // Inorder Traversal with O(1) space.
+    TreeNode* root_inorder_space = new TreeNode(8);
+    root_inorder_space->left = new TreeNode(5);
+    root_inorder_space->right = new TreeNode(10);
+    root_inorder_space->left->parent = root_inorder_space;
+    root_inorder_space->right->parent = root_inorder_space;
+    root_inorder_space->left->left = new TreeNode(4);
+    root_inorder_space->left->right = new TreeNode(7);
+    root_inorder_space->left->left->parent = root_inorder_space->left;
+    root_inorder_space->left->right->parent = root_inorder_space->left;
+    root_inorder_space->right->left = new TreeNode(9);
+    root_inorder_space->right->left->parent = root_inorder_space->right;
+    root_inorder_space->left->left->right = new TreeNode(6);
+    root_inorder_space->left->left->right->parent = root_inorder_space->left->left;
+    std::cout << "The inorder traversal of the binary tree: ";
+    tree.inorderTraversalWithO1Space(root_inorder_space);
+    std::cout << "\n----------------------------------------------------------" << std::endl;
     return 0;
 }
