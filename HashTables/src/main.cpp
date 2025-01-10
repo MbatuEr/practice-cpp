@@ -2,7 +2,7 @@
 
 int main()
 {
-    // check for unique characters
+    // Unique characters.
     HashTables hashTable;
 
     std::string input = "asdfghjklip";
@@ -17,7 +17,7 @@ int main()
     }
     std::cout << "--------------------------------------------------------" <<std::endl;
 
-    // check for permutations
+    // Permutation.
     std::string str1 = "asdfghjkl";
     std::string str2 = "pkjhgfdas";
 
@@ -31,14 +31,14 @@ int main()
     }
     std::cout << "--------------------------------------------------------" <<std::endl;
 
-    // check for palindrome permutation
+    // Palindrome permutation.
     std::string str = "tcao cat";
     bool isPalindrome = hashTable.isPalindromePermutation(str);
     std::cout << "Input: " << str << std::endl;
     std::cout << "Is palindrome permutation: " << (isPalindrome ? "Yes" : "No") << std::endl;
     std::cout << "--------------------------------------------------------" <<std::endl;
 
-    // check for one away
+    // One edit away checker.
     std::string str3 = "pale";
     std::string str4 = "bale";
     bool isOneAway = hashTable.isOneAwayChecker(str3, str4);
@@ -46,14 +46,14 @@ int main()
     std::cout << "Is one away: " << (isOneAway ? "Yes" : "No") << std::endl;
     std::cout << "--------------------------------------------------------" <<std::endl;
 
-    // check for most frequent word
+    // Most frequent word.
     std::string str5 = "hello world";
     std::unordered_map<char, int> freqWord = hashTable.mostFrequentWord(str5);
     std::cout << "Input: " << str5 << std::endl;    
     std::cout << "Most frequent word is " << freqWord.begin()->first << " with " <<freqWord.begin()->second << " times" << std::endl;
     std::cout << "--------------------------------------------------------" <<std::endl;
 
-    // check for nearest repetition
+    // Nearest repetition.
     std::vector<std::string> vec = {{"hello"}, {"world"}, {"look"}, {"at"}, {"what"}, {"hello"}, {"what"}};
     std::unordered_map<int, std::string> nearestRep = hashTable.nearestRepetition(vec);
     std::cout << "Input: ";
@@ -65,7 +65,7 @@ int main()
     std::cout << "Nearest repetition is between two '" << nearestRep.begin()->second << "' words and the distance is " << nearestRep.begin()->first << std::endl;
     std::cout << "--------------------------------------------------------" <<std::endl;
 
-    // check for shortest subarray  
+    // Shortest subarray.
     std::vector<std::string> text = {
         "Given", "permutation", "string,", "write", "a", "palindrome", "to", "check", "if", "it", "is", "a", 
         "palindrome", "of", "a", "permutation", "A", "check", "is", "a", "word", "or", 
@@ -91,7 +91,7 @@ int main()
     }
     std::cout << "--------------------------------------------------------" <<std::endl;
 
-    // check for longest subarray with distinct entries
+    // Longest subarray.
     std::vector<std::string> arr = {"f", "s", "s", "e", "t", "w", "e", "n", "a", "e"};
     std::pair<int, int> longestSubarray = hashTable.longestSubarrayWithDistinctEntries(arr);
     std::cout << "Input: ";
@@ -108,7 +108,7 @@ int main()
     std::cout << std::endl;
     std::cout << "--------------------------------------------------------" <<std::endl;
 
-    // check for length of longest contained interval
+    // Longest contained interval.
     std::vector<int> intArr = {3, -2, 7, 9, 8, 1, 6, 0, -1, 5, 4};
     int length = hashTable.longestContainedInterval(intArr);
     std::cout << "Input: ";
@@ -120,7 +120,7 @@ int main()
     std::cout << "Length of longest contained interval: " << length << std::endl;
     std::cout << "--------------------------------------------------------" <<std::endl;
 
-    // check for average of top three scores
+    // Average of top three scores.
     std::vector<std::pair<std::string, int>> scores = {{"John", 60}, {"Jane", 90}, {"John", 35}, {"Jane", 20}, {"Jane", 50}, {"jack", 80}, {"jack", 95}, {"aby", 100}, {"aby", 95}, {"aby", 80}};
     std::unordered_map<std::string, double> avgScores = hashTable.averageOfTopThreeScores(scores);
     std::cout << "Input: ";
@@ -135,7 +135,7 @@ int main()
     }
     std::cout << "--------------------------------------------------------" <<std::endl;
 
-    // check for all string decompositions
+    // String decompositions.
     std::string s = "amanaplanacandl";
     std::vector<std::string> words = {"nac", "ana", "pla"};
     int starting_indice = hashTable.allStringDecompositions(s, words);
@@ -148,7 +148,7 @@ int main()
     std::cout << std::endl;
     std::cout << "--------------------------------------------------------" <<std::endl;
 
-    // check for Collatz Conjecture
+    // Collatz conjecture.
     int n = 1000000;
     if (hashTable.testCollatz(n))
     {
