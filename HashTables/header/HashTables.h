@@ -15,43 +15,43 @@ class HashTables
         std::unordered_map<long long, bool> cache;
         
     public:
-        // Check if a string has all unique characters.
+        // Checks if a string has all unique characters.
         bool hasAllUniqueCharacters(std::string& str);
 
-        // Check if two strings are permutations of each other.
+        // Checks if two strings are permutations of each other.
         bool arePermutations(const std::string& str1, const std::string& str2);
 
-        // Check if a string is a permutation of a palindrome.
+        // Checks if a string is a permutation of a palindrome.
         bool isPalindromePermutation(const std::string& str);
 
-        // Check if two strings size differ by one
+        // Checks if two strings size differ by one
         bool isOneAwayChecker(const std::string& str1, const std::string& str2);
 
-        // Check if two strings are one edit away from each other.
+        // Checks if two strings are one edit away from each other.
         bool isOneAway(const std::string& str1, const std::string& str2);
 
-        // Find the most frequent word in a string.
+        // Finds the most frequent word in a string.
         std::unordered_map<char, int> mostFrequentWord(const std::string& str);
 
-        // Find the nearest repetition of a word in a string.
+        // Finds the nearest repetition of a word in a string.
         std::unordered_map<int, std::string> nearestRepetition(const std::vector<std::string>& str);
 
-        // Find the shortest subarray that contains all keywords in a paragraph.
+        // Finds the shortest subarray that contains all keywords in a paragraph.
         std::pair<int, int> findShortestSequentialSubarray(const std::vector<std::string>& paragraph, const std::unordered_set<std::string>& keywords);
 
-        // Find the longest subarray with distinct entries.
+        // Finds the longest subarray with distinct entries.
         std::pair<int,int> longestSubarrayWithDistinctEntries(const std::vector<std::string>& arr);
 
-        // Find the length of the longest contained interval.
+        // Finds the length of the longest contained interval.
         int longestContainedInterval(const std::vector<int>& arr);
 
-        // Find the average of top three scores.
+        // Finds the average of top three scores.
         std::unordered_map<std::string, double> averageOfTopThreeScores( std::vector<std::pair<std::string, int>>& scores);
 
-        // Find all string decompositions.
+        // Finds all string decompositions.
         int allStringDecompositions(const std::string& sentence, const std::vector<std::string>& words);
 
-        // Test the conjecture for the first billion integers.
+        // Tests the conjecture for the first billion integers.
         bool testCollatz(int n);
 
         // Recursive function to compute Collatz sequence.
