@@ -178,5 +178,28 @@ int main()
     std::cout << "The inorder traversal of the binary tree: ";
     tree.inorderTraversalWithO1Space(root_inorder_space);
     std::cout << "\n----------------------------------------------------------" << std::endl;
+
+    // Build a binary tree.
+    std::vector<int> inorder = {4, 6, 5, 7, 8, 9, 10, 12, 13, 14};
+    std::vector<int> preorder = {8, 5, 4, 6, 7, 10, 9, 13, 12, 14};
+    
+
+    TreeNode* root_order = tree.buildTree(preorder, inorder);
+
+    std::cout << "Inorder traversal of the reconstructed tree: " << std::endl;
+    std::vector<int> inorder_traversal_tree = tree.inorderTraversal(root_order, k);
+    for (int val : inorder_traversal_tree)
+    {
+        std::cout << val << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "Preorder traversal of the reconstructed tree: " << std::endl;
+    std::vector<int> preorder_traversal_tree = tree.preorderTraversal(root_order);
+    for (int val : preorder_traversal_tree)
+    {
+        std::cout << val << " ";
+    }
+    std::cout << "\n----------------------------------------------------------" << std::endl;
     return 0;
 }

@@ -207,3 +207,40 @@ void BinaryTree::inorderTraversalWithO1Space(TreeNode* root)
     }
 }
 
+TreeNode* BinaryTree::buildTreeHelper(std::vector<int>& preorder, int preStart, int preEnd,
+                          std::vector<int>& inorder, int inStart, int inEnd,
+                          std::unordered_map<int, int>& inMap) 
+{
+    if (preStart > preEnd || inStart > inEnd) 
+    {
+        return nullptr;
+    }
+
+    // Root is the first element of preorder traversal
+    int rootVal = preorder[preStart];
+    TreeNode* root = new TreeNode(rootVal);
+
+    // Find the root's index in inorder traversal
+    int rootIndex = inMap[rootVal];
+    int leftSubtreeSize = rootIndex - inStart;
+
+    // Recursively build left and right subtrees
+    root->left = buildTreeHelper(preorder, preStart + 1, preStart + leftSubtreeSize,
+                                 inorder, inStart, rootIndex - 1, inMap);
+    root->right = buildTreeHelper(preorder, preStart + leftSubtreeSize + 1, preEnd,
+                                  inorder, rootIndex + 1, inEnd, inMap);
+
+    return root;
+}
+
+TreeNode* BinaryTree::buildTree(std::vector<int>& preorder, std::vector<int>& inorder) 
+{
+    std::unordered_map<int, int> inMap; 
+    for (int i = 0; i < inorder.size(); i++) 
+    {
+        inMap[inorder[i]] = i;
+    }
+
+    return buildTreeHelper(preorder, 0, preorder.size() - 1,
+                           inorder, 0, inorder.size() - 1, inMap);
+}

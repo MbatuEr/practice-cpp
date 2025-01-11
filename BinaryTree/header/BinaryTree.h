@@ -2,7 +2,9 @@
 #include <vector>
 #include <stack>
 #include <unordered_map>
-struct TreeNode {
+
+struct TreeNode 
+{
     int val;
     TreeNode* left;
     TreeNode* right;
@@ -44,4 +46,11 @@ class BinaryTree
         // does an inorder traversal with a O(1) space complexity.
         void inorderTraversalWithO1Space(TreeNode* root);        
 
+        // Main function to build the binary tree.
+        TreeNode* buildTree(std::vector<int>& preorder, std::vector<int>& inorder);
+
+        // Helper function to build the binary tree.
+        TreeNode* buildTreeHelper(std::vector<int>& preorder, int preStart, int preEnd,
+                          std::vector<int>& inorder, int inStart, int inEnd,
+                          std::unordered_map<int, int>& inMap);
 };
