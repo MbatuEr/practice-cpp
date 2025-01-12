@@ -3,6 +3,12 @@
 #include <stack>
 #include <unordered_map>
 
+struct ListNode 
+{
+    int val;
+    ListNode* next;
+    ListNode(int x);
+};
 struct TreeNode 
 {
     int val;
@@ -34,10 +40,10 @@ class BinaryTree
         // checks if there exists a leaf whose path weight equals the given integer.
         bool hasPathWeight(TreeNode* node, int targetWeight, int currentWeight);
 
-        // does an inorder traversal without a recursion or parent references.
+        // Builds a tree from an inorder traversal without a recursion or parent references.
         std::vector<int> inorderTraversal(TreeNode* root, int k);
 
-        // does an preorder traversal without a recursion or parent references.
+        // Builds a tree from a preorder traversal without a recursion or parent references.
         std::vector<int> preorderTraversal(TreeNode* root);
 
         // computes the successor of the node in an inorder traversal.
@@ -53,4 +59,16 @@ class BinaryTree
         TreeNode* buildTreeHelper(std::vector<int>& preorder, int preStart, int preEnd,
                           std::vector<int>& inorder, int inStart, int inEnd,
                           std::unordered_map<int, int>& inMap);
+        
+        // Builds a tree from a preorder traversal and uses null to mark empty children.
+        void reconstructPreOrder(TreeNode* root);
+
+        // Creates a linked list from leaves of the tree.
+        ListNode* createsListFromLeaves(TreeNode* root);
+
+        // Helper function to traverse the tree and collect leaves
+        void collectLeaves(TreeNode* root, ListNode*& current); 
+
+        // Function to print the linked list
+        void printLinkedList(ListNode* head);
 };

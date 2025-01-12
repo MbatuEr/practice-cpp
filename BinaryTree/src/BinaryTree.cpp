@@ -2,6 +2,8 @@
 
 TreeNode::TreeNode(int x) : val(x), left(nullptr), right(nullptr), parent(nullptr) {}
 
+ListNode::ListNode(int x) : val(x), next(nullptr) {}
+
 TreeNode* BinaryTree::findLCA(TreeNode* root, TreeNode* p, TreeNode* q) 
 {
     if(!root || root == p || root == q) return root;
@@ -243,4 +245,73 @@ TreeNode* BinaryTree::buildTree(std::vector<int>& preorder, std::vector<int>& in
 
     return buildTreeHelper(preorder, 0, preorder.size() - 1,
                            inorder, 0, inorder.size() - 1, inMap);
+}
+
+ void BinaryTree::reconstructPreOrder(TreeNode* root)
+ {  
+    if(!root) return;
+
+    std::stack<TreeNode*> nodeStack; 
+    nodeStack.push(root);
+
+    while (!nodeStack.empty()) 
+    {
+        TreeNode* current = nodeStack.top();
+        nodeStack.pop();
+
+        std::cout << current->val << " ";
+
+        if (current->right != nullptr) 
+        {
+            nodeStack.push(current->right);
+        }
+        else
+        {
+            std::cout << "null" << " ";
+        }
+        
+        if (current->left != nullptr) 
+        {
+            nodeStack.push(current->left);
+        }
+        else
+        {
+            std::cout << "null" << " ";
+        }
+    }
+ }
+
+void BinaryTree::collectLeaves(TreeNode* root, ListNode*& current)
+{
+     if (!root) return;
+
+    if (!root->left && !root->right) 
+    {
+        current->next = new ListNode(root->val);
+        current = current->next;
+        return;
+    }
+
+    collectLeaves(root->left, current);
+    collectLeaves(root->right, current);
+}
+
+ ListNode* BinaryTree::createsListFromLeaves(TreeNode* root)
+ {
+    ListNode* dummy = new ListNode(-1);
+    ListNode* current = dummy;
+
+    collectLeaves(root, current);
+
+    return dummy->next;
+ }
+
+ void BinaryTree::printLinkedList(ListNode* head) 
+ {
+    while (head) 
+    {
+        std::cout << head->val << " ";
+        head = head->next;
+    }
+    std::cout << std::endl;
 }

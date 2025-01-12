@@ -201,5 +201,38 @@ int main()
         std::cout << val << " ";
     }
     std::cout << "\n----------------------------------------------------------" << std::endl;
+
+    // Reconstruct preorder traversal.
+    TreeNode* root_reconstruct = new TreeNode(8);
+    root_reconstruct->left = new TreeNode(5);
+    root_reconstruct->right = new TreeNode(10);
+    root_reconstruct->left->left = new TreeNode(4);
+    root_reconstruct->left->right = new TreeNode(7);
+    root_reconstruct->right->right = new TreeNode(13);
+    root_reconstruct->right->left = new TreeNode(9);
+    root_reconstruct->left->left->right = new TreeNode(6);
+    root_reconstruct->right->right->right = new TreeNode(14);
+    root_reconstruct->right->right->left = new TreeNode(12);
+
+    tree.reconstructPreOrder(root_reconstruct);
+    std::cout << "\n----------------------------------------------------------" << std::endl;
+    
+    // Create list from leaves.
+    TreeNode* list_from_leaves = new TreeNode(8);
+    list_from_leaves->left = new TreeNode(5);
+    list_from_leaves->right = new TreeNode(10);
+    list_from_leaves->left->left = new TreeNode(4);
+    list_from_leaves->left->right = new TreeNode(7);
+    list_from_leaves->right->right = new TreeNode(13);
+    list_from_leaves->right->left = new TreeNode(9);
+    list_from_leaves->left->left->right = new TreeNode(6);
+    list_from_leaves->right->right->right = new TreeNode(14);
+    list_from_leaves->right->right->left = new TreeNode(12);
+    
+    ListNode* leafList = tree.createsListFromLeaves(list_from_leaves);
+
+    std::cout << "Linked list of leaves: ";
+    tree.printLinkedList(leafList);
+    std::cout << "----------------------------------------------------------" << std::endl;
     return 0;
 }
