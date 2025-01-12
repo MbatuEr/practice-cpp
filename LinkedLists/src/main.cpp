@@ -12,32 +12,7 @@ int main()
     list.append(5);
     list.append(3);
 
-    list1.append(7);
-    list1.append(1);
-    list1.append(6);
-
-    list2.append(5);
-    list2.append(9);
-    list2.append(2);
-
-    list3.append(6);
-    list3.append(1);
-    list3.append(7);
-
-    list4.append(2);
-    list4.append(9);
-    list4.append(5);
-
-    list5.append(4);
-
-    list6.append(3);
-    list6.append(5);
-    list6.append(8);
-    list6.append(7);
-    list6.append(6);
-    list6.append(4);
-    list6.append(1);
-
+    // Find kth to the last element.
     std::cout << "\nOriginal List : \n";
     list.print_list();
 
@@ -54,20 +29,33 @@ int main()
     {
         std::cerr << e.what() << '\n';
     }
+    std::cout << "------------------------------------------------------";
 
+    // Delete middle node.
     std::cout << "\nDeleting the middle node... " << std::endl;
     list.delete_middle_node();
 
     std::cout << "List after deleting the middle node : ";
-
     list.print_list();
-
+    std::cout << "------------------------------------------------------";
+    
+    // Create partitions.
     int partition_value = 6;
     std::cout << "\nPartitioning around value : " << partition_value << std::endl;
     list.partition(partition_value);
 
     std::cout << "List after partition : ";
     list.print_list();
+    std::cout << "------------------------------------------------------";
+
+    // Reverse Order.
+    list1.append(7);
+    list1.append(1);
+    list1.append(6);
+
+    list2.append(5);
+    list2.append(9);
+    list2.append(2);
 
     std::cout << "\nList 1: ";
     list1.print_list();
@@ -79,6 +67,16 @@ int main()
 
     std::cout << "Sum of list1 and list2 (reverse order): ";
     result.print_list();
+    std::cout << "------------------------------------------------------";
+
+    // Forward order.
+    list3.append(6);
+    list3.append(1);
+    list3.append(7);
+
+    list4.append(2);
+    list4.append(9);
+    list4.append(5);
 
     std::cout << "\nList 3: ";
     list3.print_list();
@@ -90,22 +88,31 @@ int main()
 
     std::cout << "Sum of list3 and list4 (Forward Order): ";
     result_forward.print_list();
+    std::cout << "------------------------------------------------------";
 
+    // Removes duplicates.
     list.remove_duplicates();
     std::cout << "\nList After Removing Duplicates : ";
-
     list.print_list();
+    std::cout << "------------------------------------------------------";
 
+    // Check palindrome.
     list.append(5);
     list.append(3);
 
     std::cout << "\nIs 'list' a Palindrome? " << (list.is_palindrome() ? "Yes" : "No") << std::endl;
 
     std::cout << "Is 'list1' a Palindrome? " << (list1.is_palindrome() ? "Yes" : "No") << std::endl;
+    std::cout << "------------------------------------------------------";
+
+    // Check interactions.
+    list5.append(4);
 
     Node* intersecting_node = new Node(15);
+    
     list2.get_head()->next->next->next = intersecting_node;
     list5.get_head()->next = intersecting_node;
+    
     intersecting_node->next = new Node(20);
 
     Node* intersection = list.first_intersection(list2.get_head(), list5.get_head());
@@ -114,23 +121,35 @@ int main()
     {
         std::cout << "\nThe lists intersect at node with value: " << intersection->data << std::endl;
     }
-    else {
+    else 
+    {
         std::cout << "\nThe lists do not intersect." << std::endl;
     }
+    std::cout << "------------------------------------------------------";
+
+    // Detect loop.
+    list6.append(3);
+    list6.append(5);
+    list6.append(8);
+    list6.append(7);
+    list6.append(6);
+    list6.append(4);
+    list6.append(1);
 
     list6.get_head()->next->next->next->next->next->next->next = list6.get_head()->next;
-
+    
     Node* loop_start = list6.detect_loop_start(list6.get_head());
 
     if (loop_start)
     {
         std::cout << "\nThe loop starts at the node : " << loop_start->next->data << std::endl;
     }
-    else {
+    else 
+    {
         std::cout << "\nThe list does not loop " << std::endl;
     }
 
     loop_start->next = nullptr; // to break the loop
-
+    std::cout << "------------------------------------------------------" << std::endl;
     return 0;
 }

@@ -108,7 +108,7 @@ int LinkedList::find_to_kth_last(int k)
 
 void LinkedList::delete_middle_node()
 {
-    if(!head || !head->next ||!head->next)
+    if(!head || !head->next ||!head->next->next)
     {
         std::cout << "List is too short to have a middle node." << std::endl;
         return;
