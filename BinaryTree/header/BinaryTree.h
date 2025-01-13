@@ -2,6 +2,7 @@
 #include <vector>
 #include <stack>
 #include <unordered_map>
+#include <limits>
 
 struct ListNode 
 {
@@ -15,7 +16,10 @@ struct TreeNode
     TreeNode* left;
     TreeNode* right;
     TreeNode* parent;
+    TreeNode* level_next_right;
     TreeNode(int x);
+    bool locked;
+    int locked_descendant_count;
 };
 
 class BinaryTree 
@@ -66,9 +70,36 @@ class BinaryTree
         // Creates a linked list from leaves of the tree.
         ListNode* createsListFromLeaves(TreeNode* root);
 
-        // Helper function to traverse the tree and collect leaves
+        // Helper function to traverse the tree and collect leaves.
         void collectLeaves(TreeNode* root, ListNode*& current); 
 
-        // Function to print the linked list
+        // Prints the linked list.
         void printLinkedList(ListNode* head);
+
+        // Computes the exterior of a binary tree.
+        void exteriorOfBinaryTree(TreeNode* root);
+
+        // Sets the node to its level next right node.
+        void rightSiblingTree(TreeNode* root);
+
+        // Helper funtion to set the nodes to next level field.
+        void setLevelNextField(TreeNode* left_tree, TreeNode* right_tree);
+
+        // Prints the nodes in order of their level.
+        void printLevelNext(TreeNode* root);
+
+        // Checks if any ancestors or descendants are locked.
+        bool canLockOrUnlock(TreeNode* node);
+
+        // Function to lock the node
+        bool lock(TreeNode* node);
+
+        // Function to unlock the node
+        bool unlock(TreeNode* node);
+
+        // Checks if a binary tree satisfies the BST property.
+        bool isBSTHelper(TreeNode* node, int min_value, int max_value, TreeNode* input_key, int first_key_appeared);
+
+        // Wrapper function for isBSTHelper().
+        bool isBST(TreeNode* node, TreeNode* input_key);
 };

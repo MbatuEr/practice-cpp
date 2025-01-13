@@ -167,14 +167,17 @@ int main()
     root_inorder_space->right = new TreeNode(10);
     root_inorder_space->left->parent = root_inorder_space;
     root_inorder_space->right->parent = root_inorder_space;
+
     root_inorder_space->left->left = new TreeNode(4);
     root_inorder_space->left->right = new TreeNode(7);
     root_inorder_space->left->left->parent = root_inorder_space->left;
     root_inorder_space->left->right->parent = root_inorder_space->left;
+
     root_inorder_space->right->left = new TreeNode(9);
     root_inorder_space->right->left->parent = root_inorder_space->right;
     root_inorder_space->left->left->right = new TreeNode(6);
     root_inorder_space->left->left->right->parent = root_inorder_space->left->left;
+
     std::cout << "The inorder traversal of the binary tree: ";
     tree.inorderTraversalWithO1Space(root_inorder_space);
     std::cout << "\n----------------------------------------------------------" << std::endl;
@@ -233,6 +236,96 @@ int main()
 
     std::cout << "Linked list of leaves: ";
     tree.printLinkedList(leafList);
+    std::cout << "----------------------------------------------------------" << std::endl;
+
+    // Compute exterior.
+    TreeNode* root_exterior = new TreeNode(8);
+    root_exterior->left = new TreeNode(5);
+    root_exterior->right = new TreeNode(10);
+    root_exterior->left->left = new TreeNode(4);
+    root_exterior->left->right = new TreeNode(7);
+    root_exterior->right->right = new TreeNode(13);
+    root_exterior->right->left = new TreeNode(9);
+    root_exterior->left->left->left = new TreeNode(3);
+    root_exterior->left->left->right = new TreeNode(6);
+    root_exterior->left->right->right = new TreeNode(22);
+    root_exterior->right->left->right = new TreeNode(17);
+    root_exterior->right->right->right = new TreeNode(14);
+    root_exterior->right->right->left = new TreeNode(12);
+    root_exterior->left->right->right->left = new TreeNode(20);
+
+    root_exterior->right->right->right->parent = root_exterior->right->right;
+    root_exterior->right->right->parent = root_exterior->right;
+    root_exterior->right->parent = root_exterior;
+
+    tree.exteriorOfBinaryTree(root_exterior);
+    std::cout << "\n----------------------------------------------------------" << std::endl;
+
+    // Right sibling tree.
+    TreeNode* root_right_to_next = new TreeNode(8);
+    root_right_to_next->left = new TreeNode(4);
+    root_right_to_next->right = new TreeNode(13);
+    root_right_to_next->left->left = new TreeNode(2);
+    root_right_to_next->left->right = new TreeNode(6);
+    root_right_to_next->right->left = new TreeNode(10);
+    root_right_to_next->right->right = new TreeNode(16);
+    root_right_to_next->left->left->left = new TreeNode(1);
+    root_right_to_next->left->left->right = new TreeNode(3);
+    root_right_to_next->left->right->left = new TreeNode(5);
+    root_right_to_next->left->right->right = new TreeNode(7);
+    root_right_to_next->right->left->left = new TreeNode(9);
+    root_right_to_next->right->left->right = new TreeNode(11);
+    root_right_to_next->right->right->left = new TreeNode(14);
+    root_right_to_next->right->right->right = new TreeNode(18);
+
+    tree.rightSiblingTree(root_right_to_next);
+
+    tree.printLevelNext(root_right_to_next);
+    std::cout << "----------------------------------------------------------" << std::endl;
+
+    // Lock the node.
+    TreeNode* root_lock = new TreeNode(1);
+    root_lock->left = new TreeNode(2);
+    root_lock->right = new TreeNode(3);
+    root_lock->left->parent = root_lock;
+    root_lock->right->parent = root_lock;
+
+    root_lock->left->left = new TreeNode(4);
+    root_lock->left->right = new TreeNode(5);
+    root_lock->left->left->parent = root_lock->left;
+    root_lock->left->right->parent = root_lock->left;
+
+    root_lock->right->left = new TreeNode(6);
+    root_lock->right->right = new TreeNode(7);
+    root_lock->right->left->parent = root_lock->right;
+    root_lock->right->right->parent = root_lock->right;
+
+    std::cout << "Locking node 4: " << (tree.lock(root_lock->left->left) ? "Success" : "Failed") << std::endl;
+    std::cout << "Locking node 5: " << (tree.lock(root_lock->left->right) ? "Success" : "Failed") << std::endl;
+    std::cout << "Locking node 2 (parent of 4 and 5): " << (tree.lock(root_lock->left) ? "Success" : "Failed") << std::endl;
+    std::cout << "Unlocking node 5: " << (tree.unlock(root_lock->left->right) ? "Success" : "Failed") << std::endl;
+    std::cout << "Locking node 2 after unlocking node 5: " << (tree.lock(root_lock->left) ? "Success" : "Failed") << std::endl;
+    std::cout << "Unlocking node 4: " << (tree.unlock(root_lock->left->left) ? "Success" : "Failed") << std::endl;
+    std::cout << "Locking node 2 after unlocking node 4: " << (tree.lock(root_lock->left) ? "Success" : "Failed") << std::endl;
+    std::cout << "----------------------------------------------------------" << std::endl;
+    
+    // Check BST is proper and finds first value greater than input_key.
+    TreeNode* root_BST = new TreeNode(8);
+    root_BST->left = new TreeNode(4);
+    root_BST->right = new TreeNode(12);
+    root_BST->left->left = new TreeNode(2);
+    root_BST->left->right = new TreeNode(6);
+    root_BST->right->left = new TreeNode(10);
+    root_BST->right->right = new TreeNode(14);
+
+    TreeNode* input_key = new TreeNode(13);
+    if (tree.isBST(root_BST, input_key)) {
+        std::cout << "The tree satisfies the BST property." << std::endl;
+        std::cout << "First key greater than input value: " << input_key->val << std::endl;
+    } else {
+        std::cout << "The tree does NOT satisfy the BST property." << std::endl;
+        std::cout << "First key greater than input value: " << input_key->val << std::endl;
+    }
     std::cout << "----------------------------------------------------------" << std::endl;
     return 0;
 }
