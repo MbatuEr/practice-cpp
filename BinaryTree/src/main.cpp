@@ -3,6 +3,7 @@
 int main()
 {
     BinaryTree tree;
+
     // Check if the tree is symmetric.
     TreeNode* root = new TreeNode(1);
     root->left = new TreeNode(2);
@@ -23,18 +24,21 @@ int main()
     std::cout << "----------------------------------------------------------" << std::endl;
 
     // Find the lowest common ancestor.
-    TreeNode* rootLCA = new TreeNode(3);
-    rootLCA->left = new TreeNode(5);
-    rootLCA->right = new TreeNode(1);
-    rootLCA->left->left = new TreeNode(6);
-    rootLCA->left->right = new TreeNode(2);
-    rootLCA->right->left = new TreeNode(0);
-    rootLCA->right->right = new TreeNode(8);
-    rootLCA->left->right->left = new TreeNode(7);
-    rootLCA->left->right->right = new TreeNode(4);
+    TreeNode* rootLCA = new TreeNode(8);
+    rootLCA->left = new TreeNode(4);
+    rootLCA->right = new TreeNode(12);
+    rootLCA->left->left = new TreeNode(2);
+    rootLCA->left->right = new TreeNode(6);
+    rootLCA->right->right = new TreeNode(14);
+    rootLCA->right->left = new TreeNode(10);
+    rootLCA->left->left->right = new TreeNode(3);
+    rootLCA->right->left->left = new TreeNode(9);
+    rootLCA->right->left->right = new TreeNode(11);
+    rootLCA->right->right->right = new TreeNode(16);
+    rootLCA->right->right->left = new TreeNode(13);
 
-    TreeNode* p = rootLCA->right->right;
-    TreeNode* q = rootLCA->right;
+    TreeNode* p = rootLCA->left->left->right;
+    TreeNode* q = rootLCA->left->right;
     TreeNode* lca = tree.findLCA(rootLCA, p, q);
     
     if(lca) 
@@ -326,6 +330,23 @@ int main()
         std::cout << "The tree does NOT satisfy the BST property." << std::endl;
         std::cout << "First key greater than input value: " << input_key->val << std::endl;
     }
+    std::cout << "----------------------------------------------------------" << std::endl;
+
+    // Largest elements.
+    TreeNode* root_largest = new TreeNode(8);
+    root_largest->left = new TreeNode(4);
+    root_largest->right = new TreeNode(12);
+    root_largest->left->left = new TreeNode(2);
+    root_largest->left->right = new TreeNode(6);
+    root_largest->right->right = new TreeNode(14);
+    root_largest->right->left = new TreeNode(10);
+    root_largest->left->left->right = new TreeNode(3);
+    root_largest->right->right->right = new TreeNode(16);
+    root_largest->right->right->left = new TreeNode(13);
+    
+    int input_value = 3;
+
+    tree.largestElementsInBST(root_largest, input_value);
     std::cout << "----------------------------------------------------------" << std::endl;
     return 0;
 }

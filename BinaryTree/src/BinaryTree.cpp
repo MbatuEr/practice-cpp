@@ -218,15 +218,12 @@ TreeNode* BinaryTree::buildTreeHelper(std::vector<int>& preorder, int preStart, 
         return nullptr;
     }
 
-    // Root is the first element of preorder traversal
     int rootVal = preorder[preStart];
     TreeNode* root = new TreeNode(rootVal);
 
-    // Find the root's index in inorder traversal
     int rootIndex = inMap[rootVal];
     int leftSubtreeSize = rootIndex - inStart;
 
-    // Recursively build left and right subtrees
     root->left = buildTreeHelper(preorder, preStart + 1, preStart + leftSubtreeSize,
                                  inorder, inStart, rootIndex - 1, inMap);
     root->right = buildTreeHelper(preorder, preStart + leftSubtreeSize + 1, preEnd,
@@ -247,7 +244,7 @@ TreeNode* BinaryTree::buildTree(std::vector<int>& preorder, std::vector<int>& in
                            inorder, 0, inorder.size() - 1, inMap);
 }
 
- void BinaryTree::reconstructPreOrder(TreeNode* root)
+void BinaryTree::reconstructPreOrder(TreeNode* root)
  {  
     if(!root) return;
 
@@ -296,7 +293,7 @@ void BinaryTree::collectLeaves(TreeNode* root, ListNode*& current)
     collectLeaves(root->right, current);
 }
 
- ListNode* BinaryTree::createsListFromLeaves(TreeNode* root)
+ListNode* BinaryTree::createsListFromLeaves(TreeNode* root)
  {
     ListNode* dummy = new ListNode(-1);
     ListNode* current = dummy;
@@ -306,7 +303,7 @@ void BinaryTree::collectLeaves(TreeNode* root, ListNode*& current)
     return dummy->next;
  }
 
- void BinaryTree::printLinkedList(ListNode* head) 
+void BinaryTree::printLinkedList(ListNode* head) 
  {
     while (head) 
     {
@@ -486,3 +483,33 @@ bool BinaryTree::isBST(TreeNode* root, TreeNode* input_key)
     int first_key_appeared = std::numeric_limits<int>::max();
     return isBSTHelper(root, std::numeric_limits<int>::min(), std::numeric_limits<int>::max(), input_key, first_key_appeared);
 }
+
+std::vector<int> BinaryTree::recursiveInorderTraversal(TreeNode* root, std::vector<int>& result)
+{
+    if(!root) return result;
+
+    recursiveInorderTraversal(root->left, result);
+
+    result.push_back(root->val);
+
+    recursiveInorderTraversal(root->right, result);
+
+    return result;
+}
+
+void BinaryTree::largestElementsInBST(TreeNode* root, int k)
+{
+    std::vector<int> result;
+    if(!root) return;
+
+    std::vector<int> largest_elements = recursiveInorderTraversal(root, result);
+    
+    int s = largest_elements.size() - 1;
+
+    for(int i = s; i > s - k; i--)
+    {
+        std::cout << largest_elements[i] << " ";   
+    }
+    std::cout << std::endl;
+}
+

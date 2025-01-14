@@ -91,10 +91,10 @@ class BinaryTree
         // Checks if any ancestors or descendants are locked.
         bool canLockOrUnlock(TreeNode* node);
 
-        // Function to lock the node
+        // Function to lock the node.
         bool lock(TreeNode* node);
 
-        // Function to unlock the node
+        // Function to unlock the node.
         bool unlock(TreeNode* node);
 
         // Checks if a binary tree satisfies the BST property.
@@ -102,4 +102,10 @@ class BinaryTree
 
         // Wrapper function for isBSTHelper().
         bool isBST(TreeNode* node, TreeNode* input_key);
+
+        // Finds the k larger elements in a BST.
+        void largestElementsInBST(TreeNode* root, int k);
+
+        // Recursive function to get inorder traversal.
+        std::vector<int> recursiveInorderTraversal(TreeNode* root, std::vector<int>& result);
 };
