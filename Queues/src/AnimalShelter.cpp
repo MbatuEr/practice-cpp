@@ -23,7 +23,7 @@ Animal AnimalShelter::dequeueAny()
 {
     if (dogs.empty() && cats.empty())
     {
-        throw std::runtime_error("No animals available for adoption.");
+        throw runtime_error("No animals available for adoption.");
     }
 
     if (dogs.empty())

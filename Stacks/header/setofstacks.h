@@ -7,30 +7,30 @@
 class SetOfStacks
 {
     private:
-    std::vector<std::stack<int>> stacks; // Vector of stacks
-    int capacity;                        // Capacity of each stack
+        std::vector<std::stack<int>> stacks; 
+        int capacity;                        
 
     public:
-        // Default constructor
+        // Default constructor.
         SetOfStacks(); 
         
         SetOfStacks(int capacity);
 
-        // Push an element onto the stack
+        // Push an element onto the stack.
         void push(int value);
 
-        // Pop an element from the stack
+        // Pop an element from the stack.
         int pop();
 
-        // Pop an element from a specific stack
+        // Pop an element from a specific stack.
         int popAt(int index);
 
-        // Check if the set of stacks is empty
+        // Check if the set of stacks is empty.
         bool isEmpty() const;
 
-        // Print all stacks for debugging purposes
+        // Print all stacks for debugging purposes.
         void printStacks() const;
 
-        // Sorts the stack smallest to highest value
+        // Sorts the stack smallest to highest value.
         void sortstack(std::stack<int>& a);
 };
