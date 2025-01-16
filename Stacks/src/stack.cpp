@@ -1,152 +1,158 @@
 #include "../header/stack.h"
 
-using namespace std;
-
-Stacks::Stacks(int totalsize)
+void Stacks::push(int value)
 {
-    size = totalsize;
-    arr = new int[size];
-    stackSize = size / 3;
-    top1 = -1;                      // Stack 1 starts from index 0
-    top2 = stackSize - 1;           // Stack 2 starts from index 1
-    top3 = (2 * stackSize) - 1;     // Stack 3 starts from index 2
+    mainstack.push(value);
 
-    // Inıtıalize min tracking for each stack
-    min1.push_back(INT_MAX);
-    min2.push_back(INT_MAX);
-    min3.push_back(INT_MAX);
-}
-
-Stacks::~Stacks()
-{
-    delete[] arr;
-}
-
-void Stacks::push(int stacknum, int value)
-{
-    switch (stacknum)
+    if(maxstack.empty() || value >= maxstack.top())
     {
-        case 1:
-            if (top1 < stackSize -1)
-            {
-                arr[++top1] = value;
-                min1.push_back(std::min(min1.back(), value)); // update min
-            } else 
-            {
-                throw overflow_error("Stack 1 overflow");
-            }
-            break;
-        case 2:
-            if (top2 < (2 * stackSize) -1)
-            {
-                arr[++top2] = value;
-                min2.push_back(std::min(min1.back(), value)); // update min
-            } else 
-            {
-                throw overflow_error("Stack 2 overflow");
-            }
-            break;
-        case 3:
-            if (top3 < size -1)
-            {
-                arr[++top3] = value;
-                min3.push_back(std::min(min1.back(), value)); // update min
-            } else 
-            {
-                throw overflow_error("Stack 3 overflow");
-            }
-            break;
-
-        default:
-            throw invalid_argument("Invalid stack number");
+        maxstack.push(value);
+    }
+    else
+    {
+        maxstack.push(maxstack.top());
     }
 }
 
-int Stacks::pop(int stacknum)
+void Stacks::pop() 
 {
-    switch (stacknum)
+    if (mainstack.empty())
     {
-        case 1:
-            if (top1 >= 0)
-            {
-                min1.pop_back();
-                return arr[top1--];
-                
-            } else 
-            {
-                throw underflow_error("Stack 1 underflow");
-            }
-            break;
-        case 2:
-            if (top2 >= stackSize)
-            {
-                min2.pop_back();
-                return arr[top2--];
-            } else 
-            {
-                throw underflow_error("Stack 2 underflow");
-            }
-            break;
-        case 3:
-            if (top3 >= 2* stackSize)
-            {
-                min3.pop_back();
-                return arr[top3--];
-            } else 
-            {
-                throw underflow_error("Stack 3 underflow");
-            }
-            break;
-        default:
-            throw invalid_argument("Invalid stack number");
+        throw std::underflow_error("Stack is empty.");
     }
+    mainstack.pop();
+    maxstack.pop();
 }
 
-bool Stacks::is_empty(int stackNum) 
+int Stacks::max() const
 {
-    switch (stackNum) 
+    if (maxstack.empty())
     {
-        case 1:
-            return top1 == -1;
-        case 2:
-            return top2 == stackSize - 1;
-        case 3:
-            return top3 == (2 * stackSize) - 1;
-        default:
-            throw invalid_argument("Invalid Stack Number");
+        throw std::underflow_error("Stack is empty.");
     }
-}
+    return maxstack.top();
+} 
 
-int Stacks::getmin(int stacknum)
+bool Stacks::isWellFormed(const std::string& str)
 {
-    switch (stacknum)
+    std::unordered_map<char, char> bracked_pairs = {
+        {')', '('},
+        {'}', '{'},
+        {']', '['}
+    };
+
+    for (char ch : str) 
     {
-    case 1:
-        if (top1 >= 0)
+        if (ch == '(' || ch == '{' || ch == '[') 
         {
-            return min1.back();
-        } else 
-        {
-            throw underflow_error("Stack 1 is empty.");
+            wellformed.push(ch);
+        } 
+        else if (ch == ')' || ch == '}' || ch == ']') 
+        {    
+            if (wellformed.empty() || wellformed.top() != bracked_pairs[ch]) 
+            {
+                return false;
+            }
+            wellformed.pop();
         }
-    case 2:
-        if (top2 >= stackSize)
-        {
-            return min2.back();
-        } else 
-        {
-            throw underflow_error("Stack 2 is empty.");
-        }
-    case 3:
-        if (top3 >= 2 * stackSize)
-        {
-            return min3.back();
-        } else 
-        {
-            throw underflow_error("Stack 3 is empty.");
-        }
-
-    default:
-        throw invalid_argument("Invalid stack number.");
     }
+
+    return wellformed.empty();
+}
+
+std::string Stacks::simplifyPath(const std::string& path)
+{
+    std::stringstream ss(path);
+    std::string token;
+
+    while(std::getline(ss, token, '/'))
+    {
+        if(token == "." || token.empty())
+        {
+            continue;
+        }
+        else if(token == "..")
+        {
+            if(!stackpath.empty())
+            {
+                stackpath.pop();
+            }
+        }
+        else
+        {
+            stackpath.push(token);
+        }
+    }
+    std::string simplified_path;
+
+    while (!stackpath.empty())
+    {
+        simplified_path = "/" + stackpath.top() + simplified_path;
+        stackpath.pop();
+    }
+
+    return simplified_path.empty() ? "/" : simplified_path;
+}
+
+void Stacks::setJumpOrderRecursive(std::shared_ptr<PostingsListNode> node, int& order)
+{
+    if (!node || node->order != -1) 
+    {
+        return;  
+    }
+    node->order = order++;  
+    
+    setJumpOrderRecursive(node->jump, order);  
+    setJumpOrderRecursive(node->next, order);  
+}
+
+void Stacks::setJumpOrderIterative(std::shared_ptr<PostingsListNode> head) 
+{
+    if (!head) return;
+
+    stack_order.push(head);
+    int order = 0;
+
+    while (!stack_order.empty()) 
+    {
+        auto node = stack_order.top();
+        stack_order.pop();
+
+        if (node && node->order == -1) 
+        {
+            node->order = order++;  
+            if (node->next) stack_order.push(node->next);  
+            if (node->jump) stack_order.push(node->jump);  
+        }
+    }
+}
+
+void Stacks::printPostingsList(const std::shared_ptr<PostingsListNode>& head) 
+{
+    auto node = head;
+    while (node) 
+    {
+        std::cout << "Node Order: " << node->order << "\n";
+        node = node->next;
+    }
+}
+
+std::vector<int> Stacks::findBuildingsWithSunsetView(const std::vector<int>& buildings)
+{
+    for (int i = buildings.size() - 1; i >= 0; --i) 
+    { 
+        while (!sunsetView.empty() && buildings[sunsetView.top()] <= buildings[i]) 
+        {
+            sunsetView.pop();
+        }
+        sunsetView.push(i);
+    }
+    std::vector<int> result;
+    
+    while (!sunsetView.empty()) 
+    {
+        result.push_back(sunsetView.top());
+        sunsetView.pop();
+    } 
+    return result;
 }
