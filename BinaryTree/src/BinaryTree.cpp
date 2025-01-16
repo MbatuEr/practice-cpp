@@ -4,6 +4,119 @@ TreeNode::TreeNode(int x) : val(x), left(nullptr), right(nullptr), parent(nullpt
 
 ListNode::ListNode(int x) : val(x), next(nullptr) {}
 
+BinaryTree::BinaryTree() : root(nullptr) {}
+
+bool BinaryTree::insert(int key)
+{
+    if(!root)
+    {
+        root = new TreeNode(key);
+        return true;
+    }
+    return insertHelper(root, key);
+}
+
+bool BinaryTree::insertHelper(TreeNode* node, int key)
+{
+    if(key == node->val) 
+    {
+        return false;
+    }
+    else if(key < node->val)
+    {
+        if(node->left) 
+        {
+            return insertHelper(node->left, key);
+        }
+        else
+        {
+            node->left = new TreeNode(key);
+            return true;
+        }
+    }
+    else
+    {
+        if (node->right)
+        {
+            return insertHelper(node->right, key);
+        }
+        else
+        {
+            node->right = new TreeNode(key);
+            return true;
+        }
+    }
+}
+
+bool BinaryTree::lookup(int key)
+{
+    return lookupHelper(root, key);
+}
+
+bool BinaryTree::lookupHelper(TreeNode* node, int key)
+{
+    if(!node) return false;
+    if(node->val == key) return true;
+
+    return (key < node->val) ? lookupHelper(node->left, key) : lookupHelper(node->right, key);
+}
+
+bool BinaryTree::remove(int key)
+{
+    bool removed = false;
+    root = removeHelper(root, key, removed);
+    return removed;
+}
+
+TreeNode* BinaryTree::removeHelper(TreeNode* node, int key, bool& removed)
+{
+    if(!node) return nullptr;
+
+    if(key < node->val)
+    {
+        node->left = removeHelper(node->left, key, removed);
+    }
+    else if(key > node->val)
+    {
+        node->right = removeHelper(node->right, key, removed);
+    }
+    else
+    {
+        removed = true;
+
+        if(!node->left)
+        {
+            TreeNode* temp = node->right;
+            delete node;
+            return temp;
+        }
+        else if(!node->right)
+        {
+            TreeNode* temp = node->left;
+            delete node;
+            return temp;
+        }
+    
+        TreeNode* successor = findMin(node->right);
+
+        node->val = successor->val;
+
+        node->right = removeHelper(node->right, successor->val, removed);
+    }
+
+    return node;
+}
+
+TreeNode* BinaryTree::findMin(TreeNode* node)
+{
+    while (node->left)
+    {
+        node = node->left;
+    }
+
+    return node;
+}
+
 TreeNode* BinaryTree::findLCA(TreeNode* root, TreeNode* p, TreeNode* q) 
 {
     if(!root || root == p || root == q) return root;
@@ -512,4 +625,3 @@ void BinaryTree::largestElementsInBST(TreeNode* root, int k)
     }
     std::cout << std::endl;
 }
-

@@ -13,35 +13,62 @@ struct ListNode
 struct TreeNode 
 {
     int val;
+    bool locked;
+    int locked_descendant_count;
     TreeNode* left;
     TreeNode* right;
     TreeNode* parent;
     TreeNode* level_next_right;
     TreeNode(int x);
-    bool locked;
-    int locked_descendant_count;
 };
 
 class BinaryTree 
 {
     private:
-        // check if the tree's both sides mirroring each other.
+        // Check if the tree's both sides mirroring each other.
         bool isMirror(TreeNode* left, TreeNode* right);
 
-        // apply depth-first search.
+        // Apply depth-first search.
         int dfs(TreeNode* node, int currentsum);
 
+        // Helper function for insertion.
+        bool insertHelper(TreeNode* node, int key);
+
+        // Helper function for removal.
+        TreeNode* removeHelper(TreeNode* node, int key, bool& removed);
+        
+        // Helper function for lookup.
+        bool lookupHelper(TreeNode* node, int key);
+        
+        // Finds the minimum value node in a subtree.
+        TreeNode* findMin(TreeNode* node);
+
     public:
-        // check if the tree is symmetric.
+        // Root node of the BST.
+        TreeNode* root;
+
+        // Constructor.
+        BinaryTree();
+
+        // Inserts a key into the BST.
+        bool insert(int key);
+
+        // Removes a key from the BST.
+        bool remove(int key);
+
+        // Looks up for the specified node in the BST.
+        bool lookup(int key);
+
+        // Checks if the tree is symmetric.
         bool isSymmetric(TreeNode* root);
 
-        // find the lowest common ancestor.
+        // Finds the lowest common ancestor.
         TreeNode* findLCA(TreeNode* root, TreeNode* p, TreeNode* q);
 
-        // find the binary numbers that represented by the tree.
+        // Finds the binary numbers that represented by the tree.
         int sumRootToLeaf(TreeNode* root);
 
-        // checks if there exists a leaf whose path weight equals the given integer.
+        // Checks if there exists a leaf whose path weight equals the given integer.
         bool hasPathWeight(TreeNode* node, int targetWeight, int currentWeight);
 
         // Builds a tree from an inorder traversal without a recursion or parent references.
@@ -50,10 +77,10 @@ class BinaryTree
         // Builds a tree from a preorder traversal without a recursion or parent references.
         std::vector<int> preorderTraversal(TreeNode* root);
 
-        // computes the successor of the node in an inorder traversal.
+        // Computes the successor of the node in an inorder traversal.
         void computeTheSuccessor(TreeNode* root, TreeNode* wanted);
 
-        // does an inorder traversal with a O(1) space complexity.
+        // Does an inorder traversal with a O(1) space complexity.
         void inorderTraversalWithO1Space(TreeNode* root);        
 
         // Main function to build the binary tree.
