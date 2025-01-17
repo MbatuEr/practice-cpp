@@ -625,3 +625,33 @@ void BinaryTree::largestElementsInBST(TreeNode* root, int k)
     }
     std::cout << std::endl;
 }
+
+void BinaryTree::levelOrderTraversal(TreeNode* root)
+{
+    if (!root) return;
+    
+    std::queue<TreeNode*> q;
+    q.push(root);
+
+    while (!q.empty()) 
+    {
+        int levelSize = q.size(); 
+        std::vector<int> currentLevel;
+
+        for (int i = 0; i < levelSize; ++i) 
+        {
+            TreeNode* currentNode = q.front();
+            q.pop();
+            currentLevel.push_back(currentNode->val);
+
+            if (currentNode->left) q.push(currentNode->left);
+            if (currentNode->right) q.push(currentNode->right);
+        }
+
+        for(auto value : currentLevel)
+        {
+            std::cout << value << " ";
+        }
+        std::cout << std::endl;
+    }
+}

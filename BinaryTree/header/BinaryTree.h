@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <queue>
 #include <unordered_map>
 #include <limits>
 
@@ -135,4 +136,7 @@ class BinaryTree
 
         // Recursive function to get inorder traversal.
         std::vector<int> recursiveInorderTraversal(TreeNode* root, std::vector<int>& result);
+
+        // Prints a binary tree in level-order.
+        void levelOrderTraversal(TreeNode* root);
 };

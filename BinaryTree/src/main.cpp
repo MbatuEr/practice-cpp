@@ -404,5 +404,23 @@ int main()
 
     tree.largestElementsInBST(largest.root, input_value);
     std::cout << "----------------------------------------------------------" << std::endl;
+    
+    // Level order tree traversal.
+    BinaryTree level_order;
+
+    level_order.insert(8);
+    level_order.insert(4);
+    level_order.insert(12);
+    level_order.insert(2);
+    level_order.insert(6);
+    level_order.insert(14);
+    level_order.insert(10);
+    level_order.insert(3);
+    level_order.insert(16);
+    level_order.insert(13);
+
+    level_order.levelOrderTraversal(level_order.root);
+    std::cout << "----------------------------------------------------------" << std::endl;
+    
     return 0;
 }
