@@ -1,22 +1,26 @@
-#include "../header/queue.h"
-
-using namespace std;
+#include "../header/AnimalShelter.h"
 
 int main()
 {
-    Queue q;
+    AnimalShelter shelter;
 
-    q.enqueue(1);
-    q.enqueue(2);
-    q.enqueue(3);
+    shelter.enqueue("dog");
+    shelter.enqueue("cat");
+    shelter.enqueue("dog");
+    shelter.enqueue("cat");
 
-    cout << "Dequeue: " << q.dequeue() << endl; 
-    cout << "Dequeue: " << q.dequeue() << endl; 
+    try {
+        Animal adopted1 = shelter.dequeueAny();
+        std::cout << "Adopted: " << adopted1.type << " with order: " << adopted1.order << std::endl;
 
-    q.enqueue(4);
-    cout << "Dequeue: " << q.dequeue() << endl;
-    cout << "Dequeue: " << q.dequeue() << endl; 
-    cout << "Is queue empty? " << (q.isEmpty() ? "Yes" : "No") << endl;    
+        Animal adopted2 = shelter.dequeueDog();
+        std::cout << "Adopted: " << adopted2.type << " with order: " << adopted2.order << std::endl;
+
+        Animal adopted3 = shelter.dequeueCat();
+        std::cout << "Adopted: " << adopted3.type << " with order: " << adopted3.order << std::endl;
+    } catch(const std::exception& e) {
+        cerr << e.what() << endl;
+    }
 
     return 0;
 }
