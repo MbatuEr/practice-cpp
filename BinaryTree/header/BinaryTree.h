@@ -84,10 +84,10 @@ class BinaryTree
         // Does an inorder traversal with a O(1) space complexity.
         void inorderTraversalWithO1Space(TreeNode* root);        
 
-        // Main function to build the binary tree.
+        // Main function to build a binary tree.
         TreeNode* buildTree(std::vector<int>& preorder, std::vector<int>& inorder);
 
-        // Helper function to build the binary tree.
+        // Helper function to build a binary tree.
         TreeNode* buildTreeHelper(std::vector<int>& preorder, int preStart, int preEnd,
                           std::vector<int>& inorder, int inStart, int inEnd,
                           std::unordered_map<int, int>& inMap);

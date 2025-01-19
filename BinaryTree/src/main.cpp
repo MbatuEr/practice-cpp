@@ -25,15 +25,15 @@ int main()
     }
     std::cout << std::endl;
 
-    std::cout << "Lookup for node 7: " << (tree.lookup(7) ? "true" : "false") << "\n"; // Output: 1
-    std::cout << "Lookup for node 12: " << (tree.lookup(14) ? "true" : "false") << "\n"; // Output: 0
+    std::cout << "Lookup for node 7: " << (tree.lookup(7) ? "true" : "false") << "\n"; 
+    std::cout << "Lookup for node 12: " << (tree.lookup(14) ? "true" : "false") << "\n"; 
 
     std::cout << "Removing 15: " << (tree.remove(15) ? "Success" : "Failed") << std::endl;
     std::cout << "Removing 10: " << (tree.remove(10) ? "Success" : "Failed") << std::endl;
 
-
-    std::cout << "Inorder Traversal after Removals: ";
     inorder_result2 = tree.recursiveInorderTraversal(tree.root, inorder_result2);
+    
+    std::cout << "Inorder Traversal after Removals: ";
     for (int val : inorder_result2)
     {
         std::cout << val << " ";
@@ -193,21 +193,19 @@ int main()
     std::cout << "----------------------------------------------------------" << std::endl;
 
     // Compute the successor.
-    TreeNode* root_successor = new TreeNode(8);
-    root_successor->left = new TreeNode(5);
-    root_successor->right = new TreeNode(10);
-    root_successor->left->parent = root_successor;
-    root_successor->right->parent = root_successor;
-    root_successor->left->left = new TreeNode(4);
-    root_successor->left->right = new TreeNode(7);
-    root_successor->left->left->parent = root_successor->left;
-    root_successor->left->right->parent = root_successor->left;
-    root_successor->right->left = new TreeNode(9);
-    root_successor->right->left->parent = root_successor->right;
-    root_successor->left->left->right = new TreeNode(6);
-    root_successor->left->left->right->parent = root_successor->left->left;
-    
-    tree.computeTheSuccessor(root_successor, root_successor->left->right);
+    BinaryTree root_successor;
+
+    root_successor.insert(8);
+    root_successor.insert(6);
+    root_successor.insert(10);
+    root_successor.insert(4);
+    root_successor.insert(7);
+    root_successor.insert(9);
+    root_successor.insert(12);
+    root_successor.insert(5);
+    root_successor.insert(11);
+
+    root_successor.computeTheSuccessor(root_successor.root, root_successor.root->right);
     std::cout << "----------------------------------------------------------" << std::endl;
 
     // Inorder Traversal with O(1) space.

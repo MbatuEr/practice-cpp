@@ -18,10 +18,8 @@ bool BinaryTree::insert(int key)
 
 bool BinaryTree::insertHelper(TreeNode* node, int key)
 {
-    if(key == node->val) 
-    {
-        return false;
-    }
+    if(key == node->val) return false;
+
     else if(key < node->val)
     {
         if(node->left) 
@@ -117,18 +115,6 @@ TreeNode* BinaryTree::findMin(TreeNode* node)
     return node;
 }
 
-TreeNode* BinaryTree::findLCA(TreeNode* root, TreeNode* p, TreeNode* q) 
-{
-    if(!root || root == p || root == q) return root;
-
-    TreeNode* left = findLCA(root->left, p, q);
-    TreeNode* right = findLCA(root->right, p, q);
-    
-    if(left && right) return root;
-    
-    return left ? left : right;
-}
-
 bool BinaryTree::isMirror(TreeNode* left, TreeNode* right) 
 {
     if(!left && !right) return true;
@@ -140,6 +126,18 @@ bool BinaryTree::isSymmetric(TreeNode* root)
 {
     if(!root) return true;
     return isMirror(root->left, root->right);
+}
+
+TreeNode* BinaryTree::findLCA(TreeNode* root, TreeNode* p, TreeNode* q) 
+{
+    if(!root || root == p || root == q) return root;
+
+    TreeNode* left = findLCA(root->left, p, q);
+    TreeNode* right = findLCA(root->right, p, q);
+    
+    if(left && right) return root;
+    
+    return left ? left : right;
 }
 
 int BinaryTree::sumRootToLeaf(TreeNode* root)
@@ -178,11 +176,14 @@ bool BinaryTree::hasPathWeight(TreeNode* node, int targetWeight, int currentWeig
 
 std::vector<int> BinaryTree::inorderTraversal(TreeNode* root, int k) 
 {
-    int counter = 0;
-    std::vector<int> result; 
+    std::vector<int> result;
+    if (root == nullptr) return result;
+
     std::stack<TreeNode*> nodeStack; 
     TreeNode* current = root; 
 
+    int counter = 0;
+    
     while (current != nullptr || !nodeStack.empty()) 
     {
         while (current != nullptr) 
@@ -238,7 +239,7 @@ std::vector<int> BinaryTree::preorderTraversal(TreeNode* root)
 
 void BinaryTree::computeTheSuccessor(TreeNode* root, TreeNode* wanted)
 {
-    int successor_node;   
+    TreeNode* successor_node;   
     std::vector<int> result; 
     std::stack<TreeNode*> nodeStack; 
     TreeNode* current = root; 
@@ -257,21 +258,24 @@ void BinaryTree::computeTheSuccessor(TreeNode* root, TreeNode* wanted)
         
         if(wanted->val == current->val)
         {
-            if(current->right && !current->right->left)
+            if(current->right)
             {
-                successor_node = current->right->val;
-                std::cout << "The successor of " << wanted->val << " is: " << successor_node << std::endl;
+                successor_node = current->right;
+                while(successor_node->left)
+                {
+                    successor_node = successor_node->left;
+                }
+                std::cout << "The successor of " << wanted->val << " is: " << successor_node->val << std::endl;
             }
-            else if(current->right && current->right->left)
+            else if(!current->right && current->left)
             {
-                successor_node = current->right->left->val;
-                std::cout << "The successor of " << wanted->val << " is: " << successor_node << std::endl;
+                successor_node = current->left;
+                std::cout << "The successor of " << wanted->val << " is: " << successor_node->val << std::endl;
             }
             else if(!current->right && !current->left)
             {
-                TreeNode* temp = nodeStack.top();
-                successor_node = temp->val;
-                std::cout << "The successor of " << wanted->val << " is: " << successor_node << std::endl;
+                successor_node = nodeStack.top();
+                std::cout << "The successor of " << wanted->val << " is: " << successor_node->val << std::endl;
             }
             else
             {
@@ -280,7 +284,6 @@ void BinaryTree::computeTheSuccessor(TreeNode* root, TreeNode* wanted)
 
             break;
         }
-        
         current = current->right;
     }
 }
@@ -326,10 +329,7 @@ TreeNode* BinaryTree::buildTreeHelper(std::vector<int>& preorder, int preStart, 
                           std::vector<int>& inorder, int inStart, int inEnd,
                           std::unordered_map<int, int>& inMap) 
 {
-    if (preStart > preEnd || inStart > inEnd) 
-    {
-        return nullptr;
-    }
+    if (preStart > preEnd || inStart > inEnd) return nullptr;
 
     int rootVal = preorder[preStart];
     TreeNode* root = new TreeNode(rootVal);
@@ -460,15 +460,17 @@ void BinaryTree::exteriorOfBinaryTree(TreeNode* root)
         right_subtree = right_subtree->right;
         nodeStack.push(right_subtree);
     }
-    nodeStack.pop();
 
     while(!nodeStack.empty())
     {
         TreeNode* last_part_of_tree = nodeStack.top();
         nodeStack.pop();
-        std::cout << last_part_of_tree->val << " ";
+        
+        if(last_part_of_tree->val != leaves->val)
+        {
+            std::cout << last_part_of_tree->val << " ";
+        }
     }
-
 }
 
 void BinaryTree::rightSiblingTree(TreeNode* root)
@@ -517,6 +519,10 @@ void BinaryTree::printLevelNext(TreeNode* root)
         {
             current = current->left;
         }
+        else if(current->right)
+        {
+            current = current->right;
+        }
         else 
         {
             current = nullptr;
@@ -558,8 +564,8 @@ bool BinaryTree::unlock(TreeNode* node)
     return false;
 }
 
-bool BinaryTree::canLockOrUnlock(TreeNode* node) {
-    
+bool BinaryTree::canLockOrUnlock(TreeNode* node) 
+{    
     TreeNode* ancestor = node->parent;
     while (ancestor) 
     {
@@ -612,8 +618,9 @@ std::vector<int> BinaryTree::recursiveInorderTraversal(TreeNode* root, std::vect
 
 void BinaryTree::largestElementsInBST(TreeNode* root, int k)
 {
-    std::vector<int> result;
     if(!root) return;
+
+    std::vector<int> result;
 
     std::vector<int> largest_elements = recursiveInorderTraversal(root, result);
     
