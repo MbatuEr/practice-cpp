@@ -4,14 +4,9 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <utility>
 #include <algorithm>
-#include <tuple>
 #include <string>
 #include <cmath>
-#include <stdexcept>
-#include <fstream>
-#include <sstream>
 
 using pairs = std::pair<int, std::pair<int, int>>; 
 
@@ -40,7 +35,6 @@ struct CompareDistance
 {
     bool operator()(const Star& a, const Star& b);
 };
-
 
 class Heaps 
 {

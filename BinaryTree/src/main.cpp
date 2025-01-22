@@ -4,16 +4,13 @@ int main()
 {
     BinaryTree tree;
 
-    // Insertion and removal.
-    tree.insert(10);
-    tree.insert(5);
-    tree.insert(15);
-    tree.insert(3);
-    tree.insert(7);
-    tree.insert(12);
-    tree.insert(18);
+    // Insertion, lookup and removal.
+    std::vector<int> items_to_insert = {10,5,15,3,7,12,10};
+    for (int values: items_to_insert)
+    {
+        tree.insert(values);
+    }
 
-    
     std::vector<int> inorder_result1;
     std::vector<int> inorder_result2;
 
@@ -135,18 +132,14 @@ int main()
     std::cout << "----------------------------------------------------------" << std::endl;
 
     // Inorder traversal without recursion.
-    BinaryTree tree_inorder;
+    BinaryTree tree_order;
+   
+    std::vector<int> order_of_tree = {8,6,10,4,7,9,13,5,12,14};
+    for (int values : order_of_tree)
+    {
+        tree_order.insert(values);
+    }
     
-    tree_inorder.insert(8);
-    tree_inorder.insert(6);
-    tree_inorder.insert(10);
-    tree_inorder.insert(4);
-    tree_inorder.insert(7);
-    tree_inorder.insert(9);
-    tree_inorder.insert(13);
-    tree_inorder.insert(5);
-    tree_inorder.insert(12);
-    tree_inorder.insert(14);
     /*
          Constructed binary tree:
                8
@@ -159,38 +152,23 @@ int main()
            5       12    14    
     */
     int k = 7;
-    std::vector<int> inorder_traversal = tree_inorder.inorderTraversal(tree_inorder.root, k);
+    std::vector<int> inorder_traversal = tree_order.inorderTraversal(tree_order.root, k);
     std::cout << "The inorder traversal of the binary tree: ";
     for (int val : inorder_traversal)
     {
         std::cout << val << " ";
     }
-    std::cout << std::endl;
-    std::cout << "----------------------------------------------------------" << std::endl;
+    std::cout << "\n----------------------------------------------------------" << std::endl;
     
     // Preorder traversal without recursion.
 
-    BinaryTree tree_preorder;
-
-    tree_preorder.insert(8);
-    tree_preorder.insert(6);
-    tree_preorder.insert(10);
-    tree_preorder.insert(4);
-    tree_preorder.insert(7);
-    tree_preorder.insert(9);
-    tree_preorder.insert(13);
-    tree_preorder.insert(5);
-    tree_preorder.insert(12);
-    tree_preorder.insert(14);   
-
-    std::vector<int> preorder_traversal = tree.preorderTraversal(tree_preorder.root);
+    std::vector<int> preorder_traversal = tree.preorderTraversal(tree_order.root);
     std::cout << "The preorder traversal of the binary tree: ";
     for (int val : preorder_traversal)
     {
         std::cout << val << " ";
     }
-    std::cout << std::endl;
-    std::cout << "----------------------------------------------------------" << std::endl;
+    std::cout << "\n----------------------------------------------------------" << std::endl;
 
     // Compute the successor.
     BinaryTree root_successor;
