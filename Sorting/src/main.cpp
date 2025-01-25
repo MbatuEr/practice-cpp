@@ -69,9 +69,121 @@ int main()
     std::vector<std::string> sortedData = sort.mergeChunks(chunks);
 
     std::cout << "Sorted data:\n";
+
     for (const auto& str : sortedData) 
     {
         std::cout << str << " ";
+    }
+    std::cout << "\n----------------------------------------------" << std::endl;
+
+    // Max number of concurrent events.
+    std::vector<Event> events = {{1, 3}, {2, 4}, {5, 8}, {6, 7}, {8, 9}, {14, 17}, {4, 6}, {1, 5}, {13, 15}};
+
+    int result_of_events = sort.maxConcurrentEvents(events);
+    std::cout << "Maksimum eş zamanli etkinlik sayisi: " << result_of_events << std::endl;
+    std::cout << "----------------------------------------------" << std::endl;
+
+    // Union of intervals. 
+    std::vector<Event> intervals = {
+        {0, 3}, {1, 1}, {2, 4}, {3, 4}, {5, 7}, {7, 8}, {8, 11}, {9, 11}, {12, 14}, {12, 16}, {13, 15}, {16, 17}
+    };
+
+    std::vector<Event> unions = sort.computeUnion(intervals);
+
+    std::cout << "Union of intervals: ";
+    for (const auto& interval : unions) {
+        std::cout << "[" << interval.start << "," << interval.end << "]" << " ";
+    }
+    std::cout << "\n----------------------------------------------" << std::endl;
+
+    // Sorting by counting sort.
+    std::vector<Student> students = {
+        {"Alice", 20}, {"Bob", 22}, {"Charlie", 20}, {"David", 21}, {"Eve", 22}, {"Frank", 21}
+    };
+
+    std::cout << "Input vector: " << std::endl;
+    for (const auto& student : students) 
+    {
+        std::cout << "[" << student.name << ", " << student.age << "] ";
+    }
+    std::cout << std::endl;
+
+    sort.sortingStudentsByAge(students);
+    std::cout << "After sorting by numbers: " << std::endl;
+    for (const auto& student : students) 
+    {
+        std::cout << "[" << student.name << ", " << student.age << "] ";
+    }
+    std::cout << "\n----------------------------------------------" << std::endl;
+    
+    // Sorting into two different arrays.
+    std::vector<Team> Fenerbahce = {
+        {"Livakovic", 190}, {"Kadioglu", 180}, {"Djiku", 188}, {"Becao", 194}, {"Osayi", 188}, {"Ismail", 183}, {"Fred", 169},
+        {"Kahveci", 180}, {"Szymanski", 174}, {"Tadic", 181}, {"Dzeko", 193}
+    };
+
+    std::vector<Team> Galatasaray = {
+        {"Muslera", 188}, {"Baris", 183}, {"Davinson", 192}, {"Nelsson", 185}, {"Boey", 181}, {"Torreira", 173}, {"Demirbay", 182},
+        {"Ziyech", 182}, {"Mertens", 169}, {"Akturkoglu", 179}, {"Icardi", 184}
+    };
+
+    sort.teamPhoto(Fenerbahce, Galatasaray);
+    std::cout << "----------------------------------------------" << std::endl;
+
+    // Perform Quick Sort
+    std::vector<int> input_array = {10, 80, 30, 90, 40, 50, 70};
+
+    std::cout << "Original array: ";
+    for (int num : input_array) 
+    {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+    
+    sort.quickSort(input_array, 0, input_array.size() - 1);
+
+    std::cout << "Sorted array: ";
+    for (int num : input_array) 
+    {
+        std::cout << num << " ";
+    }
+    std::cout << "\n----------------------------------------------" << std::endl;
+    
+    // Perform Bucket sort.
+    std::vector<float> bucket_arr = {0.78, 0.17, 0.39, 0.26, 0.72, 0.94, 0.21, 0.12, 0.23, 0.68};
+
+    std::cout << "Original array: \n";
+    for (float num : bucket_arr) 
+    {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;    
+
+    sort.bucketSort(bucket_arr);
+
+    std::cout << "Sorted array: \n";
+    for (float num : bucket_arr) 
+    {
+        std::cout << num << " ";
+    }
+    std::cout << "\n----------------------------------------------" << std::endl;
+
+    // Perform Radix sort.
+    std::vector<int> radix_arr = {170, 45, 75, 90, 802, 24, 2, 66};
+
+    std::cout << "Original array: \n";
+    for (float num : radix_arr) 
+    {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;    
+
+    sort.radixSort(radix_arr);
+
+    std::cout << "Sorted array: \n";
+    for (float num : radix_arr) 
+    {
+        std::cout << num << " ";
     }
     std::cout << "\n----------------------------------------------" << std::endl;
     return 0;

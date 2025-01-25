@@ -7,11 +7,29 @@
 #include <algorithm>
 #include <string>
 #include <queue>
+#include <list>
+
+struct Event {
+    int start;
+    int end;
+};
+
+struct Student {
+    std::string name;
+    int age;
+};
+
+struct Team {
+    std::string name;
+    int height;
+
+    bool operator<(const Team& other) const;
+};
 
 class Sorting
 {
     private:
-        std::vector<int> data;
+        std::vector<int> data;  
     
     public:
         Sorting();
@@ -39,9 +57,39 @@ class Sorting
 
         // Merges sorted chunks.
         std::vector<std::string> mergeChunks(const std::vector<std::vector<std::string>>& chunks);
+
+        // Determines the max number of events that take place concurrently.
+        int maxConcurrentEvents(std::vector<Event> events);
+
+        // Computes the union of intervals.
+        std::vector<Event> computeUnion(const std::vector<Event>& intervals);
+
+        // Counting sort.
+        void sortingStudentsByAge(std::vector<Student>& students);
+
+        // Sorts two unsorted vectors into two different arrays.
+        void teamPhoto(std::vector<Team>& team1, std::vector<Team>& team2);
+
+        // Prints the sorted arrays.
+        void printLine(const std::vector<Team>& front_line, const std::vector<Team>& back_line);
+
+        // Partition function to rearrange elements around the pivot.
+        int partition(std::vector<int>& arr, int low, int high);
+
+        // Quick Sort function.
+        void quickSort(std::vector<int>& arr, int low, int high);
+
+        // Function to perform Bucket Sort.
+        void bucketSort(std::vector<float>& arr);
+
+        // Radix Sort implementation.
+        void radixSort(std::vector<int>& arr); 
+
+        // Helper function to get the maximum value in the array.
+        int getMax(const std::vector<int>& arr);
+        
+        // Counting sort for a specific digit represented by given value.
+        void countingSort(std::vector<int>& arr, int exp);
 };
-
-
-
 
 #endif // SORTING_H

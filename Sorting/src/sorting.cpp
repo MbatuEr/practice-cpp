@@ -4,6 +4,11 @@ Sorting::Sorting() {}
 
 Sorting::Sorting(const std::vector<int>& arr) : data(arr) {}
 
+bool Team::operator<(const Team& other) const 
+{
+        return height < other.height;
+}
+
 void Sorting::mergeSortedArrays(std::vector<int>& A, int m, std::vector<int>& B, int n) 
 {    
     int i = m - 1;  
@@ -168,4 +173,251 @@ std::vector<std::string> Sorting::mergeChunks(const std::vector<std::vector<std:
     }
 
     return result;
+}
+
+int Sorting::maxConcurrentEvents(std::vector<Event> events) 
+{
+    std::sort(events.begin(), events.end(), [](const Event& a, const Event& b) { return a.end < b.end; });
+
+    std::queue<Event> active;
+    int maxConcurrent = 0;
+
+    for (const Event& event : events) 
+    {
+        while (!active.empty() && active.front().end <= event.start) 
+        {
+            active.pop();
+        }
+        active.push(event);
+        maxConcurrent = std::max(maxConcurrent, (int)active.size());
+    }
+    return maxConcurrent;
+}
+
+std::vector<Event> Sorting::computeUnion(const std::vector<Event>& intervals)
+{
+    if (intervals.empty()) return {};
+
+    std::vector<Event> sortedIntervals = intervals;
+
+    std::sort(sortedIntervals.begin(), sortedIntervals.end(), [](const Event& a, const Event& b) 
+    {
+        return (a.start < b.start && a.end < b.end) || (a.start == b.start && a.end < b.end);
+    });
+
+    // Merge intervals
+    std::vector<Event> result;
+    Event current = sortedIntervals[0];
+
+    for (size_t i = 1; i < sortedIntervals.size(); ++i) 
+    {        
+        const Event& next = sortedIntervals[i];
+
+        if (current.end >= next.start) 
+        {
+            current.end = std::max(current.end, next.end);
+        } 
+        else {
+            result.push_back(current);
+            current = next;
+        }
+    }
+
+    result.push_back(current);
+
+    return result;
+}
+
+void Sorting::sortingStudentsByAge(std::vector<Student>& students)
+{
+    std::unordered_map<int, std::vector<Student>> ageBuckets;
+
+    for (const auto& student : students)
+    {
+        ageBuckets[student.age].push_back(student);
+    }
+
+    std::vector<int> ages;
+    for (const auto& [age, _] : ageBuckets) 
+    {
+        ages.push_back(age);
+    }
+    std::sort(ages.begin(), ages.end());
+    
+    size_t index = 0;
+    for (int age : ages) 
+    {
+        for (const auto& student : ageBuckets[age]) 
+        {
+            students[index++] = student;
+        }
+    }
+}
+
+void Sorting::teamPhoto(std::vector<Team>& team1, std::vector<Team>& team2) 
+{
+    std::vector<Team> front_line;
+    std::vector<Team> back_line;
+
+    std::sort(team1.begin(), team1.end());
+    std::sort(team2.begin(), team2.end());
+
+    int team1_order = 0, team2_order = 0;
+
+    while (team1_order < team1.size() && team2_order < team2.size() && front_line.size() < team1.size()) 
+    {
+        if (team1[team1_order].height <= team2[team2_order].height) 
+        {
+            front_line.push_back(team1[team1_order]);
+            team1_order++;
+        } 
+        else {
+            front_line.push_back(team2[team2_order]);
+            team2_order++;
+        }
+    }
+
+    while (team1_order < team1.size() && team2_order < team2.size() && back_line.size() < team1.size()) 
+    {
+        if (team1[team1_order].height <= team2[team2_order].height) 
+        {
+            back_line.push_back(team1[team1_order]);
+            team1_order++;
+        } 
+        else {
+            back_line.push_back(team2[team2_order]);
+            team2_order++;
+        }
+    }
+
+    while (team1_order < team1.size()) 
+    {
+        back_line.push_back(team1[team1_order]);
+        team1_order++;
+    }
+
+    while (team2_order < team2.size()) 
+    {
+        back_line.push_back(team2[team2_order]);
+        team2_order++;
+    }
+
+    printLine(front_line, back_line);
+}
+
+void Sorting::printLine(const std::vector<Team>& front_line, const std::vector<Team>& back_line) 
+{
+    std::cout << "Back Line: " << std::endl;
+    for (const auto& player : back_line) 
+    {
+        std::cout << "[" << player.name << ", " << player.height << "] ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "Front Line: " << std::endl;
+    for (const auto& player : front_line) 
+    {
+        std::cout << "[" << player.name << ", " << player.height << "] ";
+    }
+    std::cout << std::endl;
+}
+
+int Sorting::partition(std::vector<int>& arr, int low, int high) 
+{
+    int pivot = arr[high]; 
+    int i = low - 1;       
+
+    for (int j = low; j < high; ++j) 
+    {
+        if (arr[j] <= pivot) 
+        {
+            ++i;                 
+            std::swap(arr[i], arr[j]); 
+        }
+    }
+
+    std::swap(arr[i + 1], arr[high]);
+    return i + 1; 
+}
+
+void Sorting::quickSort(std::vector<int>& arr, int low, int high) 
+{
+    if (low < high) 
+    {
+        int pi = partition(arr, low, high);
+
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+void Sorting::bucketSort(std::vector<float>& arr) 
+{
+    int n = arr.size();
+    if (n <= 1) return;
+
+    std::vector<std::list<float>> buckets(n);
+
+    for (float num : arr) 
+    {
+        int bucketIndex = static_cast<int>(num * n); 
+        buckets[bucketIndex].push_back(num);
+    }
+
+    for (int i = 0; i < n; i++) 
+    {
+        buckets[i].sort();
+    }
+
+    int index = 0;
+    for (int i = 0; i < n; i++) 
+    {
+        for (float num : buckets[i]) 
+        {
+            arr[index++] = num;
+        }
+    }
+}
+
+int Sorting::getMax(const std::vector<int>& arr) {
+    return *std::max_element(arr.begin(), arr.end());
+}
+
+void Sorting::countingSort(std::vector<int>& arr, int exp) 
+{
+    int n = arr.size();
+    std::vector<int> output(n); 
+    int count[10] = {0};
+
+    for (int i = 0; i < n; i++) 
+    {
+        int digit = (arr[i] / exp) % 10;
+        count[digit]++;
+    }
+
+    for (int i = 1; i < 10; i++) 
+    {
+        count[i] += count[i - 1];
+    }
+
+    for (int i = n - 1; i >= 0; i--) 
+    {
+        int digit = (arr[i] / exp) % 10;
+        output[count[digit] - 1] = arr[i];
+        count[digit]--;
+    }
+
+    for (int i = 0; i < n; i++) 
+    {
+        arr[i] = output[i];
+    }
+}
+
+void Sorting::radixSort(std::vector<int>& arr) 
+{
+    int maxVal = getMax(arr);
+    for (int exp = 1; maxVal / exp > 0; exp *= 10) 
+    {
+        countingSort(arr, exp);
+    }
 }
