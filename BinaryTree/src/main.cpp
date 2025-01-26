@@ -58,30 +58,25 @@ int main()
     std::cout << "----------------------------------------------------------" << std::endl;
 
     // Find the lowest common ancestor.
-    TreeNode* rootLCA = new TreeNode(8);
-    rootLCA->left = new TreeNode(4);
-    rootLCA->right = new TreeNode(12);
-    rootLCA->left->left = new TreeNode(2);
-    rootLCA->left->right = new TreeNode(6);
-    rootLCA->right->right = new TreeNode(14);
-    rootLCA->right->left = new TreeNode(10);
-    rootLCA->left->left->right = new TreeNode(3);
-    rootLCA->right->left->left = new TreeNode(9);
-    rootLCA->right->left->right = new TreeNode(11);
-    rootLCA->right->right->right = new TreeNode(16);
-    rootLCA->right->right->left = new TreeNode(13);
+    BinaryTree LCA;
+    std::vector<int> LCA_order = {8,4,12,2,6,10,14,3,9,11,13,16};
 
-    TreeNode* p = rootLCA->left->left->right;
-    TreeNode* q = rootLCA->left->right;
-    TreeNode* lca = tree.findLCA(rootLCA, p, q);
+    for (int values : LCA_order)
+    {
+        LCA.insert(values);
+    }   
+    int p = 3;
+    int q = 6;
+    
+    TreeNode* lca = tree.findLCA(LCA.root, p, q);
     
     if(lca) 
     {
-        std::cout << "The lowest common ancestor of " << p->val << " and " << q->val << " is " << lca->val << std::endl;
+        std::cout << "The lowest common ancestor of " << p << " and " << q << " is " << lca->val << std::endl;
     } 
     else 
     {
-        std::cout << "The lowest common ancestor of " << p->val << " and " << q->val << " is not found." << std::endl;
+        std::cout << "The lowest common ancestor of " << p << " and " << q << " is not found." << std::endl;
     }
     std::cout << "----------------------------------------------------------" << std::endl;
 
@@ -108,20 +103,18 @@ int main()
     std::cout << "----------------------------------------------------------" << std::endl;
     
     // Sum of the weight of from root to a specified node.
-    TreeNode* rootsumweight = new TreeNode(5);
-    rootsumweight->left = new TreeNode(3);
-    rootsumweight->right = new TreeNode(8);
-    rootsumweight->left->left = new TreeNode(2);
-    rootsumweight->left->right = new TreeNode(4);
-    rootsumweight->right->left = new TreeNode(7);
-    rootsumweight->right->right = new TreeNode(11);
-    rootsumweight->left->left->left = new TreeNode(1);
-    rootsumweight->right->right->right = new TreeNode(13);
+    BinaryTree path_weight;
+    std::vector<int> path_weight_order = {5,3,8,2,4,7,11,1,13};
 
+    for (int values : path_weight_order)
+    {
+        path_weight.insert(values);
+    }
+    
     int num = 20;
     int currentsum = 0;
 
-    if (tree.hasPathWeight(rootsumweight, num, currentsum)) 
+    if (tree.hasPathWeight(path_weight.root, num, currentsum)) 
     {
         std::cout << "There exists a leaf whose path weight equals " << num << ".\n";
     } 
@@ -171,40 +164,28 @@ int main()
     std::cout << "\n----------------------------------------------------------" << std::endl;
 
     // Compute the successor.
-    BinaryTree root_successor;
-
-    root_successor.insert(8);
-    root_successor.insert(6);
-    root_successor.insert(10);
-    root_successor.insert(4);
-    root_successor.insert(7);
-    root_successor.insert(9);
-    root_successor.insert(12);
-    root_successor.insert(5);
-    root_successor.insert(11);
-
-    root_successor.computeTheSuccessor(root_successor.root, root_successor.root->right);
+    TreeNode* node = tree_order.findValue(12);
+    if (node) 
+    {
+        std::cout << "Node found: " << node->val << std::endl;
+        TreeNode* successor = tree_order.computeTheSuccessor(node);
+        
+        if (successor) 
+        {
+            std::cout << "Successor of " << node->val << " is: " << successor->val << std::endl;
+        } 
+        else {
+            std::cout << "No successor for " << node->val << std::endl;
+        }
+    } 
+    else {
+        std::cout << "Node not found in the tree." << std::endl;
+    }
     std::cout << "----------------------------------------------------------" << std::endl;
 
     // Inorder Traversal with O(1) space.
-    TreeNode* root_inorder_space = new TreeNode(8);
-    root_inorder_space->left = new TreeNode(6);
-    root_inorder_space->right = new TreeNode(10);
-    root_inorder_space->left->parent = root_inorder_space;
-    root_inorder_space->right->parent = root_inorder_space;
-
-    root_inorder_space->left->left = new TreeNode(4);
-    root_inorder_space->left->right = new TreeNode(7);
-    root_inorder_space->left->left->parent = root_inorder_space->left;
-    root_inorder_space->left->right->parent = root_inorder_space->left;
-
-    root_inorder_space->right->left = new TreeNode(9);
-    root_inorder_space->right->left->parent = root_inorder_space->right;
-    root_inorder_space->left->left->right = new TreeNode(5);
-    root_inorder_space->left->left->right->parent = root_inorder_space->left->left;
-
     std::cout << "The inorder traversal of the binary tree: ";
-    tree.inorderTraversalWithO1Space(root_inorder_space);
+    tree.inorderTraversalWithO1Space(tree_order.root);
     std::cout << "\n----------------------------------------------------------" << std::endl;
 
     // Build a binary tree.
@@ -231,125 +212,68 @@ int main()
     std::cout << "\n----------------------------------------------------------" << std::endl;
 
     // Reconstruct preorder traversal.
-    BinaryTree reconstruct;
-
-    reconstruct.insert(8);
-    reconstruct.insert(6);
-    reconstruct.insert(10);
-    reconstruct.insert(4);
-    reconstruct.insert(7);
-    reconstruct.insert(9);
-    reconstruct.insert(13);
-    reconstruct.insert(5);
-    reconstruct.insert(12);
-    reconstruct.insert(14);
-
-    tree.reconstructPreOrder(reconstruct.root);
+    tree_order.reconstructPreOrder(tree_order.root);
     std::cout << "\n----------------------------------------------------------" << std::endl;
     
-    // Create list from leaves.
-    BinaryTree list_from_leaves;
-
-    list_from_leaves.insert(8);
-    list_from_leaves.insert(6);
-    list_from_leaves.insert(10);
-    list_from_leaves.insert(4);
-    list_from_leaves.insert(7);
-    list_from_leaves.insert(9);
-    list_from_leaves.insert(13);
-    list_from_leaves.insert(5);
-    list_from_leaves.insert(12);
-    list_from_leaves.insert(14);
-    
-    ListNode* leafList = tree.createsListFromLeaves(list_from_leaves.root);
+    // Create list from leaves.    
+    ListNode* leafList = tree_order.createsListFromLeaves(tree_order.root);
 
     std::cout << "Linked list of leaves: ";
     tree.printLinkedList(leafList);
-    std::cout << "----------------------------------------------------------" << std::endl;
+    std::cout << "\n----------------------------------------------------------" << std::endl;
 
     // Compute exterior.
-    TreeNode* root_exterior = new TreeNode(8);
-    root_exterior->left = new TreeNode(4);
-    root_exterior->right = new TreeNode(13);
-    root_exterior->left->left = new TreeNode(2);
-    root_exterior->left->right = new TreeNode(5);
-    root_exterior->right->right = new TreeNode(16);
-    root_exterior->right->left = new TreeNode(11);
-    root_exterior->left->left->left = new TreeNode(1);
-    root_exterior->left->left->right = new TreeNode(3);
-    root_exterior->left->right->right = new TreeNode(7);
-    root_exterior->right->left->right = new TreeNode(12);
-    root_exterior->right->right->right = new TreeNode(18);
-    root_exterior->right->right->left = new TreeNode(14);
-    root_exterior->left->right->right->left = new TreeNode(6);
+    BinaryTree exterior;
+    std::vector<int> root_exterior = {8,4,13,2,5,11,16,1,3,7,12,14,18,6};
 
-    root_exterior->right->right->right->parent = root_exterior->right->right;
-    root_exterior->right->right->parent = root_exterior->right;
-    root_exterior->right->parent = root_exterior;
+    for (int values : root_exterior)
+    {
+        exterior.insert(values);
+    }
 
-    tree.exteriorOfBinaryTree(root_exterior);
+    tree.exteriorOfBinaryTree(exterior.root);
     std::cout << "\n----------------------------------------------------------" << std::endl;
 
     // Right sibling tree.
-    BinaryTree right_sibling;
+    BinaryTree sibling;
+    std::vector<int> right_sibling = {8,4,13,2,6,10,16,1,3,5,7,9,11,14,18};
+    for (int values : right_sibling)
+    {
+        sibling.insert(values);
+    }
+    
+    sibling.rightSiblingTree(sibling.root);
 
-    right_sibling.insert(8);
-    right_sibling.insert(4);
-    right_sibling.insert(13);
-    right_sibling.insert(2);
-    right_sibling.insert(6);
-    right_sibling.insert(10);
-    right_sibling.insert(16);
-    right_sibling.insert(1);
-    right_sibling.insert(3);
-    right_sibling.insert(5);
-    right_sibling.insert(7);
-    right_sibling.insert(9);
-    right_sibling.insert(11);
-    right_sibling.insert(14);
-    right_sibling.insert(18);
-
-    tree.rightSiblingTree(right_sibling.root);
-
-    tree.printLevelNext(right_sibling.root);
+    sibling.printLevelNext(sibling.root);
     std::cout << "----------------------------------------------------------" << std::endl;
 
     // Lock the node.
-    TreeNode* root_lock = new TreeNode(4);
-    root_lock->left = new TreeNode(2);
-    root_lock->right = new TreeNode(6);
-    root_lock->left->parent = root_lock;
-    root_lock->right->parent = root_lock;
+    BinaryTree locked;
+    std::vector<int> root_lock = {4,2,6,1,3,5,7};
+    for(int values : root_lock)
+    {
+        locked.insert(values);
+    }
+    TreeNode* lock_node1 = locked.findValue(1);
+    TreeNode* lock_node3 = locked.findValue(3);
+    TreeNode* lock_node2 = locked.findValue(2);
 
-    root_lock->left->left = new TreeNode(1);
-    root_lock->left->right = new TreeNode(3);
-    root_lock->left->left->parent = root_lock->left;
-    root_lock->left->right->parent = root_lock->left;
-
-    root_lock->right->left = new TreeNode(5);
-    root_lock->right->right = new TreeNode(7);
-    root_lock->right->left->parent = root_lock->right;
-    root_lock->right->right->parent = root_lock->right;
-
-    std::cout << "Locking node 1: " << (tree.lock(root_lock->left->left) ? "Success" : "Failed") << std::endl;
-    std::cout << "Locking node 3: " << (tree.lock(root_lock->left->right) ? "Success" : "Failed") << std::endl;
-    std::cout << "Locking node 2 (parent of 1 and 3): " << (tree.lock(root_lock->left) ? "Success" : "Failed") << std::endl;
-    std::cout << "Unlocking node 3: " << (tree.unlock(root_lock->left->right) ? "Success" : "Failed") << std::endl;
-    std::cout << "Locking node 2 after unlocking node 3: " << (tree.lock(root_lock->left) ? "Success" : "Failed") << std::endl;
-    std::cout << "Unlocking node 1: " << (tree.unlock(root_lock->left->left) ? "Success" : "Failed") << std::endl;
-    std::cout << "Locking node 2 after unlocking node 1: " << (tree.lock(root_lock->left) ? "Success" : "Failed") << std::endl;
+    std::cout << "Locking node 1: " << (locked.lock(lock_node1) ? "Success" : "Failed") << std::endl;
+    std::cout << "Locking node 3: " << (locked.lock(lock_node3) ? "Success" : "Failed") << std::endl;    
+    std::cout << "Locking node 2 (parent of 1 and 3): " << (locked.lock(lock_node2) ? "Success" : "Failed") << std::endl;
+    std::cout << "Unlocking node 3: " << (locked.unlock(lock_node3) ? "Success" : "Failed") << std::endl;
+    std::cout << "Locking node 2 after unlocking node 3: " << (locked.lock(lock_node2) ? "Success" : "Failed") << std::endl;
+    std::cout << "Unlocking node 1: " << (locked.unlock(lock_node1) ? "Success" : "Failed") << std::endl;
+    std::cout << "Locking node 2 after unlocking node 1: " << (locked.lock(lock_node2) ? "Success" : "Failed") << std::endl;
     std::cout << "----------------------------------------------------------" << std::endl;
     
-    // Check BST is proper and finds first value greater than input_key.
+    // Check BST is proper and find first value greater than input_key.
     BinaryTree if_BST;
-
-    if_BST.insert(8);
-    if_BST.insert(4);
-    if_BST.insert(12);
-    if_BST.insert(2);
-    if_BST.insert(6);
-    if_BST.insert(10);
-    if_BST.insert(14);
+    std::vector<int> root_BST = {8,4,12,2,6,10,14};
+    for (int values : root_BST)
+    {
+        if_BST.insert(values);
+    }
     
     TreeNode* input_key = new TreeNode(13);
 
@@ -363,39 +287,12 @@ int main()
     std::cout << "----------------------------------------------------------" << std::endl;
 
     // Largest elements.
-    BinaryTree largest;
-    
-    largest.insert(8);
-    largest.insert(4);
-    largest.insert(12);
-    largest.insert(2);
-    largest.insert(6);
-    largest.insert(14);
-    largest.insert(10);
-    largest.insert(3);
-    largest.insert(16);
-    largest.insert(13);
-
     int input_value = 3;
-
-    tree.largestElementsInBST(largest.root, input_value);
+    tree.largestElementsInBST(tree_order.root, input_value);
     std::cout << "----------------------------------------------------------" << std::endl;
     
     // Level order tree traversal.
-    BinaryTree level_order;
-
-    level_order.insert(8);
-    level_order.insert(4);
-    level_order.insert(12);
-    level_order.insert(2);
-    level_order.insert(6);
-    level_order.insert(14);
-    level_order.insert(10);
-    level_order.insert(3);
-    level_order.insert(16);
-    level_order.insert(13);
-
-    level_order.levelOrderTraversal(level_order.root);
+    tree.levelOrderTraversal(tree_order.root);
     std::cout << "----------------------------------------------------------" << std::endl;
     
     return 0;

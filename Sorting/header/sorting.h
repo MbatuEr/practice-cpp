@@ -30,6 +30,18 @@ class Sorting
 {
     private:
         std::vector<int> data;  
+
+        // Prints the sorted arrays.
+        void printLine(const std::vector<Team>& front_line, const std::vector<Team>& back_line);
+
+        // Partition function to rearrange elements around the pivot.
+        int partition(std::vector<int>& arr, int low, int high);
+
+        // Helper function to get the maximum value in the array.
+        int getMax(const std::vector<int>& arr);
+
+        // Counting sort for a specific digit represented by given value.
+        void countingSort(std::vector<int>& arr, int exp);
     
     public:
         Sorting();
@@ -64,17 +76,11 @@ class Sorting
         // Computes the union of intervals.
         std::vector<Event> computeUnion(const std::vector<Event>& intervals);
 
-        // Counting sort.
+        // Sorts string and integer pairs by comparing integers.
         void sortingStudentsByAge(std::vector<Student>& students);
 
         // Sorts two unsorted vectors into two different arrays.
         void teamPhoto(std::vector<Team>& team1, std::vector<Team>& team2);
-
-        // Prints the sorted arrays.
-        void printLine(const std::vector<Team>& front_line, const std::vector<Team>& back_line);
-
-        // Partition function to rearrange elements around the pivot.
-        int partition(std::vector<int>& arr, int low, int high);
 
         // Quick Sort function.
         void quickSort(std::vector<int>& arr, int low, int high);
@@ -83,13 +89,7 @@ class Sorting
         void bucketSort(std::vector<float>& arr);
 
         // Radix Sort implementation.
-        void radixSort(std::vector<int>& arr); 
-
-        // Helper function to get the maximum value in the array.
-        int getMax(const std::vector<int>& arr);
-        
-        // Counting sort for a specific digit represented by given value.
-        void countingSort(std::vector<int>& arr, int exp);
+        void radixSort(std::vector<int>& arr);
 };
 
 #endif // SORTING_H

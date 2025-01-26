@@ -1,6 +1,7 @@
 #include "../header/PriorityQueue.h"
 
-int main() {
+int main() 
+{
     // Merging arrays.
     Heaps merger;
 

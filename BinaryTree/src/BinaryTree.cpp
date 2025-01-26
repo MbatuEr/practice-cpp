@@ -29,6 +29,7 @@ bool BinaryTree::insertHelper(TreeNode* node, int key)
         else
         {
             node->left = new TreeNode(key);
+            node->left->parent = node;
             return true;
         }
     }
@@ -41,6 +42,7 @@ bool BinaryTree::insertHelper(TreeNode* node, int key)
         else
         {
             node->right = new TreeNode(key);
+            node->right->parent = node;
             return true;
         }
     }
@@ -128,9 +130,9 @@ bool BinaryTree::isSymmetric(TreeNode* root)
     return isMirror(root->left, root->right);
 }
 
-TreeNode* BinaryTree::findLCA(TreeNode* root, TreeNode* p, TreeNode* q) 
+TreeNode* BinaryTree::findLCA(TreeNode* root, int p, int q) 
 {
-    if(!root || root == p || root == q) return root;
+    if(!root || root->val == p || root->val == q) return root;
 
     TreeNode* left = findLCA(root->left, p, q);
     TreeNode* right = findLCA(root->right, p, q);
@@ -237,55 +239,45 @@ std::vector<int> BinaryTree::preorderTraversal(TreeNode* root)
     return result;
 }
 
-void BinaryTree::computeTheSuccessor(TreeNode* root, TreeNode* wanted)
+TreeNode* BinaryTree::findValue(int value) 
 {
-    TreeNode* successor_node;   
-    std::vector<int> result; 
-    std::stack<TreeNode*> nodeStack; 
-    TreeNode* current = root; 
-
-    while (current != nullptr || !nodeStack.empty()) 
+    TreeNode* current = root;
+    while (current && current->val != value) 
     {
-        while (current != nullptr) 
+        if (value < current->val) 
         {
-            nodeStack.push(current);
             current = current->left;
+        } 
+        else {
+            current = current->right;
         }
-
-        current = nodeStack.top();
-        nodeStack.pop();
-        result.push_back(current->val); 
-        
-        if(wanted->val == current->val)
-        {
-            if(current->right)
-            {
-                successor_node = current->right;
-                while(successor_node->left)
-                {
-                    successor_node = successor_node->left;
-                }
-                std::cout << "The successor of " << wanted->val << " is: " << successor_node->val << std::endl;
-            }
-            else if(!current->right && current->left)
-            {
-                successor_node = current->left;
-                std::cout << "The successor of " << wanted->val << " is: " << successor_node->val << std::endl;
-            }
-            else if(!current->right && !current->left)
-            {
-                successor_node = nodeStack.top();
-                std::cout << "The successor of " << wanted->val << " is: " << successor_node->val << std::endl;
-            }
-            else
-            {
-                std::cout << wanted->val << " is the last node in the order." << std::endl;
-            }
-
-            break;
-        }
-        current = current->right;
     }
+    return current;
+}
+
+TreeNode* BinaryTree::computeTheSuccessor(TreeNode* node)
+{
+    if (!node) return nullptr;
+
+    if (node->right) 
+    {
+        TreeNode* current = node->right;
+        while (current->left) 
+        {
+            current = current->left; 
+        }
+        return current;
+    }
+
+    TreeNode* current = node;
+    TreeNode* parent = node->parent;
+    
+    while (parent && parent->right == current) 
+    {
+        current = parent;
+        parent = parent->parent; 
+    }
+    return parent; 
 }
 
 void BinaryTree::inorderTraversalWithO1Space(TreeNode* root)
@@ -423,7 +415,6 @@ void BinaryTree::printLinkedList(ListNode* head)
         std::cout << head->val << " ";
         head = head->next;
     }
-    std::cout << std::endl;
 }
 
 void BinaryTree::exteriorOfBinaryTree(TreeNode* root)
@@ -431,25 +422,15 @@ void BinaryTree::exteriorOfBinaryTree(TreeNode* root)
     if (!root) return;
 
     TreeNode* current = root;
-    std::cout << current->val << " ";
-
     while(current->left)
     {
-        current = current->left;
         std::cout << current->val << " ";
+        current = current->left;
+        
     }
-    
-    ListNode* leaves = createsListFromLeaves(root);
 
-    while(leaves->next)
-    {
-        if(current->val != leaves->val)
-        {
-            std::cout << leaves->val << " ";
-        }
-        leaves = leaves->next;
-    }
-    std::cout << leaves->val << " ";
+    ListNode* leaves = createsListFromLeaves(root);
+    printLinkedList(leaves);
 
     TreeNode* right_subtree = root;
     std::stack<TreeNode*> nodeStack; 
@@ -466,7 +447,7 @@ void BinaryTree::exteriorOfBinaryTree(TreeNode* root)
         TreeNode* last_part_of_tree = nodeStack.top();
         nodeStack.pop();
         
-        if(last_part_of_tree->val != leaves->val)
+        if(last_part_of_tree->left || last_part_of_tree->right)
         {
             std::cout << last_part_of_tree->val << " ";
         }
@@ -622,13 +603,13 @@ void BinaryTree::largestElementsInBST(TreeNode* root, int k)
 
     std::vector<int> result;
 
-    std::vector<int> largest_elements = recursiveInorderTraversal(root, result);
+    result = recursiveInorderTraversal(root, result);
     
-    int s = largest_elements.size() - 1;
+    int s = result.size() - 1;
 
     for(int i = s; i > s - k; i--)
     {
-        std::cout << largest_elements[i] << " ";   
+        std::cout << result[i] << " ";   
     }
     std::cout << std::endl;
 }

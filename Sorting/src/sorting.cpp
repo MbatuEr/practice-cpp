@@ -379,7 +379,8 @@ void Sorting::bucketSort(std::vector<float>& arr)
     }
 }
 
-int Sorting::getMax(const std::vector<int>& arr) {
+int Sorting::getMax(const std::vector<int>& arr) 
+{
     return *std::max_element(arr.begin(), arr.end());
 }
 

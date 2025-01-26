@@ -80,7 +80,7 @@ int main()
     std::vector<Event> events = {{1, 3}, {2, 4}, {5, 8}, {6, 7}, {8, 9}, {14, 17}, {4, 6}, {1, 5}, {13, 15}};
 
     int result_of_events = sort.maxConcurrentEvents(events);
-    std::cout << "Maksimum eş zamanli etkinlik sayisi: " << result_of_events << std::endl;
+    std::cout << "Maximum number of concurrent events: " << result_of_events << std::endl;
     std::cout << "----------------------------------------------" << std::endl;
 
     // Union of intervals. 
@@ -96,7 +96,7 @@ int main()
     }
     std::cout << "\n----------------------------------------------" << std::endl;
 
-    // Sorting by counting sort.
+    // Sorting string & int pairs by integers.
     std::vector<Student> students = {
         {"Alice", 20}, {"Bob", 22}, {"Charlie", 20}, {"David", 21}, {"Eve", 22}, {"Frank", 21}
     };
@@ -118,13 +118,13 @@ int main()
     
     // Sorting into two different arrays.
     std::vector<Team> Fenerbahce = {
-        {"Livakovic", 190}, {"Kadioglu", 180}, {"Djiku", 188}, {"Becao", 194}, {"Osayi", 188}, {"Ismail", 183}, {"Fred", 169},
+        {"Livakovic", 190}, {"Kadioglu", 180}, {"Djiku", 188}, {"Becao", 194}, {"Osayi", 184}, {"Ismail", 183}, {"Fred", 173},
         {"Kahveci", 180}, {"Szymanski", 174}, {"Tadic", 181}, {"Dzeko", 193}
     };
 
     std::vector<Team> Galatasaray = {
-        {"Muslera", 188}, {"Baris", 183}, {"Davinson", 192}, {"Nelsson", 185}, {"Boey", 181}, {"Torreira", 173}, {"Demirbay", 182},
-        {"Ziyech", 182}, {"Mertens", 169}, {"Akturkoglu", 179}, {"Icardi", 184}
+        {"Muslera", 188}, {"Baris", 183}, {"Davinson", 192}, {"Nelsson", 187}, {"Boey", 181}, {"Torreira", 169}, {"Demirbay", 182},
+        {"Ziyech", 182}, {"Mertens", 170}, {"Akturkoglu", 179}, {"Icardi", 185}
     };
 
     sort.teamPhoto(Fenerbahce, Galatasaray);
