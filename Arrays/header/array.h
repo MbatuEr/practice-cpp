@@ -71,4 +71,5 @@ class Array
         // Checks if one string is a rotation of another string.
         bool IsSubString(string& s1, string& s2);
 };
-#endif
+
+#endif // ARRAY_H

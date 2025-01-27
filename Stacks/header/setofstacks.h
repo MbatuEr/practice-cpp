@@ -1,3 +1,6 @@
+#ifndef SETOFSTACKS_H   
+#define SETOFSTACKS_H   
+
 #include <iostream>
 #include <vector>
 #include <stack>
@@ -34,3 +37,5 @@ class SetOfStacks
         // Sorts the stack smallest to highest value.
         void sortstack(std::stack<int>& a);
 };
+
+#endif // SETOFSTACKS_H

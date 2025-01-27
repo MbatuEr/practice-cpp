@@ -1,3 +1,6 @@
+#ifndef ANIMALSHELTER_H   
+#define ANIMALSHELTER_H
+
 #include <iostream>
 #include <queue>
 #include <string>
@@ -25,3 +28,5 @@ class AnimalShelter
         Animal dequeueDog();
         Animal dequeueCat();
 };
+
+#endif // ANIMALSHELTER_H

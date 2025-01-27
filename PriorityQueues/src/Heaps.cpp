@@ -91,7 +91,7 @@ void Heaps::remove(int index)
 {
     if (index < 0 || index >= get_size()) 
     {
-        throw std::out_of_range("Index out of range");
+        throw std::out_of_range("Index is out of range!");
     }
 
     data[index] = data.back();

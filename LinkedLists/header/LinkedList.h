@@ -1,3 +1,6 @@
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
+
 #include <iostream>
 #include <unordered_set>
 
@@ -62,3 +65,5 @@ class LinkedList
         // Detecs if there is a loop in the list.
         Node* detect_loop_start(Node* head);
 };
+
+#endif // LINKEDLIST_H

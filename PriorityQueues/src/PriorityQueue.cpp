@@ -2,6 +2,11 @@
 
 Star::Star(double x, double y, double z) : x(x), y(y), z(z) {}
 
+bool Element::operator>(const Element& other) const 
+{
+    return value > other.value;
+}
+
 bool CompareDistance::operator()(const Star& a, const Star& b) 
 {
     return a.distanceToEarth() > b.distanceToEarth();  // Min-heap for closest stars
@@ -12,16 +17,12 @@ double Star::distanceToEarth() const
     return std::sqrt(x * x + y * y + z * z);
 }
 
-bool Element::operator>(const Element& other) const 
-    {
-        return value > other.value;
-    }
-
-std::vector<int> Heaps::mergeSortedArrays(const std::vector<std::vector<int>>& sortedArrays) 
+std::vector<int> PriorityQueues::mergeSortedArrays(const std::vector<std::vector<int>>& sortedArrays) 
 {
     for (size_t i = 0; i < sortedArrays.size(); ++i) 
     {
-        if (!sortedArrays[i].empty()) {
+        if (!sortedArrays[i].empty()) 
+        {
             minHeap.push({sortedArrays[i][0], static_cast<int>(i), 0});
         }
     }
@@ -46,14 +47,14 @@ std::vector<int> Heaps::mergeSortedArrays(const std::vector<std::vector<int>>& s
     return result;
 }
 
-std::vector<int> Heaps::sortKIncreasingDecreasingArray(const std::vector<int>& arr) 
+std::vector<int> PriorityQueues::sortIncreasingDecreasingArray(const std::vector<int>& arr) 
 {
     std::vector<std::vector<int>> sortedArrays = splitIntoSortedSubarrays(arr);
 
     return mergeSortedArrays(sortedArrays);
 }
 
-std::vector<std::vector<int>> Heaps::splitIntoSortedSubarrays(const std::vector<int>& arr) 
+std::vector<std::vector<int>> PriorityQueues::splitIntoSortedSubarrays(const std::vector<int>& arr) 
 {
     std::vector<std::vector<int>> sortedArrays;
     bool increasing = true; 
@@ -77,7 +78,7 @@ std::vector<std::vector<int>> Heaps::splitIntoSortedSubarrays(const std::vector<
     return sortedArrays;
 }
 
-std::vector<int> Heaps::sortKSortedArray(const std::vector<int>& arr, int k)
+std::vector<int> PriorityQueues::sortKSortedArray(const std::vector<int>& arr, int k)
 {
     std::vector<int> result;
 
@@ -103,7 +104,7 @@ std::vector<int> Heaps::sortKSortedArray(const std::vector<int>& arr, int k)
     return result;
 }
 
-std::vector<Star> Heaps::findKClosestStars(const std::vector<Star>& stars, int k) 
+std::vector<Star> PriorityQueues::findKClosestStars(const std::vector<Star>& stars, int k) 
 {
     if (k <= 0) return {};
      
@@ -124,7 +125,7 @@ std::vector<Star> Heaps::findKClosestStars(const std::vector<Star>& stars, int k
     return closestStars;
 }
 
-void Heaps::insertForMedian(int num) 
+void PriorityQueues::insertForMedian(int num) 
 {
     if (left.empty() || num <= left.top()) 
     {
@@ -147,7 +148,7 @@ void Heaps::insertForMedian(int num)
     }
 }
 
-double Heaps::getMedian() const 
+double PriorityQueues::getMedian() const 
 {
     if (left.size() > right.size()) 
     {
@@ -159,7 +160,7 @@ double Heaps::getMedian() const
     }
 }
 
-std::vector<int> Heaps::findkLargestElements(const std::vector<int>& arr, int k)
+std::vector<int> PriorityQueues::findkLargestElements(const std::vector<int>& arr, int k)
 {
     if(arr.empty()) return arr;
     
@@ -167,13 +168,13 @@ std::vector<int> Heaps::findkLargestElements(const std::vector<int>& arr, int k)
 
     for(int value : arr)
     {
-        maxelement.push(value);
+        maxElement.push(value);
     }
 
     for(int i = 0 ; i < k; i++)
     {
-       result.push_back(maxelement.top());
-       maxelement.pop();
+       result.push_back(maxElement.top());
+       maxElement.pop();
     }
 
     return result;

@@ -1,5 +1,5 @@
-#ifndef MAXHEAP_H
-#define MAXHEAP_H
+#ifndef HEAPS_H
+#define HEAPS_H
 
 #include <iostream>
 #include <stdexcept>
@@ -9,41 +9,41 @@
 class Heaps 
 {
     private:
-    std::vector<int> data; // Internal storage for the heap
-    
-    public:
-        // Constructors
-        Heaps() = default;
+        std::vector<int> data; // Internal storage for the heap.
 
-        // Insert a new element into the heap
-        void insert(int value);
-
-        // Sift up an element to maintain heap property (used in insert)
+        // Sifts up an element to maintain heap property. 
         void sift_up(int index);
 
-        // Return the maximum element without removing it
-        int get_max() const;
-
-        // Return the number of elements in the heap
+        // Returns the number of elements in the heap.
         int get_size() const;
 
-        // Check if the heap is empty
+        // Sifts down an element to maintain heap property .
+        void sift_down(int index);
+    
+    public:
+        // Constructor.
+        Heaps() = default;
+
+        // Inserts a new element into the heap.
+        void insert(int value);
+
+        // Returns the maximum element without removing it.
+        int get_max() const;
+
+        // Checks if the heap is empty.
         bool is_empty() const;
 
-        // Remove and return the maximum element
+        // Removes and return the maximum element.
         int extract_max();
 
-        // Sift down an element to maintain heap property (used in extract_max)
-        void sift_down(int index);
-
-        // Remove an element at a specific index
+        // Removes an element at a specific index.
         void remove(int index);
 
-        // Create a heap from an unsorted array
+        // Creates a heap from an unsorted array.
         void heapify(const std::vector<int>& array);
 
-        // Perform heap sort on an array
+        // Performs heap sort on an array.
         static std::vector<int> heap_sort(std::vector<int> array);
 };
 
-#endif // MAXHEAP_H
+#endif // HEAPS_H

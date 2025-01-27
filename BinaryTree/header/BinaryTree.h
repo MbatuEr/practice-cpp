@@ -1,3 +1,6 @@
+#ifndef BINARYTREE_H
+#define BINARYTREE_H
+
 #include <iostream>
 #include <vector>
 #include <stack>
@@ -143,3 +146,5 @@ class BinaryTree
         // Prints a binary tree in level-order.
         void levelOrderTraversal(TreeNode* root);
 };
+
+#endif // BINARYTREE_H

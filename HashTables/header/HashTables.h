@@ -1,3 +1,6 @@
+#ifndef HASHTABLES_H
+#define HASHTABLES_H
+
 #include <iostream>
 #include <unordered_map>
 #include <string>
@@ -58,3 +61,4 @@ class HashTables
         bool collatzSequence(long long n);
 };
  
+ #endif // HASHTABLES_H

@@ -1,3 +1,6 @@
+#ifndef STACK_H
+#define STACK_H
+
 #include <iostream>
 #include <stdexcept>
 #include <stack>
@@ -51,3 +54,5 @@ class Stacks
         // Finds the windows that have a sunset view.
         std::vector<int> findBuildingsWithSunsetView(const std::vector<int>& buildings);
 };
+
+#endif // STACK_H

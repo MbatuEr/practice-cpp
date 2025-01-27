@@ -3,7 +3,7 @@
 int main() 
 {
     // Merging arrays.
-    Heaps merger;
+    PriorityQueues merger;
 
     std::vector<std::vector<int>> sequences = 
     {
@@ -22,11 +22,11 @@ int main()
     std::cout << "\n-------------------------------------------------" << std::endl;
 
     // Sorting an increasing-decreasing array.
-    Heaps sorted;
+    PriorityQueues sorted;
     
     std::vector<int> arr = {57, 131, 493, 294, 221, 339, 418, 452, 442, 190};
     
-    std::vector<int> sortedArray = sorted.sortKIncreasingDecreasingArray(arr);
+    std::vector<int> sortedArray = sorted.sortIncreasingDecreasingArray(arr);
 
     std::cout << "Sorted Array: ";
     for (int num : sortedArray) 
@@ -36,7 +36,7 @@ int main()
     std::cout << "\n-------------------------------------------------" << std::endl;
 
     // Sorting an array which is k away at most.
-    Heaps sort_k_away;
+    PriorityQueues sort_k_away;
     std::vector<int> k_sorted_arr = {3, -1, 2, 6, 4, 5, 8};
     int k = 2;
 
@@ -60,7 +60,7 @@ int main()
 
     int key = 3;  // Get the 3 closest stars
 
-    std::vector<Star> closestStars = Heaps::findKClosestStars(stars, k);
+    std::vector<Star> closestStars = PriorityQueues::findKClosestStars(stars, k);
 
     std::cout << "The " << key << " closest stars to Earth are:\n";
     for (const auto& star : closestStars) 
@@ -71,7 +71,7 @@ int main()
     std::cout << "-------------------------------------------------" << std::endl;
 
     // Calculating median at each step.
-    Heaps median;
+    PriorityQueues median;
     
     std::vector<int> sequence = {1, 0, 3, 5, 2, 0, 1};
     for (int num : sequence) 
@@ -82,7 +82,7 @@ int main()
     std::cout << "\n-------------------------------------------------" << std::endl;
 
     // Max elements.
-    Heaps max;
+    PriorityQueues max;
 
     int x = 3;
     std::vector<int> max_values = {16, 60, 73, 45, 52, 30, 81};
