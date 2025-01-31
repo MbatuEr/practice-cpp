@@ -3,7 +3,7 @@
 int main() 
 {
     // Merging arrays.
-    PriorityQueues merger;
+    PriorityQueues pq;
 
     std::vector<std::vector<int>> sequences = 
     {
@@ -11,8 +11,7 @@ int main()
         {0, 6},
         {0, 6, 28}
     };
-
-    std::vector<int> mergedSequence = merger.mergeSortedArrays(sequences);
+    std::vector<int> mergedSequence = pq.mergeSortedArrays(sequences);
 
     std::cout << "Merged Sorted Sequence: ";
     for (int num : mergedSequence) 
@@ -22,11 +21,9 @@ int main()
     std::cout << "\n-------------------------------------------------" << std::endl;
 
     // Sorting an increasing-decreasing array.
-    PriorityQueues sorted;
-    
     std::vector<int> arr = {57, 131, 493, 294, 221, 339, 418, 452, 442, 190};
     
-    std::vector<int> sortedArray = sorted.sortIncreasingDecreasingArray(arr);
+    std::vector<int> sortedArray = pq.sortIncreasingDecreasingArray(arr);
 
     std::cout << "Sorted Array: ";
     for (int num : sortedArray) 
@@ -36,11 +33,10 @@ int main()
     std::cout << "\n-------------------------------------------------" << std::endl;
 
     // Sorting an array which is k away at most.
-    PriorityQueues sort_k_away;
     std::vector<int> k_sorted_arr = {3, -1, 2, 6, 4, 5, 8};
     int k = 2;
 
-    std::vector<int> sortedArr = sort_k_away.sortKSortedArray(k_sorted_arr, k);
+    std::vector<int> sortedArr = pq.sortKSortedArray(k_sorted_arr, k);
 
     std::cout << "Sorted Array: ";
     for (int num : sortedArr) 
@@ -58,7 +54,7 @@ int main()
         Star(0.5, 0.5, 0.5)
     };
 
-    int key = 3;  // Get the 3 closest stars
+    int key = 3;
 
     std::vector<Star> closestStars = PriorityQueues::findKClosestStars(stars, k);
 
@@ -71,23 +67,19 @@ int main()
     std::cout << "-------------------------------------------------" << std::endl;
 
     // Calculating median at each step.
-    PriorityQueues median;
-    
     std::vector<int> sequence = {1, 0, 3, 5, 2, 0, 1};
     for (int num : sequence) 
     {
-        median.insertForMedian(num);
-        std::cout << median.getMedian() << " ";
+        pq.insertForMedian(num);
+        std::cout << pq.getMedian() << " ";
     }
     std::cout << "\n-------------------------------------------------" << std::endl;
 
     // Max elements.
-    PriorityQueues max;
-
     int x = 3;
     std::vector<int> max_values = {16, 60, 73, 45, 52, 30, 81};
 
-    std::vector<int> values = max.findkLargestElements(max_values, x);
+    std::vector<int> values = pq.findkLargestElements(max_values, x);
 
     std::cout << "Highest " << x << " values are: ";
     for(int value : values)

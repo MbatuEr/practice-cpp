@@ -7,9 +7,7 @@
 #include <algorithm>
 #include <string>
 #include <cmath>
-
-using pairs = std::pair<int, std::pair<int, int>>; 
-
+ 
 struct Element 
 {
     int value;
