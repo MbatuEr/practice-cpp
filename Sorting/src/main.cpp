@@ -42,17 +42,17 @@ int main()
     std::cout << "----------------------------------------------" << std::endl;
 
     // Find the given index in the list.
-    // Sorting sorts({1, 3, 5, 7, 9, 11, 13, 15, 17, 19});
-    // int x = 9;
-    // int index = sorts.findElement(x);
+    Sorting sorts({1, 3, 5, 7, 9, 11, 13, 15, 17, 19});
+    int x = 9;
+    int index = sorts.findElement(x);
 
-    // if (index != -1) 
-    // {
-    //     std::cout << "Element " << x << " found at index " << index << std::endl;
-    // } else {
-    //     std::cout << "Element " << x << " not found." << std::endl;
-    // }
-    // std::cout << "----------------------------------------------" << std::endl;
+    if (index != -1) 
+    {
+        std::cout << "Element " << x << " found at index " << index << std::endl;
+    } else {
+        std::cout << "Element " << x << " not found." << std::endl;
+    }
+    std::cout << "----------------------------------------------" << std::endl;
 
     // Sorting by heap sort.
     std::vector<std::string> data = {
@@ -161,7 +161,7 @@ int main()
     std::cout << "\n----------------------------------------------" << std::endl;
 
     // Perform Radix sort.
-    std::vector<int> radix_arr = {170, 45, 75, 90, 802, 24, 2, 66};
+    std::vector<int> radix_arr = {17012, 45345, 75234, 90714, 12802, 234, 23, 4466};
 
     std::cout << "Original array: \n";
     for (float num : radix_arr) 
