@@ -8,28 +8,42 @@
 #include <string>
 #include <queue>
 #include <list>
+#include <cstdlib>  // For rand()
+#include <ctime>  
 
-struct Event {
+struct Event 
+{
     int start;
     int end;
 };
 
-struct Student {
+struct Student 
+{
     std::string name;
     int age;
 };
 
-struct Team {
+struct Team 
+{
     std::string name;
     int height;
 
     bool operator<(const Team& other) const;
 };
 
+// Custom hash function for std::vector<int>
+struct VectorHash 
+{
+    std::size_t operator()(const std::vector<int>& vec) const; 
+};
+
 class Sorting
 {
     private:
-        std::vector<int> data;  
+        std::vector<int> data;
+
+        // Returns the element at index i in 0(1) time.
+        int elementAt(int i) const;
 
         // Prints the sorted arrays.
         void printLine(const std::vector<Team>& front_line, const std::vector<Team>& back_line);
@@ -44,9 +58,10 @@ class Sorting
         void countingSort(std::vector<int>& arr, int exp);
     
     public:
+        // Default constructor.
         Sorting();
         
-        // Constructor.
+        // Constructor for findElement().
         Sorting(const std::vector<int>& arr);
 
         // Merges two array in sorted order.
@@ -57,9 +72,6 @@ class Sorting
 
         // Checks a given input whether it's in the array or not.
         int findInRotatedArray(const std::vector<int>& arr, int target);
-
-        // Returns the element at index i in 0(1) time.
-        int elementAt(int i) const;
 
         // Finds the given index in the list.
         int findElement(int x) const;
@@ -82,8 +94,11 @@ class Sorting
         // Sorts two unsorted vectors into two different arrays.
         void teamPhoto(std::vector<Team>& team1, std::vector<Team>& team2);
 
-        // Quick Sort function.
-        void quickSort(std::vector<int>& arr, int low, int high);
+        // Function to perform Quick Sort.
+        void quickSort(int low, int high);
+
+        // Prints the values in the data.
+        void printValues();
 
         // Function to perform Bucket Sort.
         void bucketSort(std::vector<float>& arr);

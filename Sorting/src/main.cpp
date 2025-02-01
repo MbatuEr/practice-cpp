@@ -42,17 +42,17 @@ int main()
     std::cout << "----------------------------------------------" << std::endl;
 
     // Find the given index in the list.
-    Sorting sorts({1, 3, 5, 7, 9, 11, 13, 15, 17, 19});
-    int x = 9;
-    int index = sorts.findElement(x);
+    // Sorting sorts({1, 3, 5, 7, 9, 11, 13, 15, 17, 19});
+    // int x = 9;
+    // int index = sorts.findElement(x);
 
-    if (index != -1) 
-    {
-        std::cout << "Element " << x << " found at index " << index << std::endl;
-    } else {
-        std::cout << "Element " << x << " not found." << std::endl;
-    }
-    std::cout << "----------------------------------------------" << std::endl;
+    // if (index != -1) 
+    // {
+    //     std::cout << "Element " << x << " found at index " << index << std::endl;
+    // } else {
+    //     std::cout << "Element " << x << " not found." << std::endl;
+    // }
+    // std::cout << "----------------------------------------------" << std::endl;
 
     // Sorting by heap sort.
     std::vector<std::string> data = {
@@ -131,22 +131,14 @@ int main()
     std::cout << "----------------------------------------------" << std::endl;
 
     // Perform Quick Sort
-    std::vector<int> input_array = {10, 80, 30, 90, 40, 50, 70};
-
-    std::cout << "Original array: ";
-    for (int num : input_array) 
-    {
-        std::cout << num << " ";
-    }
-    std::cout << std::endl;
+    srand(time(0));
+    std::vector<int> qvec = {10, 80, 30, 90, 40, 50, 70};
+    Sorting qs(qvec);
     
-    sort.quickSort(input_array, 0, input_array.size() - 1);
+    qs.quickSort(0, qvec.size() - 1);
 
-    std::cout << "Sorted array: ";
-    for (int num : input_array) 
-    {
-        std::cout << num << " ";
-    }
+    std::cout << "Sorted Array: ";
+    qs.printValues();
     std::cout << "\n----------------------------------------------" << std::endl;
     
     // Perform Bucket sort.

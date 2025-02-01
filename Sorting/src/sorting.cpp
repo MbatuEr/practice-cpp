@@ -9,6 +9,16 @@ bool Team::operator<(const Team& other) const
         return height < other.height;
 }
 
+std::size_t VectorHash::operator()(const std::vector<int>& vec) const
+{
+    std::size_t hash = 0;
+    for (int num : vec) 
+    {
+        hash ^= std::hash<int>()(num) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+    }
+    return hash;
+}
+
 void Sorting::mergeSortedArrays(std::vector<int>& A, int m, std::vector<int>& B, int n) 
 {    
     int i = m - 1;  
@@ -34,17 +44,19 @@ void Sorting::mergeSortedArrays(std::vector<int>& A, int m, std::vector<int>& B,
 
 void Sorting::groupAnagrams(std::vector<std::string>& strs) 
 {
-    std::unordered_map<std::string, std::vector<std::string>> anagramGroups;
+    std::unordered_map<std::vector<int>, std::vector<std::string>, VectorHash> anagramGroups;
 
     for (const auto& str : strs) 
     {
-        std::string sortedStr = str;
-        std::sort(sortedStr.begin(), sortedStr.end());
-
-        anagramGroups[sortedStr].push_back(str);
+        std::vector<int> freq(26, 0);  
+        for (char c : str) 
+        {
+            freq[c - 'a']++; 
+        }
+        anagramGroups[freq].push_back(str);
     }
-    int index = 0;
 
+    int index = 0;
     for (auto& group : anagramGroups) 
     {
         for (const auto& anagram : group.second) 
@@ -52,7 +64,7 @@ void Sorting::groupAnagrams(std::vector<std::string>& strs)
             strs[index++] = anagram;
         }
     }
-    std::reverse(strs.begin(), strs.end());
+    reverse(strs.begin(), strs.end());
 }
 
 int Sorting::findInRotatedArray(const std::vector<int>& arr, int target) 
@@ -73,7 +85,7 @@ int Sorting::findInRotatedArray(const std::vector<int>& arr, int target)
                 right = mid - 1;
             }
             else {
-                left = mid - 1;
+                left = mid + 1;
             }
         }
         else {
@@ -322,32 +334,37 @@ void Sorting::printLine(const std::vector<Team>& front_line, const std::vector<T
     std::cout << std::endl;
 }
 
-int Sorting::partition(std::vector<int>& arr, int low, int high) 
+void Sorting::quickSort(int low, int high) 
 {
-    int pivot = arr[high]; 
-    int i = low - 1;       
+    if (low >= high) return;
 
-    for (int j = low; j < high; ++j) 
+    int i = low;
+    int j = high;
+    int pivot_index = low + rand() % (high - low + 1);
+    int pivot = data[pivot_index];
+
+    while (i <= j) 
     {
-        if (arr[j] <= pivot) 
+        while (i <= high && data[i] < pivot) i++;  
+        while (j >= low && data[j] > pivot) j--;   
+        
+        if (i <= j) 
         {
-            ++i;                 
-            std::swap(arr[i], arr[j]); 
+            std::swap(data[i], data[j]);
+            i++;
+            j--;
         }
     }
-
-    std::swap(arr[i + 1], arr[high]);
-    return i + 1; 
+    
+    if (low < j) quickSort(low, j);
+    if (high > i)  quickSort(i, high);
 }
 
-void Sorting::quickSort(std::vector<int>& arr, int low, int high) 
+void Sorting::printValues() 
 {
-    if (low < high) 
+    for (int val : data) 
     {
-        int pi = partition(arr, low, high);
-
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
+        std::cout << val << " ";
     }
 }
 
