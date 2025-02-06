@@ -7,6 +7,15 @@
 #include <functional>
 #include <unordered_map>
 #include <unordered_set>
+#include <utility>
+#include <limits>
+#include <cmath>
+#include <climits>
+
+typedef std::pair<double, int> pdi; // (distance, vertex)
+
+const double INF = std::numeric_limits<double>::infinity();
+const double EPSILON = 1e-6; // Small penalty to prioritize fewer edges
 
 // Point structure for adjacency matrixes.
 struct Point 
@@ -19,6 +28,12 @@ struct Vertex
 {
     int label;
     std::vector<Vertex*> neighbors;
+};
+
+// Structure to represent an edge
+struct Edge 
+{
+    int source, destination, weight;
 };
 
 template <typename T>
@@ -50,7 +65,9 @@ class Graph
 
         // Checks if the list bipartite or not.
         bool isBipartite();
-        
+
+        // Find the maximum number of teams that can be photographed.
+        int maxTeams();
 };
 
 class GraphBase 
@@ -65,7 +82,12 @@ class GraphBase
 
         // Checks if input strings can be obtained from each other through the given sets of strings.
         int shortestProductionSequence(const std::string& s, const std::string& t, const std::unordered_set<std::string>& d);
- 
+
+        // Finds the shortest path with the fewest edges by using Dijkstra's algorithm.
+        std::vector<int> shortestPathWithFewestEdges(int n, std::vector<std::vector<std::pair<int, double>>>& adj, int s, int t);
+
+        // Implements  Bellman-Ford algorithm.
+        void bellmanFord(int n, std::vector<Edge>& edges, int source); 
 };
 
 #endif // GRAPH_H

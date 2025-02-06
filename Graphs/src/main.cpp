@@ -139,33 +139,6 @@ int main()
     }
     std::cout << "-----------------------------------------------" << std::endl;
     
-    // Example graph construction:
-    GraphBase base;
-    Vertex* v1 = new Vertex;
-    v1->label = 1;
-    Vertex* v2 = new Vertex;
-    v2->label = 2;
-    Vertex* v3 = new Vertex;
-    v3->label = 3;
-    Vertex* v4 = new Vertex;
-    v4->label = 4;
-
-    v1->neighbors = {v2, v4};
-    v2->neighbors = {v3};
-    v4->neighbors = {v3};
-
-    // Clone the graph starting from v1:
-    std::unordered_map<Vertex*, Vertex*> visited;
-    Vertex* v1_copy = base.cloneGraph(v1, visited);
-
-    std::cout << "Cloned graph labels:" << std::endl;
-    std::cout << v1_copy->label << " ";
-    for (Vertex* neighbor : v1_copy->neighbors) 
-    {
-        std::cout << neighbor->label << " ";
-    }
-    std::cout << "\n-----------------------------------------------" << std::endl;
-
     // Bipartite list.
     std::vector<std::vector<int>> adj1 = { // Example graph (adjacency list) - Bipartite
         {1, 2},
@@ -199,6 +172,46 @@ int main()
     }
     std::cout << "-----------------------------------------------" << std::endl;
 
+    // Team photo.
+    std::vector<std::vector<int>> teams = {
+        {190, 175, 170}, // Team A
+        {165, 180, 170}, // Team B
+        {195, 180, 175}, // Team C
+        {185, 170, 165}, // Team D
+        {185, 170, 175}  // Team E
+    };
+    Graph<int> team(teams);
+    int result = team.maxTeams();
+
+    std::cout << "Maximum number of teams that can be photographed: " << result << std::endl;
+    std::cout << "-----------------------------------------------" << std::endl;
+
+    // Graph copying:
+    GraphBase base;
+    Vertex* v1 = new Vertex;
+    v1->label = 1;
+    Vertex* v2 = new Vertex;
+    v2->label = 2;
+    Vertex* v3 = new Vertex;
+    v3->label = 3;
+    Vertex* v4 = new Vertex;
+    v4->label = 4;
+
+    v1->neighbors = {v2, v4};
+    v2->neighbors = {v3};
+    v4->neighbors = {v3};
+
+    std::unordered_map<Vertex*, Vertex*> visited;
+    Vertex* v1_copy = base.cloneGraph(v1, visited);
+
+    std::cout << "Cloned graph labels:" << std::endl;
+    std::cout << v1_copy->label << " ";
+    for (Vertex* neighbor : v1_copy->neighbors) 
+    {
+        std::cout << neighbor->label << " ";
+    }
+    std::cout << "\n-----------------------------------------------" << std::endl;
+
     // Shortest production sequence. 
     GraphBase shortest_sequence;
     std::unordered_set<std::string> d = {"bat", "cot", "dog", "dag", "dot", "cat"};
@@ -215,5 +228,55 @@ int main()
         std::cout << "No production sequence found." << std::endl;
     }
     std::cout << "-----------------------------------------------" << std::endl;
+
+    // Example usage
+    GraphBase dijkstra;
+
+    int n = 5; // Number of vertices
+    std::vector<std::vector<std::pair<int, double>>> adj(n);
+
+    // Add edges (u, v, cost)
+    adj[0].push_back({1, 2});
+    adj[0].push_back({2, 4});
+    adj[1].push_back({2, 1});
+    adj[1].push_back({3, 7});
+    adj[2].push_back({4, 3});
+    adj[3].push_back({4, 1});
+
+    int a = 0; // Source vertex
+    int b = 4; // Target vertex
+
+    std::vector<int> paths = dijkstra.shortestPathWithFewestEdges(n, adj, a, b);
+
+    if (path.empty()) 
+    {
+        std::cout << "No path exists from " << a << " to " << b << std::endl;
+    } 
+    else {
+        std::cout << "Shortest path with fewest edges from " << a << " to " << b << ": ";
+        for (int v : paths) 
+        {
+            std::cout << v << " ";
+        }
+    }
+    std::cout << "\n-----------------------------------------------" << std::endl;
+
+    // Bellman-Ford algorithm.
+    GraphBase bf;
+    int nov = 5; // Number of vertices
+    std::vector<Edge> edges = {
+        {0, 1, -1}, // Edge from 0 to 1 with weight -1
+        {0, 2, 4},  
+        {1, 2, 3},  
+        {1, 3, 2},  
+        {1, 4, 2},  
+        {3, 2, 5},  
+        {3, 1, 1},  
+        {4, 3, -3} 
+    };
+
+    int source = 0; 
+    bf.bellmanFord(nov, edges, source);
+
     return 0;
 }

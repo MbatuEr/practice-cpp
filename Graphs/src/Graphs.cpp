@@ -219,6 +219,43 @@ bool Graph<T>::isBipartite()
     return true;
 }
 
+template <typename T>
+int Graph<T>::maxTeams() 
+{
+    for (auto& team : maze)
+    {
+        sort(team.begin(), team.end());
+    }
+
+    sort(maze.begin(), maze.end(), [](const std::vector<T>& a, const std::vector<T>& b)
+    {
+        return a.back() < b.back();
+    });
+    
+    int max_team_count = 0;
+    std::vector<T> last_row;
+
+    for(const auto& team : maze)
+    {
+        bool can_add = true;
+        for (size_t i = 0; i < team.size(); i++)
+        {
+            if (!last_row.empty() && team[i] <= last_row[i])
+            {
+                can_add = false;
+                break;
+            }
+        }
+        if (can_add)
+        {
+            last_row = team;
+            max_team_count++;
+        }
+    }
+
+    return max_team_count;
+}
+
 Vertex* GraphBase::cloneGraph(Vertex* u, std::unordered_map<Vertex*, Vertex*>& visited) 
 {
     if (u == nullptr) return nullptr;
@@ -252,8 +289,6 @@ bool GraphBase::differByOne(const std::string& a, const std::string& b)
         }
     }
     return diff_count == 1;
-    
-    
 }
 
 int GraphBase::shortestProductionSequence(const std::string& s, const std::string& t, const std::unordered_set<std::string>& dict)
@@ -286,4 +321,102 @@ int GraphBase::shortestProductionSequence(const std::string& s, const std::strin
         }
     }
     return -1;
+}
+
+std::vector<int> GraphBase::shortestPathWithFewestEdges(int n, std::vector<std::vector<std::pair<int, double>>>& adj, int s, int t)
+{
+    // modify edge costs: c'(e) = c(e) + EPSILON
+    for (int i = 0; i < n; i++)
+    {
+        for (auto& edge : adj[i])
+        {
+            edge.second += EPSILON; 
+        }
+    }
+    
+    // Dijkstra's Algorithm.
+    std::vector<double> dist(n, INF);
+    std::vector<int> parent(n, -1);
+    std::priority_queue<pdi, std::vector<pdi>, std::greater<pdi>> pq;
+
+    dist[s] = 0;
+    pq.push({0, s});
+
+    while (!pq.empty())
+    {
+        int u = pq.top().second;
+        double d = pq.top().first;
+        pq.pop();
+
+        if (u == t) break;
+        if (d > dist[u]) continue;
+        
+        for (auto& edge : adj[u])
+        {
+            int v = edge.first;
+            double w = edge.second;
+
+            if (dist[u] + w < dist[v])
+            {
+                dist[v] = dist[u] + w;
+                parent[v] = u;
+                pq.push({dist[v], v});
+            }
+        }        
+    }
+    
+    std::vector<int> path;
+    if (dist[t] == INF)
+    {
+        return path;
+    }
+
+    for (int v = t; v != -1; v = parent[v])
+    {
+        path.push_back(v);
+    }
+
+    reverse(path.begin(), path.end());
+    return path;
+}
+
+void GraphBase::bellmanFord(int n, std::vector<Edge>& edges, int source) 
+{
+    std::vector<int> distance(n, INT_MAX);
+    distance[source] = 0;
+
+    for (int i = 0; i <= n - 1; i++)
+    {
+        for(const auto& edge : edges)
+        {
+            int u = edge.source;
+            int v = edge.destination;
+            int w = edge.weight;
+
+            if (distance[u] != INT_MAX && distance[u] + w < distance[v])
+            {
+                distance[v] = distance[u] + w; 
+            }
+        }
+    }
+
+    // Check for negative cycles.
+    for (const auto& edge : edges)
+    {
+        int u = edge.source;
+        int v = edge.destination;
+        int w = edge.weight;
+
+        if (distance[u] != INT_MAX && distance[u] + w < distance[v])
+        {
+            std::cout << "Graph contains a negative weight cycle!" << std::endl;
+            return;
+        }
+    }
+
+    std::cout << "Vertex\tDistance from source" << std::endl;
+    for (int i = 0; i < n; i++)
+    {
+        std::cout << i <<"\t" << distance[i] << std::endl;
+    }
 }
