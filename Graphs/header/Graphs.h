@@ -12,10 +12,10 @@
 #include <cmath>
 #include <climits>
 
-typedef std::pair<double, int> pdi; // (distance, vertex)
+typedef std::pair<double, int> pdi; // (distance, vertex).
 
 const double INF = std::numeric_limits<double>::infinity();
-const double EPSILON = 1e-6; // Small penalty to prioritize fewer edges
+const double EPSILON = 1e-6; // Small penalty to prioritize fewer edges.
 
 // Point structure for adjacency matrixes.
 struct Point 
@@ -30,10 +30,13 @@ struct Vertex
     std::vector<Vertex*> neighbors;
 };
 
-// Structure to represent an edge
+// Structure to represent an edge.
 struct Edge 
 {
     int source, destination, weight;
+
+    // Comparison function to sort edges based on weight.
+    bool operator<(const Edge& other) const;  
 };
 
 template <typename T>
@@ -42,14 +45,17 @@ class Graph
     private:
         int rows;
         int cols;
-        std::vector<std::vector<T>>& maze;  // Template-based maze
+        std::vector<std::vector<T>>& adjacency_matrix;  
 
         // Checks if a point is valid within the maze boundaries.
         bool isValid(int x, int y);
 
     public:
         // Constructor.
-        Graph(std::vector<std::vector<T>>& maze);
+        Graph(std::vector<std::vector<T>>& adjacency_matrix);
+
+        // Print the distance matrix.
+        void printMatrix(const std::vector<std::vector<T>>& matrix);
 
         // Breadth-first search to find a path from entrance to exit in the maze.
         std::vector<Point> findPath(Point start, Point end);
@@ -68,6 +74,11 @@ class Graph
 
         // Find the maximum number of teams that can be photographed.
         int maxTeams();
+
+        // Implements Floyd-Warshall Algorithm.
+        void floydWarshall();
+
+        
 };
 
 class GraphBase 
@@ -75,6 +86,12 @@ class GraphBase
     private:
         // Checks if two strings differ by exactly one character.
         bool differByOne(const std::string& a, const std::string& b);
+
+        // Finds the parent of a node (for disjoint sets).
+        int findParent(std::vector<int>& parent, int i);
+
+        // Performs union of two sets (by rank).
+        void unionSets(std::vector<int>& parent, std::vector<int>& rank, int i, int j);
 
     public:
         // Clones a graph reachable from a given vertex.
@@ -86,8 +103,11 @@ class GraphBase
         // Finds the shortest path with the fewest edges by using Dijkstra's algorithm.
         std::vector<int> shortestPathWithFewestEdges(int n, std::vector<std::vector<std::pair<int, double>>>& adj, int s, int t);
 
-        // Implements  Bellman-Ford algorithm.
+        // Implements Bellman-Ford algorithm.
         void bellmanFord(int n, std::vector<Edge>& edges, int source); 
+
+        // Implements Kruskal's algorithm.
+        std::vector<Edge> kruskalsAlgorithm(std::vector<Edge>& edges, int numVertices) ;
 };
 
 #endif // GRAPH_H

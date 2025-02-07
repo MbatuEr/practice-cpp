@@ -50,26 +50,13 @@ int main()
     int x = 0, y = 0;
 
     std::cout << "Original Matrix:" << std::endl;
-    for (const auto& row : matrix) 
-    {
-        for (bool val : row) 
-        {
-            std::cout << val << " ";
-        }
-        std::cout << std::endl;
-    }
+    flip_color.printMatrix(matrix);
 
     flip_color.flipRegion(x, y);
 
     std::cout << "\nMatrix after flipping:" << std::endl;
-    for (const auto& row : matrix) 
-    {
-        for (bool val : row) 
-        {
-            std::cout << val << " ";
-        }
-        std::cout << std::endl;
-    }
+    flip_color.printMatrix(matrix);
+
     std::cout << "-----------------------------------------------" << std::endl;
 
     // Compute the enclosed region.
@@ -83,26 +70,13 @@ int main()
     Graph<char> enclosed(enclosed_region);
     
         std::cout << "Original Matrix:" << std::endl;
-    for (const auto& row : enclosed_region) 
-    {
-        for (char c : row) 
-        {
-            std::cout << c << " ";
-        }
-        std::cout << std::endl;
-    }
+    enclosed.printMatrix(enclosed_region);
 
     enclosed.computeEnclosedRegions();
 
     std::cout << "\nMatrix after flipping:" << std::endl;
-    for (const auto& row : enclosed_region) 
-    {
-        for (char c : row) 
-        {
-            std::cout << c << " ";
-        }
-        std::cout << std::endl;
-    }
+    enclosed.printMatrix(enclosed_region);
+
     std::cout << "-----------------------------------------------" << std::endl;
     
     // Detect loop.
@@ -263,6 +237,7 @@ int main()
 
     // Bellman-Ford algorithm.
     GraphBase bf;
+
     int nov = 5; // Number of vertices
     std::vector<Edge> edges = {
         {0, 1, -1}, // Edge from 0 to 1 with weight -1
@@ -277,6 +252,51 @@ int main()
 
     int source = 0; 
     bf.bellmanFord(nov, edges, source);
+    std::cout << "-----------------------------------------------" << std::endl;
 
+    // Kruskal's algorithm.
+    GraphBase k_alg;
+
+    int num_vertices = 4; 
+    std::vector<Edge> kruskal = {
+        {0, 1, 10},
+        {0, 2, 6},
+        {0, 3, 5},
+        {2, 3, 4},
+        {1, 3, 15}
+    };
+
+    std::vector<Edge> mst = k_alg.kruskalsAlgorithm(kruskal, num_vertices);
+
+    std::cout << "Minimum Spanning Tree (MST) edges:" << std::endl;
+    int mstWeight = 0;
+    for (const Edge& edge : mst) 
+    {
+        std::cout << edge.source << " -- " << edge.destination << "  Weight: " << edge.weight << std::endl;
+        mstWeight += edge.weight;
+    }
+     std::cout << "Total MST weight: " << mstWeight << std::endl;
+    std::cout << "-----------------------------------------------" << std::endl;
+    
+    // Floyd-Warshall algorithm.
+    int number_of_vertices = 4;
+    std::vector<std::vector<int>> dist = {
+        {0,   5,  INT_MAX, 10},
+        {INT_MAX, 0,   3,  INT_MAX},
+        {INT_MAX, INT_MAX, 0,   1},
+        {INT_MAX, INT_MAX, INT_MAX, 0}
+    };
+
+    Graph<int> fw(dist);
+
+    std::cout << "Original distance matrix:" << std::endl;
+    fw.printMatrix(dist);
+
+    fw.floydWarshall();
+
+    std::cout << "\nShortest-path distance matrix:" << std::endl;
+    fw.printMatrix(dist);
+    
     return 0;
 }
+/**/

@@ -4,17 +4,41 @@ template class Graph<int>;
 template class Graph<bool>;
 template class Graph<char>;
 
-template <typename T>
-Graph<T>::Graph(std::vector<std::vector<T>>& maze) : maze(maze) 
+bool Edge::operator<(const Edge& other) const 
 {
-    rows = maze.size();
-    cols = maze[0].size();
+    return this->weight < other.weight;
+}
+
+template <typename T>
+Graph<T>::Graph(std::vector<std::vector<T>>& adjacency_matrix) : adjacency_matrix(adjacency_matrix) 
+{
+    rows = adjacency_matrix.size();
+    cols = adjacency_matrix[0].size();
 }
 
 template <typename T>
 bool Graph<T>::isValid(int x, int y) 
 {
     return x >= 0 && x < rows && y >= 0 && y < cols;
+}
+
+template <typename T>
+void Graph<T>::printMatrix(const std::vector<std::vector<T>>& matrix) 
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            if (matrix[i][j] == INT_MAX)
+            {
+                std::cout << "INF ";
+            }
+            else {
+                std::cout << matrix[i][j] << "  ";
+            }
+        }
+        std::cout << std::endl;
+    }
 }
 
 template <typename T>
@@ -42,7 +66,7 @@ std::vector<Point> Graph<T>::findPath(Point start, Point end)
             int nx = last_point.x + dx[i];
             int ny = last_point.y + dy[i];
 
-            if (isValid(nx, ny) && maze[nx][ny] == 0 && !visited[nx][ny]) 
+            if (isValid(nx, ny) && adjacency_matrix[nx][ny] == 0 && !visited[nx][ny]) 
             {
                 std::vector<Point> new_path = current_path;
                 new_path.push_back({nx, ny});
@@ -57,13 +81,13 @@ std::vector<Point> Graph<T>::findPath(Point start, Point end)
 template <typename T>
 void Graph<T>::flipRegion(int x, int y) 
 {
-    T target_color = maze[x][y];
+    T target_color = adjacency_matrix[x][y];
 
     std::function<void(int, int)> dfs = [&](int i, int j) 
     {
-        if (!isValid(i, j) || maze[i][j] != target_color) return;
+        if (!isValid(i, j) || adjacency_matrix[i][j] != target_color) return;
 
-        maze[i][j] = !target_color;
+        adjacency_matrix[i][j] = !target_color;
 
         dfs(i + 1, j);
         dfs(i - 1, j);
@@ -82,12 +106,12 @@ void Graph<T>::computeEnclosedRegions()
 
     for (int i = 0; i < rows; i++)
     {
-        if (maze[i][0] == 'W' && !reachable[i][0])
+        if (adjacency_matrix[i][0] == 'W' && !reachable[i][0])
         {
             q.push({i, 0});
             reachable[i][0] = true;
         }
-        if (maze[i][cols - 1] == 'W' && !reachable[i][cols - 1])
+        if (adjacency_matrix[i][cols - 1] == 'W' && !reachable[i][cols - 1])
         {
             q.push({i, cols - 1});
             reachable[i][cols - 1] = true;
@@ -96,12 +120,12 @@ void Graph<T>::computeEnclosedRegions()
     
     for (int j = 0; j < cols; j++)
     {
-        if (maze[0][j] == 'W' && !reachable[0][j])
+        if (adjacency_matrix[0][j] == 'W' && !reachable[0][j])
         {
             q.push({0, j});
             reachable[0][j] = true;
         }
-        if (maze[rows - 1][j] == 'W' && !reachable[rows - 1][j])
+        if (adjacency_matrix[rows - 1][j] == 'W' && !reachable[rows - 1][j])
         {
             q.push({rows - 1, j});
             reachable[rows - 1][j] = true;
@@ -122,7 +146,7 @@ void Graph<T>::computeEnclosedRegions()
             int nx = current_point.x + dx[i];
             int ny = current_point.y + dy[i];
 
-            if (isValid(nx, ny) && maze[nx][ny] == 'W' && !reachable[nx][ny])
+            if (isValid(nx, ny) && adjacency_matrix[nx][ny] == 'W' && !reachable[nx][ny])
             {
                 q.push({nx, ny});
                 reachable[nx][ny] = true;
@@ -134,9 +158,9 @@ void Graph<T>::computeEnclosedRegions()
     {
         for (int j = 0; j < cols; j++)
         {
-            if (maze[i][j] == 'W' && !reachable[i][j])
+            if (adjacency_matrix[i][j] == 'W' && !reachable[i][j])
             {
-                maze[i][j] = 'B';
+                adjacency_matrix[i][j] = 'B';
             }
         }
     }
@@ -145,13 +169,13 @@ void Graph<T>::computeEnclosedRegions()
 template <typename T>
 bool Graph<T>::hasCycle()
 {
-    int num_nodes = maze.size();
+    int num_nodes = adjacency_matrix.size();
     std::vector<int> visited(num_nodes, 0);
 
     std::function<bool(int)> dfs = [&](int node)
     {
         visited[node] = 1;
-        for(int neighbor : maze[node])
+        for(int neighbor : adjacency_matrix[node])
         {
             if (visited[neighbor] == 1)
             {
@@ -185,7 +209,7 @@ bool Graph<T>::hasCycle()
 template <typename T>
 bool Graph<T>::isBipartite() 
 {
-    int n = maze.size();
+    int n = adjacency_matrix.size();
     std::vector<int> color(n, -1); // -1; uncolored, 0 or 1; colored.
     
     for (int  start_node = 0; start_node < n; start_node++)
@@ -201,7 +225,7 @@ bool Graph<T>::isBipartite()
                 int u = q.front();
                 q.pop();
 
-                for (int v : maze[u])
+                for (int v : adjacency_matrix[u])
                 {
                     if (color[v] == -1)
                     {
@@ -222,12 +246,12 @@ bool Graph<T>::isBipartite()
 template <typename T>
 int Graph<T>::maxTeams() 
 {
-    for (auto& team : maze)
+    for (auto& team : adjacency_matrix)
     {
         sort(team.begin(), team.end());
     }
 
-    sort(maze.begin(), maze.end(), [](const std::vector<T>& a, const std::vector<T>& b)
+    sort(adjacency_matrix.begin(), adjacency_matrix.end(), [](const std::vector<T>& a, const std::vector<T>& b)
     {
         return a.back() < b.back();
     });
@@ -235,7 +259,7 @@ int Graph<T>::maxTeams()
     int max_team_count = 0;
     std::vector<T> last_row;
 
-    for(const auto& team : maze)
+    for(const auto& team : adjacency_matrix)
     {
         bool can_add = true;
         for (size_t i = 0; i < team.size(); i++)
@@ -255,6 +279,34 @@ int Graph<T>::maxTeams()
 
     return max_team_count;
 }
+
+template <typename T>
+void Graph<T>::floydWarshall() 
+{
+    for (int k = 0; k < rows; k++)
+    {
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                if (adjacency_matrix[i][k] != INT_MAX && adjacency_matrix[k][j] != INT_MAX &&
+                    adjacency_matrix[i][j] > adjacency_matrix[i][k] + adjacency_matrix[k][j])
+                {
+                    adjacency_matrix[i][j] = adjacency_matrix[i][k] + adjacency_matrix[k][j];
+                }
+            }
+        }
+    }
+    for (int i = 0; i < rows; i++)
+    {
+        if (adjacency_matrix[i][i] < 0)
+        {
+            std::cout << "Graph contains a negative weoghted cycle!" << std::endl;
+            return;
+        }
+    }
+}
+
 
 Vertex* GraphBase::cloneGraph(Vertex* u, std::unordered_map<Vertex*, Vertex*>& visited) 
 {
@@ -419,4 +471,63 @@ void GraphBase::bellmanFord(int n, std::vector<Edge>& edges, int source)
     {
         std::cout << i <<"\t" << distance[i] << std::endl;
     }
+}
+
+int GraphBase::findParent(std::vector<int>& parent, int i) 
+{
+    if(parent[i] == i) return i;
+
+    return findParent(parent, parent[i]); 
+}
+
+void GraphBase::unionSets(std::vector<int>& parent, std::vector<int>& rank, int i, int j) 
+{
+    int i_id = findParent(parent, i);
+    int j_id = findParent(parent, j);
+
+    if (i_id != j_id)
+    {
+        if (rank[i_id] > rank[j_id])
+        {
+            parent[j_id] = i_id;
+        }
+        if (rank[i_id] < rank[j_id])
+        {
+            parent[i_id] = j_id;
+        }
+        else{
+            parent[j_id] = i_id;
+            rank[i_id]++;
+        }
+    }
+}
+
+std::vector<Edge> GraphBase::kruskalsAlgorithm(std::vector<Edge>& edges, int num_vertices) 
+{
+    std::vector<Edge> result;
+
+    sort(edges.begin(), edges.end());
+
+    std::vector<int> parent(num_vertices);
+    std::vector<int> rank(num_vertices, 0);
+
+    for (int i = 0; i < num_vertices; i++)
+    {
+        parent[i] = i;
+    }
+
+    // Iterate through sorted edges and add to MST if it doesn't create a cycle
+    for (const auto& edge : edges)
+    {
+        int source_parent = findParent(parent, edge.source);
+        int dest_parent = findParent(parent, edge.destination);
+
+        if (source_parent != dest_parent)
+        {
+            result.push_back(edge);
+            unionSets(parent, rank, edge.source, edge.destination);
+        }
+    }
+    
+    return result;
 }
