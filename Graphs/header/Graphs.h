@@ -54,11 +54,11 @@ class Graph
         // Constructor.
         Graph(std::vector<std::vector<T>>& adjacency_matrix);
 
-        // Print the distance matrix.
-        void printMatrix(const std::vector<std::vector<T>>& matrix);
-
         // Breadth-first search to find a path from entrance to exit in the maze.
         std::vector<Point> findPath(Point start, Point end);
+
+        // Print the distance matrix.
+        void printMatrix(const std::vector<std::vector<T>>& matrix);
 
         // Depth-First Search to find and flip the region.
         void flipRegion(int x, int y);
@@ -98,7 +98,7 @@ class GraphBase
         Vertex* cloneGraph(Vertex* u, std::unordered_map<Vertex*, Vertex*>& visited);
 
         // Checks if input strings can be obtained from each other through the given sets of strings.
-        int shortestProductionSequence(const std::string& s, const std::string& t, const std::unordered_set<std::string>& d);
+        int shortestProductionSequence(const std::string& s, const std::string& t, const std::unordered_set<std::string>& dict);
 
         // Finds the shortest path with the fewest edges by using Dijkstra's algorithm.
         std::vector<int> shortestPathWithFewestEdges(int n, std::vector<std::vector<std::pair<int, double>>>& adj, int s, int t);

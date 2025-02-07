@@ -23,25 +23,6 @@ bool Graph<T>::isValid(int x, int y)
 }
 
 template <typename T>
-void Graph<T>::printMatrix(const std::vector<std::vector<T>>& matrix) 
-{
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < cols; j++)
-        {
-            if (matrix[i][j] == INT_MAX)
-            {
-                std::cout << "INF ";
-            }
-            else {
-                std::cout << matrix[i][j] << "  ";
-            }
-        }
-        std::cout << std::endl;
-    }
-}
-
-template <typename T>
 std::vector<Point> Graph<T>::findPath(Point start, Point end) 
 {
     std::vector<std::vector<bool>> visited(rows, std::vector<bool>(cols, false));
@@ -76,6 +57,25 @@ std::vector<Point> Graph<T>::findPath(Point start, Point end)
         }
     }
     return {};
+}
+
+template <typename T>
+void Graph<T>::printMatrix(const std::vector<std::vector<T>>& matrix) 
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            if (matrix[i][j] == INT_MAX)
+            {
+                std::cout << "INF ";
+            }
+            else {
+                std::cout << matrix[i][j] << "  ";
+            }
+        }
+        std::cout << std::endl;
+    }
 }
 
 template <typename T>
@@ -169,8 +169,7 @@ void Graph<T>::computeEnclosedRegions()
 template <typename T>
 bool Graph<T>::hasCycle()
 {
-    int num_nodes = adjacency_matrix.size();
-    std::vector<int> visited(num_nodes, 0);
+    std::vector<int> visited(rows, 0);
 
     std::function<bool(int)> dfs = [&](int node)
     {
@@ -193,7 +192,7 @@ bool Graph<T>::hasCycle()
         return false;
     };
 
-    for (int i = 0; i < num_nodes; i++)
+    for (int i = 0; i < rows; i++)
     {
         if (visited[i] == 0)
         {
@@ -209,10 +208,9 @@ bool Graph<T>::hasCycle()
 template <typename T>
 bool Graph<T>::isBipartite() 
 {
-    int n = adjacency_matrix.size();
-    std::vector<int> color(n, -1); // -1; uncolored, 0 or 1; colored.
+    std::vector<int> color(rows, -1); // -1; uncolored, 0 or 1; colored.
     
-    for (int  start_node = 0; start_node < n; start_node++)
+    for (int  start_node = 0; start_node < rows; start_node++)
     {
         if (color[start_node == -1])
         {
@@ -262,7 +260,7 @@ int Graph<T>::maxTeams()
     for(const auto& team : adjacency_matrix)
     {
         bool can_add = true;
-        for (size_t i = 0; i < team.size(); i++)
+        for (size_t i = 0; i < cols; i++)
         {
             if (!last_row.empty() && team[i] <= last_row[i])
             {

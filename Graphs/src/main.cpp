@@ -90,10 +90,10 @@ int main()
 
     if (loop_check1.hasCycle()) 
     {
-        std::cout << "Graph contains a cycle (potential deadlock)." << std::endl;
+        std::cout << "Graph 1 contains a cycle (potential deadlock)." << std::endl;
     } 
     else {
-        std::cout << "Graph does not contain a cycle." << std::endl;
+        std::cout << "Graph 1 does not contain a cycle." << std::endl;
     }
 
     std::vector<std::vector<int>> graph2 = {
@@ -160,6 +160,26 @@ int main()
     std::cout << "Maximum number of teams that can be photographed: " << result << std::endl;
     std::cout << "-----------------------------------------------" << std::endl;
 
+    // Floyd-Warshall algorithm.
+    int number_of_vertices = 4;
+    std::vector<std::vector<int>> dist = {
+        {0,   5,  INT_MAX, 10},
+        {INT_MAX, 0,   3,  INT_MAX},
+        {INT_MAX, INT_MAX, 0,   1},
+        {INT_MAX, INT_MAX, INT_MAX, 0}
+    };
+
+    Graph<int> fw(dist);
+
+    std::cout << "Original distance matrix:" << std::endl;
+    fw.printMatrix(dist);
+
+    fw.floydWarshall();
+
+    std::cout << "\nShortest-path distance matrix:" << std::endl;
+    fw.printMatrix(dist);
+    std::cout << "-----------------------------------------------" << std::endl;
+    
     // Graph copying:
     GraphBase base;
     Vertex* v1 = new Vertex;
@@ -275,28 +295,7 @@ int main()
         std::cout << edge.source << " -- " << edge.destination << "  Weight: " << edge.weight << std::endl;
         mstWeight += edge.weight;
     }
-     std::cout << "Total MST weight: " << mstWeight << std::endl;
-    std::cout << "-----------------------------------------------" << std::endl;
-    
-    // Floyd-Warshall algorithm.
-    int number_of_vertices = 4;
-    std::vector<std::vector<int>> dist = {
-        {0,   5,  INT_MAX, 10},
-        {INT_MAX, 0,   3,  INT_MAX},
-        {INT_MAX, INT_MAX, 0,   1},
-        {INT_MAX, INT_MAX, INT_MAX, 0}
-    };
-
-    Graph<int> fw(dist);
-
-    std::cout << "Original distance matrix:" << std::endl;
-    fw.printMatrix(dist);
-
-    fw.floydWarshall();
-
-    std::cout << "\nShortest-path distance matrix:" << std::endl;
-    fw.printMatrix(dist);
-    
+    std::cout << "Total MST weight: " << mstWeight << std::endl;
+    std::cout << "-----------------------------------------------" << std::endl;    
     return 0;
 }
-/**/
