@@ -13,6 +13,7 @@
 #include <climits>
 
 typedef std::pair<double, int> pdi; // (distance, vertex).
+typedef std::pair<int, double> pid; // (vertex, distance).
 
 const double INF = std::numeric_limits<double>::infinity();
 const double EPSILON = 1e-6; // Small penalty to prioritize fewer edges.
@@ -77,8 +78,6 @@ class Graph
 
         // Implements Floyd-Warshall Algorithm.
         void floydWarshall();
-
-        
 };
 
 class GraphBase 
@@ -101,13 +100,13 @@ class GraphBase
         int shortestProductionSequence(const std::string& s, const std::string& t, const std::unordered_set<std::string>& dict);
 
         // Finds the shortest path with the fewest edges by using Dijkstra's algorithm.
-        std::vector<int> shortestPathWithFewestEdges(int n, std::vector<std::vector<std::pair<int, double>>>& adj, int s, int t);
+        std::vector<int> shortestPathWithFewestEdges(int n, std::vector<std::vector<pid>>& adj, int s, int t);
 
         // Implements Bellman-Ford algorithm.
         void bellmanFord(int n, std::vector<Edge>& edges, int source); 
 
         // Implements Kruskal's algorithm.
-        std::vector<Edge> kruskalsAlgorithm(std::vector<Edge>& edges, int numVertices) ;
+        std::vector<Edge> kruskalsAlgorithm(std::vector<Edge>& edges, int numVertices);
 };
 
 #endif // GRAPH_H

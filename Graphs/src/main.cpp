@@ -160,7 +160,7 @@ int main()
     std::cout << "Maximum number of teams that can be photographed: " << result << std::endl;
     std::cout << "-----------------------------------------------" << std::endl;
 
-    // Floyd-Warshall algorithm.
+    // Floyd-Warshall Algorithm.
     int number_of_vertices = 4;
     std::vector<std::vector<int>> dist = {
         {0,   5,  INT_MAX, 10},
@@ -223,7 +223,7 @@ int main()
     }
     std::cout << "-----------------------------------------------" << std::endl;
 
-    // Example usage
+    // Dijkstra's Algorithm.
     GraphBase dijkstra;
 
     int n = 5; // Number of vertices
@@ -255,7 +255,7 @@ int main()
     }
     std::cout << "\n-----------------------------------------------" << std::endl;
 
-    // Bellman-Ford algorithm.
+    // Bellman-Ford Algorithm.
     GraphBase bf;
 
     int nov = 5; // Number of vertices
@@ -274,7 +274,7 @@ int main()
     bf.bellmanFord(nov, edges, source);
     std::cout << "-----------------------------------------------" << std::endl;
 
-    // Kruskal's algorithm.
+    // Kruskal's Algorithm.
     GraphBase k_alg;
 
     int num_vertices = 4; 

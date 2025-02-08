@@ -373,7 +373,7 @@ int GraphBase::shortestProductionSequence(const std::string& s, const std::strin
     return -1;
 }
 
-std::vector<int> GraphBase::shortestPathWithFewestEdges(int n, std::vector<std::vector<std::pair<int, double>>>& adj, int s, int t)
+std::vector<int> GraphBase::shortestPathWithFewestEdges(int n, std::vector<std::vector<pid>>& adj, int s, int t)
 {
     // modify edge costs: c'(e) = c(e) + EPSILON
     for (int i = 0; i < n; i++)
