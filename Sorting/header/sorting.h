@@ -1,20 +1,16 @@
 #ifndef SORTING_H
 #define SORTING_H
 
-#include <vector>
 #include <iostream>
+#include <vector>
 #include <unordered_map>
 #include <algorithm>
-#include <string>
 #include <queue>
 #include <list>
-#include <cstdlib>  // For rand()
-#include <ctime>  
 
 struct Event 
 {
-    int start;
-    int end;
+    int start, end;
 };
 
 struct Student 
@@ -31,7 +27,7 @@ struct Team
     bool operator<(const Team& other) const;
 };
 
-// Custom hash function for std::vector<int>
+// Custom hash function for std::vector<int>.
 struct VectorHash 
 {
     std::size_t operator()(const std::vector<int>& vec) const; 
@@ -47,9 +43,6 @@ class Sorting
 
         // Prints the sorted arrays.
         void printLine(const std::vector<Team>& front_line, const std::vector<Team>& back_line);
-
-        // Partition function to rearrange elements around the pivot.
-        int partition(std::vector<int>& arr, int low, int high);
 
         // Helper function to get the maximum value in the array.
         int getMax(const std::vector<int>& arr);
@@ -77,7 +70,7 @@ class Sorting
         int findElement(int x) const;
 
         // Split the vector into chunks.
-        std::vector<std::vector<std::string>> splitIntoChunks(const std::vector<std::string>& data, int chunkSize);
+        std::vector<std::vector<std::string>> splitIntoChunks(const std::vector<std::string>& data, int chunk_size);
 
         // Merges sorted chunks.
         std::vector<std::string> mergeChunks(const std::vector<std::vector<std::string>>& chunks);

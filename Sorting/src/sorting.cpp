@@ -96,16 +96,13 @@ int Sorting::findInRotatedArray(const std::vector<int>& arr, int target)
             }
         }
     }
-
     return -1;
 }
 
 int Sorting::elementAt(int i) const
 {
-    if(i >= 0 && i < data.size())
-    {
-        return data[i];
-    }
+    if(i >= 0 && i < data.size()) return data[i];
+
     return -1;
 }
 
@@ -132,14 +129,12 @@ int Sorting::findElement(int x) const
     return -1;
 }
 
-std::vector<std::vector<std::string>> Sorting::splitIntoChunks(const std::vector<std::string>& data, int chunkSize) 
+std::vector<std::vector<std::string>> Sorting::splitIntoChunks(const std::vector<std::string>& data, int chunk_size) 
 {
     std::vector<std::vector<std::string>> chunks;
-    
-    for (size_t i = 0; i < data.size(); i += chunkSize)
+    for (size_t i = 0; i < data.size(); i += chunk_size)
     {
-        std::vector<std::string> chunk(data.begin() + i, data.begin() + std::min(i + chunkSize, data.size()));
-        
+        std::vector<std::string> chunk(data.begin() + i, data.begin() + std::min(i + chunk_size, data.size()));
         std::sort(chunk.begin(), chunk.end());
         chunks.push_back(chunk);    
     }
@@ -149,13 +144,11 @@ std::vector<std::vector<std::string>> Sorting::splitIntoChunks(const std::vector
 
 std::vector<std::string> Sorting::mergeChunks(const std::vector<std::vector<std::string>>& chunks) 
 {
-    auto cmp = [] (const std::pair<std::string, int>& a, const std::pair<std::string, int>& b) 
-    {
+    auto cmp = [] (const std::pair<std::string, int>& a, const std::pair<std::string, int>& b) {
         return a.first > b.first;
     };
 
     std::priority_queue<std::pair<std::string, int>, std::vector<std::pair<std::string, int>>, decltype(cmp)> min_heap(cmp);
-
     std::vector<int> indices(chunks.size(), 0);
 
     for(int i = 0; i < chunks.size(); i++)
@@ -187,8 +180,10 @@ std::vector<std::string> Sorting::mergeChunks(const std::vector<std::vector<std:
 
 int Sorting::maxConcurrentEvents(std::vector<Event> events) 
 {
-    std::sort(events.begin(), events.end(), 
-                [](const Event& a, const Event&b) {return a.end < b.end;});
+    std::sort(events.begin(), events.end(), [](const Event& a, const Event& b) {
+        return a.end < b.end;
+    });
+
     int max_concurrent = 0;
 
     std::queue<Event> active;
@@ -208,9 +203,7 @@ int Sorting::maxConcurrentEvents(std::vector<Event> events)
 std::vector<Event> Sorting::computeUnion(const std::vector<Event>& intervals)
 {
     std::vector<Event> sorted_intervals = intervals;
-    std::sort(sorted_intervals.begin(), sorted_intervals.end(), 
-            [](const Event& a, const Event& b) 
-            {
+    std::sort(sorted_intervals.begin(), sorted_intervals.end(), [](const Event& a, const Event& b) {
                 return (a.start < b.start && a.end < b.end) ||
                         (a.start == b.start && a.end < b.end);
             });
@@ -230,7 +223,6 @@ std::vector<Event> Sorting::computeUnion(const std::vector<Event>& intervals)
             current = next;
         }
     }
-    
     result.push_back(current);
 
     return result;
@@ -239,14 +231,12 @@ std::vector<Event> Sorting::computeUnion(const std::vector<Event>& intervals)
 void Sorting::sortingStudentsByAge(std::vector<Student>& students)
 {
     std::unordered_map<int, std::vector<Student>> age_buckets;
-
     for (const auto& student : students)
     {
         age_buckets[student.age].push_back(student);
     }
 
     std::vector<int> ages;
-
     for (const auto& [age, _] : age_buckets)
     {
         ages.push_back(age);
@@ -273,7 +263,6 @@ void Sorting::teamPhoto(std::vector<Team>& team1, std::vector<Team>& team2)
    std::sort(team2.begin(), team2.end());
 
    int team1_order = 0, team2_order = 0;
-
    while (team1_order < team1.size() && team2_order < team2.size() && front_line.size() < team1.size())
    {
         if (team1[team1_order] < team2[team2_order])
@@ -338,7 +327,6 @@ void Sorting::quickSort(int low, int high)
 
     int i = low;
     int j = high;
-    
     int pivot_index = low + rand() % (high - low + 1);
     int pivot = data[pivot_index];
 
@@ -354,7 +342,6 @@ void Sorting::quickSort(int low, int high)
             j--;
         }
     }
-    
     if(low < j) quickSort(low, j);
     if(high > i) quickSort(i, high);
 }
@@ -373,7 +360,6 @@ void Sorting::bucketSort(std::vector<float>& arr)
     if(n <= 1) return;
 
     std::vector<std::list<float>> buckets(n);
-
     for(float num : arr)
     {
         int bucket_index = static_cast<int> (num * n);
@@ -429,9 +415,6 @@ void Sorting::countingSort(std::vector<int>& arr, int exp)
     {
         arr[i] = output[i];
     }
-    
-    
-
 }
 
 void Sorting::radixSort(std::vector<int>& arr) 
