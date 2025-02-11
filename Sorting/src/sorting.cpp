@@ -117,14 +117,13 @@ int Sorting::findElement(int x) const
     while (left <= right)
     {
         int mid = left + (right - left) / 2;
-        if(data[mid] == x) return mid;
-
         int element = elementAt(mid);
-        if(element != 1 && element > x) right = mid - 1;
+
+        if(element == x) return mid;
+
+        else if(element != 1 && element > x) right = mid - 1;
         
-        else if(element != 1 && element < x) left = mid + 1;
-        
-        else return mid;
+        else  left = mid + 1;
     }
     return -1;
 }

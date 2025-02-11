@@ -62,9 +62,9 @@ int main()
         "lime", "watermelon", "blackberry", "pineapple", "coconut"
     };
 
-    int chunkSize = 5; 
+    int chunk_size = 5; 
 
-    std::vector<std::vector<std::string>> chunks = sort.splitIntoChunks(data, chunkSize);
+    std::vector<std::vector<std::string>> chunks = sort.splitIntoChunks(data, chunk_size);
 
     std::vector<std::string> sortedData = sort.mergeChunks(chunks);
 
@@ -130,7 +130,7 @@ int main()
     sort.teamPhoto(Fenerbahce, Galatasaray);
     std::cout << "----------------------------------------------" << std::endl;
 
-    // Perform Quick Sort
+    // Perform Quick Sort.
     srand(time(0));
     std::vector<int> qvec = {10, 80, 30, 90, 40, 50, 70};
     Sorting qs(qvec);

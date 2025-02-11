@@ -69,7 +69,7 @@ class Sorting
         // Finds the given index in the list.
         int findElement(int x) const;
 
-        // Split the vector into chunks.
+        // Splits the data into chunks and sorts each chunk.
         std::vector<std::vector<std::string>> splitIntoChunks(const std::vector<std::string>& data, int chunk_size);
 
         // Merges sorted chunks.
