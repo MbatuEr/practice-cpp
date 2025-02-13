@@ -170,7 +170,7 @@ template <typename T>
 bool Graph<T>::hasCycle()
 {
     std::vector<int> visited(rows, 0);
-
+    
     std::function<bool(int)> dfs = [&](int node)
     {
         visited[node] = 1;
@@ -268,6 +268,7 @@ int Graph<T>::maxTeams()
                 break;
             }
         }
+
         if (can_add)
         {
             last_row = team;
@@ -450,7 +451,6 @@ void GraphBase::bellmanFord(int n, std::vector<Edge>& edges, int source)
         }
     }
 
-    // Check for negative cycles.
     for (const auto& edge : edges)
     {
         int u = edge.source;
