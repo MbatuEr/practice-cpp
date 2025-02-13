@@ -489,7 +489,7 @@ void GraphBase::unionSets(std::vector<int>& parent, std::vector<int>& rank, int 
         {
             parent[j_id] = i_id;
         }
-        if (rank[i_id] < rank[j_id])
+        else if (rank[i_id] < rank[j_id])
         {
             parent[i_id] = j_id;
         }

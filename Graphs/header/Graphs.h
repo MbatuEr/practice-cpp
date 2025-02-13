@@ -106,7 +106,7 @@ class GraphBase
         void bellmanFord(int n, std::vector<Edge>& edges, int source); 
 
         // Implements Kruskal's algorithm.
-        std::vector<Edge> kruskalsAlgorithm(std::vector<Edge>& edges, int numVertices);
+        std::vector<Edge> kruskalsAlgorithm(std::vector<Edge>& edges, int num_vertices);
 };
 
 #endif // GRAPH_H
