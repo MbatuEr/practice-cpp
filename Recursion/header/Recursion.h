@@ -19,6 +19,12 @@ struct Tree
     Tree(int x);
 };
 
+struct Edges 
+{
+    int to;
+    int weight;
+};
+
 class Recursion
 {
     private:
@@ -49,6 +55,12 @@ class Recursion
         // Helper function to generate trees recursively.
         std::vector<Tree*> generateTreesHelper(int start, int end);
 
+        // Checks the validation of sudoku board.
+        bool isValid(const std::vector<std::vector<int>>& board, int row, int col, int num);
+
+        // Depth-first search to find the deepest node and its distance from the start node.
+        std::pair<int, int> dfs(int node, int parent, const std::vector<std::vector<Edges>>& adj, int& diameter);
+
     public:
         // Implements the recursive logic of the Tower of Hanoi problem.
         void towerOfHanoi(int n, char source, char destination, char auxiliary);
@@ -76,6 +88,18 @@ class Recursion
 
         // Function to print the tree in level order traversal (BFS).
         void printTree(Tree* root);
+
+        // Recursive function to complete a  9x9 sudoku board.
+        bool solveSudoku(std::vector<std::vector<int>>& board, int row, int col);
+
+        // Prints the completed sudoku board.
+        void printSudoku(std::vector<std::vector<int>>& board);
+
+        // Computes n-bit gray code with the given input.
+        std::vector<int> grayCode(int n);
+
+        // Computes the diameter of a tree.
+        int treeDiameter(const std::vector<std::vector<Edges>>& adj);
 };
 
 #endif // RECURSION_H

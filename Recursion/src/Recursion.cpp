@@ -202,16 +202,6 @@ std::vector<std::vector<std::string>> Recursion::generatePalindromicDecompositio
     return result;
 }
 
-std::vector<Tree*> Recursion::generateTrees(int n) 
-{
-    if (n == 0) 
-    {
-        return std::vector<Tree*>();
-    }
-
-    return generateTreesHelper(1, n);
-}
-
 std::vector<Tree*> Recursion::generateTreesHelper(int start, int end) 
 {
     std::vector<Tree*> result;
@@ -250,6 +240,16 @@ std::vector<Tree*> Recursion::generateTreesHelper(int start, int end)
     return result;
 }
 
+std::vector<Tree*> Recursion::generateTrees(int n) 
+{
+    if (n == 0) 
+    {
+        return std::vector<Tree*>();
+    }
+
+    return generateTreesHelper(1, n);
+}
+
 void Recursion::printTree(Tree* root) 
 {
     if (root == NULL) 
@@ -280,4 +280,146 @@ void Recursion::printTree(Tree* root)
         }
         std::cout << std::endl;
     }
+}
+
+bool Recursion::isValid(const std::vector<std::vector<int>>& board, int row, int col, int num)
+{
+    for (int i = 0; i < 9; i++)
+    {
+        if (board[row][i] == num) return false;
+    }
+
+    for (int j = 0; j < 9; j++)
+    {
+        if(board[j][col] == num) return false;
+    }
+
+    int block_row_start = row - row % 3;
+    int block_col_start = col - col % 3;
+
+    for (int i = block_row_start; i < block_row_start + 3; i++)
+    {
+        for (int j = block_col_start; j < block_col_start + 3; j++)
+        {
+            if(board[i][j] == num) return false;
+        }
+    }
+    
+    return true;
+}
+
+bool Recursion::solveSudoku(std::vector<std::vector<int>>& board, int row, int col)
+{
+    if (row == 9)
+    {
+        return true;
+    }
+
+    if (col == 9)
+    {
+        return solveSudoku(board, row + 1, 0);
+    }
+
+    if (board[row][col] != 0)
+    {
+        return solveSudoku(board, row, col + 1);
+    }
+
+    for (int num = 1; num <= 9; ++num)
+    {
+        if (isValid(board, row, col, num))
+        {
+            board[row][col] = num;
+            if (solveSudoku(board, row, col + 1))
+            {
+                return true;
+            }
+
+            board[row][col] = 0;
+        }
+    }
+    
+    return false;  
+}
+
+void Recursion::printSudoku(std::vector<std::vector<int>>& board)
+{
+    int count_row = 0, count_col = 0;
+    std::cout << "Solution found:\n-----------------------" << std::endl;
+    for (int i = 0; i < 9; ++i) 
+    {
+        count_row++;
+        for (int j = 0; j < 9; ++j) 
+        {
+            count_col++;
+            std::cout << board[i][j] << " ";
+            if (count_col % 3 == 0)
+            {
+                std::cout << "| ";
+            }
+        }
+        std::cout << "\n";
+        if (count_row % 3 == 0)
+        {
+            std::cout << "-----------------------" << std::endl;
+        }
+    }
+}
+
+std::vector<int> Recursion::grayCode(int n)
+{
+    std::vector<int> result;
+    if (n == 0)
+    {
+        result.push_back(0);
+        return result;
+    }
+
+    std::vector<int> recursive_result = grayCode(n - 1);
+
+    for (int num : recursive_result)
+    {
+        result.push_back(num);
+    }
+
+    int msb = 1 << (n - 1);
+    for (int i = recursive_result.size() - 1; i >= 0; --i)
+    {
+        result.push_back(recursive_result[i] | msb);
+    }
+    
+    return result;    
+}
+
+std::pair<int, int> Recursion::dfs(int node, int parent, const std::vector<std::vector<Edges>>& adj, int& diameter)
+{
+    int max_dist = 0;
+
+    for (const auto& edge : adj[node])
+    {
+        if (edge.to != parent)
+        {
+            std::pair<int, int> result = dfs(edge.to, node, adj, diameter);
+            int dist = result.second + edge.weight;
+
+            if (dist > max_dist)
+            {
+                max_dist = dist;
+            }
+        }
+    }
+
+    diameter = std::max(diameter, max_dist);
+    return {node, max_dist};
+}
+
+int Recursion::treeDiameter(const std::vector<std::vector<Edges>>& adj)
+{
+    int n = adj.size();
+    if(n == 0) return 0;
+
+    int diameter = 0;
+    dfs(0, -1, adj, diameter);
+
+    return diameter;
 }

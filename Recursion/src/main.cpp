@@ -142,15 +142,57 @@ int main()
         delete tree;
     }
     std::cout << "----------------------------------------------------------------------" << std::endl;
+    
+    // Sudoku validation.
+    std::vector<std::vector<int>> board = {
+        {5, 3, 0, 0, 7, 0, 0, 0, 0},
+        {6, 0, 0, 1, 9, 5, 0, 0, 0},
+        {0, 9, 8, 0, 0, 0, 0, 6, 0},
+        {8, 0, 0, 0, 6, 0, 0, 0, 3},
+        {4, 0, 0, 8, 0, 3, 0, 0, 1},
+        {7, 0, 0, 0, 2, 0, 0, 0, 6},
+        {0, 6, 0, 0, 0, 0, 2, 8, 0},
+        {0, 0, 0, 4, 1, 9, 0, 0, 5},
+        {0, 0, 0, 0, 8, 0, 0, 7, 9}
+    };
+
+    if (rec.solveSudoku(board, 0, 0)) 
+    {
+        rec.printSudoku(board);
+    } 
+    else {
+        std::cout << "No solution exists.\n";
+    }
+    std::cout << "----------------------------------------------------------------------" << std::endl;
+    
+    // Gray code.
+    int g_code = 3;
+
+    std::vector<int> result = rec.grayCode(g_code);
+
+    std::cout << "Gray code sequence for n = " << g_code << ":\n";
+    for (int num : result) 
+    {
+        std::cout << num << " ";
+    }
+    std::cout << "\n----------------------------------------------------------------------" << std::endl;
+    
+    // The diameter of a tree. 
+    int d = 7; // Number of nodes (A, B, C, D, E and two unnamed nodes)
+    std::vector<std::vector<Edges>> adj(d);
+
+    adj[0].push_back({1, 14}); // A -> B
+    adj[1].push_back({0, 14}); // B -> A
+    adj[1].push_back({2, 7});  // B -> C
+    adj[2].push_back({1, 7});  // C -> B
+    adj[2].push_back({3, 4});  // C -> D
+    adj[3].push_back({2, 4});  // D -> C
+    adj[3].push_back({4, 6});  // D -> E
+    adj[4].push_back({3, 6});  // E -> D
+
+    int diameter = rec.treeDiameter(adj);
+
+    std::cout << "The diameter of the tree is: " << diameter << std::endl;
+    std::cout << "----------------------------------------------------------------------" << std::endl;
     return 0;
 }
-
-/*
-
-*/
-/*
-
-*/
-/*
-
-*/
