@@ -179,8 +179,9 @@ void Array::FindNextPermutation(vector<int>& vec)
 
 void Array::OfflineRandomSampling(int key, vector<int>& vec)
 {
-    srand(time(0));
-    random_shuffle(vec.begin(), vec.end());
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(vec.begin(), vec.end(), g);
     vec.erase(vec.begin() + key,vec.end());
 }
 
