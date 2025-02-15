@@ -9,7 +9,6 @@
 #include <queue>
 #include <map>
 
-// Definition for a binary tree node.
 struct Tree
 {
     int val;
@@ -40,7 +39,7 @@ class Recursion
         // Recursive function to generate the power set.
         void generatePowerSetRecursive(const std::vector<int>& set, int index, std::vector<int> currentSubset, std::vector<std::vector<int>>& powerSet);
 
-        // Recursive function to compute all subsets of size k from 1 to s.
+        // Recursive function to compute all subsets of size k from 1 to n.
         void generateSubsetsOfSizeKRecursive(int n, int k, int start, std::vector<int>& currentSubset, std::vector<std::vector<int>>& result);
 
         // Recursive function to computes a number of parantheses with a given input.

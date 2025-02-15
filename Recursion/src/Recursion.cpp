@@ -83,7 +83,6 @@ std::vector<std::vector<int>> Recursion::generatePermutations(std::vector<int> a
     std::vector<std::vector<int>> result;
     generatePermutationsRecursive(arr, arr.size(), result);
     std::sort(result.begin(), result.end());
-
     return result;
 }
 
@@ -105,7 +104,6 @@ std::vector<std::vector<int>> Recursion::generatePowerSet(const std::vector<int>
     std::vector<std::vector<int>> power_set;
     std::vector<int> current_subset;
     generatePowerSetRecursive(set, 0, current_subset, power_set);
-
     return power_set;
 }
 
@@ -162,7 +160,6 @@ std::vector<std::string> Recursion::generateParentheses(int n)
 {
     std::vector<std::string> result;
     generateParenthesesRecursive(n, 0, 0, "", result);
-
     return result;
 }
 
@@ -198,7 +195,6 @@ std::vector<std::vector<std::string>> Recursion::generatePalindromicDecompositio
     std::vector<std::vector<std::string>> result;
     std::vector<std::string> current_decompositions;
     generatePalindromicDecompositionsRecursive(s, 0, current_decompositions, result);
-
     return result;
 }
 
@@ -263,8 +259,8 @@ void Recursion::printTree(Tree* root)
 
     while (!q.empty()) 
     {
-        int levelSize = q.size();
-        for (int i = 0; i < levelSize; i++) 
+        int level_size = q.size();
+        for (int i = 0; i < level_size; i++) 
         {
             Tree* node = q.front();
             q.pop();
@@ -284,16 +280,16 @@ void Recursion::printTree(Tree* root)
 
 bool Recursion::isValid(const std::vector<std::vector<int>>& board, int row, int col, int num)
 {
-    for (int i = 0; i < 9; i++)
+    for (int j = 0; j < board[0].size(); j++)
     {
-        if (board[row][i] == num) return false;
+        if(board[row][j] == num) return false; 
     }
 
-    for (int j = 0; j < 9; j++)
+    for (int i = 0; i < board.size(); i++)
     {
-        if(board[j][col] == num) return false;
+        if(board[i][col] == num) return false; 
     }
-
+    
     int block_row_start = row - row % 3;
     int block_col_start = col - col % 3;
 
@@ -304,18 +300,18 @@ bool Recursion::isValid(const std::vector<std::vector<int>>& board, int row, int
             if(board[i][j] == num) return false;
         }
     }
-    
+
     return true;
 }
 
 bool Recursion::solveSudoku(std::vector<std::vector<int>>& board, int row, int col)
 {
-    if (row == 9)
+    if (row == board.size())
     {
-        return true;
+        return true; 
     }
 
-    if (col == 9)
+    if (col == board[0].size())
     {
         return solveSudoku(board, row + 1, 0);
     }
@@ -325,43 +321,43 @@ bool Recursion::solveSudoku(std::vector<std::vector<int>>& board, int row, int c
         return solveSudoku(board, row, col + 1);
     }
 
-    for (int num = 1; num <= 9; ++num)
+    for (int num = 1; num <= board.size(); num++)
     {
         if (isValid(board, row, col, num))
         {
             board[row][col] = num;
-            if (solveSudoku(board, row, col + 1))
+            if(solveSudoku(board, row, col + 1))
             {
                 return true;
             }
-
             board[row][col] = 0;
         }
     }
     
-    return false;  
+    return false;
 }
 
 void Recursion::printSudoku(std::vector<std::vector<int>>& board)
 {
-    int count_row = 0, count_col = 0;
-    std::cout << "Solution found:\n-----------------------" << std::endl;
-    for (int i = 0; i < 9; ++i) 
+    int row_count = 0, col_count = 0;
+    std::cout << "Solution found:\n-------------------------" << std::endl;
+    for (int i = 0; i < board.size(); i++)
     {
-        count_row++;
-        for (int j = 0; j < 9; ++j) 
+        row_count++;
+        std::cout << "| ";
+        for (int j = 0 ; j < board[0].size(); j++)
         {
-            count_col++;
+            col_count++;
             std::cout << board[i][j] << " ";
-            if (count_col % 3 == 0)
+            if (col_count % 3 == 0)
             {
                 std::cout << "| ";
             }
         }
-        std::cout << "\n";
-        if (count_row % 3 == 0)
+        std::cout << std::endl;
+        if (row_count % 3 == 0)
         {
-            std::cout << "-----------------------" << std::endl;
+            std::cout << "-------------------------" << std::endl;
         }
     }
 }
@@ -388,7 +384,7 @@ std::vector<int> Recursion::grayCode(int n)
         result.push_back(recursive_result[i] | msb);
     }
     
-    return result;    
+    return result;  
 }
 
 std::pair<int, int> Recursion::dfs(int node, int parent, const std::vector<std::vector<Edges>>& adj, int& diameter)
