@@ -62,22 +62,15 @@ bool HashTables::isPalindromePermutation(const std::string& str)
         }
     }
     return oddCount <= 1;
-}
+} 
 
-bool HashTables::isOneAwayChecker(const std::string& str1, const std::string& str2)
+bool HashTables::isOneAway(const std::string& str1, const std::string& str2)
 {
     if (abs(str1.size() - str2.size()) >= 2)
     {
         return false;   
     }
-    else
-    {
-        return isOneAway(str1, str2);
-    }
-}    
 
-bool HashTables::isOneAway(const std::string& str1, const std::string& str2)
-{
     charcount.clear();
     int diffCount = 0;
 
@@ -250,14 +243,11 @@ std::unordered_map<std::string, double> HashTables::averageOfTopThreeScores( std
     
     for (auto& it : wordIndex)
     {
-        if(notes[it.first] >= 3)
+        if(notes[it.first] >= 3 && wordIndex[it.first] > maxScore)
         {
-            if (wordIndex[it.first] > maxScore)
-            {
-                result.clear();
-                maxScore = it.second;
-                result[it.first] = maxScore / 3.0;
-            }    
+            result.clear();
+            maxScore = it.second;
+            result[it.first] = maxScore / 3.0;
         }
     }
     return result;

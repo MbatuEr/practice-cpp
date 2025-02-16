@@ -41,7 +41,7 @@ int main()
     // One edit away checker.
     std::string str3 = "pale";
     std::string str4 = "bale";
-    bool isOneAway = hashTable.isOneAwayChecker(str3, str4);
+    bool isOneAway = hashTable.isOneAway(str3, str4);
     std::cout << "Input: " << str3 << ", " << str4 << std::endl;
     std::cout << "Is one away: " << (isOneAway ? "Yes" : "No") << std::endl;
     std::cout << "--------------------------------------------------------" <<std::endl;

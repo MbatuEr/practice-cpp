@@ -27,9 +27,6 @@ class HashTables
         // Checks if a string is a permutation of a palindrome.
         bool isPalindromePermutation(const std::string& str);
 
-        // Checks if two strings size differ by one
-        bool isOneAwayChecker(const std::string& str1, const std::string& str2);
-
         // Checks if two strings are one edit away from each other.
         bool isOneAway(const std::string& str1, const std::string& str2);
 
