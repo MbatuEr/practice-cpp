@@ -2,6 +2,8 @@
 
 Star::Star(double x, double y, double z) : x(x), y(y), z(z) {}
 
+Pair::Pair(std::string s, int f) : str(s), freq(f) {}
+
 bool Element::operator>(const Element& other) const 
 {
     return value > other.value;
@@ -10,6 +12,11 @@ bool Element::operator>(const Element& other) const
 bool CompareDistance::operator()(const Star& a, const Star& b) 
 {
     return a.distanceToEarth() > b.distanceToEarth();  // Min-heap for closest stars
+}
+
+bool Pair::operator>(const Pair& other) const 
+{
+    return freq > other.freq;
 }
 
 double Star::distanceToEarth() const 
@@ -178,4 +185,31 @@ std::vector<int> PriorityQueues::findkLargestElements(const std::vector<int>& ar
     }
 
     return result;
+}
+
+std::vector<std::string> PriorityQueues::mostFrequentStrings(const std::vector<std::string>& strs, int k)
+{
+    std::unordered_map<std::string, int> freqs;
+    for (const std::string& str : strs) 
+    {
+        freqs[str]++;
+    }
+    
+    for (const auto& [str, freq] : freqs) 
+    {
+        mostFrequent.emplace(str, freq);
+        if (mostFrequent.size() > k) 
+        {
+            mostFrequent.pop();
+        }
+    }
+    
+    std::vector<std::string> res;
+    while (!mostFrequent.empty()) 
+    {
+        res.push_back(mostFrequent.top().str);
+        mostFrequent.pop();
+    }
+    
+    return res;
 }

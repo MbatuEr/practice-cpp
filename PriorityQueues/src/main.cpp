@@ -88,5 +88,14 @@ int main()
     }
     std::cout << "\n-------------------------------------------------" << std::endl;
 
+    // Most frequent word.
+    std::vector<std::string> freq = {"go", "coding" , "byte", "byte", "go", "interview", "go"};
+    k = 2;
+    std::vector<std::string> most_freq_words = pq.mostFrequentStrings(freq, k);
+    for (const auto& str: most_freq_words)
+    {
+        std::cout << str << " ";
+    }
+    std::cout << "\n-------------------------------------------------" << std::endl;
     return 0;
 }

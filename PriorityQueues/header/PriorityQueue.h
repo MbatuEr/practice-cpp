@@ -7,7 +7,8 @@
 #include <algorithm>
 #include <string>
 #include <cmath>
- 
+#include <unordered_map>
+
 struct Element 
 {
     int value;
@@ -34,6 +35,17 @@ struct CompareDistance
     bool operator()(const Star& a, const Star& b);
 };
 
+struct Pair 
+{
+
+    std::string str;
+    int freq;
+    
+    Pair(std::string s, int f);
+    
+    bool operator>(const Pair& other) const;
+};
+
 class PriorityQueues 
 {
     private:
@@ -42,7 +54,8 @@ class PriorityQueues
         std::priority_queue<int, std::vector<int>, std::greater<int>> ksorted;
         std::priority_queue<int> left; 
         std::priority_queue<int, std::vector<int>, std::greater<int>> right; 
-        std::priority_queue<int> maxElement; 
+        std::priority_queue<int> maxElement;
+        std::priority_queue<Pair, std::vector<Pair>, std::greater<Pair>> mostFrequent; 
 
         // Splits the array into k sorted subarrays.
         std::vector<std::vector<int>> splitIntoSortedSubarrays(const std::vector<int>& arr);
@@ -68,6 +81,8 @@ class PriorityQueues
 
         // Finds the k number of highest elements in a heap.
         std::vector<int> findkLargestElements(const std::vector<int>& arr, int k);
+
+        std::vector<std::string> mostFrequentStrings(const std::vector<std::string>& strs, int k);
 };
 
 #endif // PRIORITYQUEUE_H
