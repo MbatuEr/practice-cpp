@@ -178,5 +178,12 @@ int main()
         std::cout << num << " ";
     }
     std::cout << "\n----------------------------------------------" << std::endl;
+
+    // An optimized quick sort.
+    std::vector<int> nums = {5, 2, 4, 3, 1, 6};
+    int k = 3;
+    int select = sort.kthLargestNumber(nums, k);
+    std::cout << "The " << k << "th largest number is: " << select << std::endl;
+    std::cout << "----------------------------------------------" << std::endl;
     return 0;
 }

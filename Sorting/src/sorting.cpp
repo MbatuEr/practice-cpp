@@ -424,3 +424,53 @@ void Sorting::radixSort(std::vector<int>& arr)
         countingSort(arr, exp);
     }
 }
+
+int Sorting::partition(std::vector<int>& nums, int left, int right) 
+{
+    long long pivot = nums[right];
+    int lo = left;
+    for (int i = left; i < right; ++i) 
+    {
+        if (nums[i] < pivot) 
+        {
+            std::swap(nums[lo], nums[i]);
+            lo++;
+        }
+    }
+    std::swap(nums[lo], nums[right]);
+    return lo;
+}
+
+int Sorting::quickSelect(std::vector<int>& nums, int left, int right, int k) 
+{
+    int n = nums.size();
+    if (left >= right) 
+    {
+        return nums[left];
+    }
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(left, right);
+    int randomIndex = dis(gen);
+    std::swap(nums[randomIndex], nums[right]);
+
+    int pivotIndex = partition(nums, left, right);
+
+    if (pivotIndex < n - k) 
+    {
+        return quickSelect(nums, pivotIndex + 1, right, k);
+    } 
+    else if (pivotIndex > n - k) 
+    {
+        return quickSelect(nums, left, pivotIndex - 1, k);
+    } 
+    else {
+        return nums[pivotIndex];
+    }
+}
+
+int Sorting::kthLargestNumber(std::vector<int>& nums, int k) 
+{
+    return quickSelect(nums, 0, nums.size() - 1, k);
+}

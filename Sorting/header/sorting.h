@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <queue>
 #include <list>
+#include <random>
 
 struct Event 
 {
@@ -49,7 +50,13 @@ class Sorting
 
         // Counting sort for a specific digit represented by given value.
         void countingSort(std::vector<int>& arr, int exp);
-    
+
+        // Finds kth largest integer in the list.
+        int quickSelect(std::vector<int>& nums, int left, int right, int k);
+        
+        // An optimized quick sort algorithm.
+        int partition(std::vector<int>& nums, int left, int right);
+
     public:
         // Default constructor.
         Sorting();
@@ -98,6 +105,9 @@ class Sorting
 
         // Radix Sort implementation.
         void radixSort(std::vector<int>& arr);
+
+        // Wrapper function to find kth largest number in the list.
+        int kthLargestNumber(std::vector<int>& nums, int k);        
 };
 
 #endif // SORTING_H
