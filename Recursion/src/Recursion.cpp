@@ -219,7 +219,7 @@ std::vector<Tree*> Recursion::generateTreesHelper(int start, int end)
     {
         std::vector<Tree*> leftSubtrees = generateTreesHelper(start, i - 1);
         std::vector<Tree*> rightSubtrees = generateTreesHelper(i + 1, end);
-
+        
         for (Tree* left : leftSubtrees) 
         {
             for (Tree* right : rightSubtrees) 
@@ -333,7 +333,6 @@ bool Recursion::solveSudoku(std::vector<std::vector<int>>& board, int row, int c
             board[row][col] = 0;
         }
     }
-    
     return false;
 }
 
@@ -372,7 +371,6 @@ std::vector<int> Recursion::grayCode(int n)
     }
 
     std::vector<int> recursive_result = grayCode(n - 1);
-
     for (int num : recursive_result)
     {
         result.push_back(num);
@@ -383,7 +381,7 @@ std::vector<int> Recursion::grayCode(int n)
     {
         result.push_back(recursive_result[i] | msb);
     }
-    
+
     return result;  
 }
 
@@ -397,14 +395,9 @@ std::pair<int, int> Recursion::dfs(int node, int parent, const std::vector<std::
         {
             std::pair<int, int> result = dfs(edge.to, node, adj, diameter);
             int dist = result.second + edge.weight;
-
-            if (dist > max_dist)
-            {
-                max_dist = dist;
-            }
+            max_dist = std::max(max_dist, dist);
         }
     }
-
     diameter = std::max(diameter, max_dist);
     return {node, max_dist};
 }
@@ -416,6 +409,5 @@ int Recursion::treeDiameter(const std::vector<std::vector<Edges>>& adj)
 
     int diameter = 0;
     dfs(0, -1, adj, diameter);
-
     return diameter;
 }
