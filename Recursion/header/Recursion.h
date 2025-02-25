@@ -37,10 +37,10 @@ class Recursion
         void generatePermutationsRecursive(std::vector<int> arr, int n, std::vector<std::vector<int>>& result);
     
         // Recursive function to generate the power set.
-        void generatePowerSetRecursive(const std::vector<int>& set, int index, std::vector<int> currentSubset, std::vector<std::vector<int>>& powerSet);
+        void generatePowerSetRecursive(const std::vector<int>& set, int index, std::vector<int> current_subset, std::vector<std::vector<int>>& power_set);
 
         // Recursive function to compute all subsets of size k from 1 to n.
-        void generateSubsetsOfSizeKRecursive(int n, int k, int start, std::vector<int>& currentSubset, std::vector<std::vector<int>>& result);
+        void generateSubsetsOfSizeKRecursive(int n, int k, int start, std::vector<int>& current_subset, std::vector<std::vector<int>>& result);
 
         // Recursive function to computes a number of parantheses with a given input.
         void generateParenthesesRecursive(int n, int open, int close, std::string current, std::vector<std::string>& result);
