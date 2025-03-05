@@ -53,7 +53,7 @@ int main()
     std::cout << "--------------------------------------------------------" << std::endl;
 
     // THE BEDBATHANDBEYOND.com problem.
-    std::unordered_set<std::string> dictionary = {"bed", "bath", "beyond", "bat", "hand", "a", "man", "plan", "canal"};
+    std::unordered_set<std::string> dictionary = {"bed", "bath", "beyond", "and", "a", "man", "plan", "canal"};
     std::string name1 = "bedbathandbeyond";
     std::string name2 = "amanaplanacanal";
 
@@ -70,6 +70,19 @@ int main()
     {
         std::cout << sequence << std::endl;
     }
+    std::cout << "--------------------------------------------------------" << std::endl;
+
+    // Min path weight
+    std::vector<std::vector<int>> triangle = {
+        {2},
+        {4, 4},
+        {8, 5, 6},
+        {4, 2, 6, 2},
+        {1, 5, 2, 3, 4}
+    };
+
+    int result = dp.minimumPathWeight(triangle);
+    std::cout << "Minimum path sum: " << result << std::endl;
     std::cout << "--------------------------------------------------------" << std::endl;
     return 0;
 }

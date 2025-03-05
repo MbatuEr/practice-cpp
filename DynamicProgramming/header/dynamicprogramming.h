@@ -22,7 +22,7 @@ class Dp
         // Computes number of ways to reach last index of the matrix by just going right and down.
         int traversing2DArray(int n);
         
-        // Computes the binomial coefficients.
+        // Wrapper function for x choose y.
         int binomial_coefficient(int n, int k);
 
         // Looks for the given pattern in the given grid.
@@ -34,6 +34,9 @@ class Dp
         // Finds the decomposed words in a given dictionary.
         std::vector<std::string> decomposeIntoDictionaryWords(const std::string& domain, 
                                                               const std::unordered_set<std::string>& dictionary);
+        
+        // Finds the minimum weighted path top to bottom in a triangle.
+        int minimumPathWeight(const std::vector<std::vector<int>>& triangle);
 
 };
 

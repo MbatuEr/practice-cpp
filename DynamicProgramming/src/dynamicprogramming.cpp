@@ -195,3 +195,24 @@ std::vector<std::string> Dp::decomposeIntoDictionaryWords(
 
     return decompositions;  
 }
+
+int Dp::minimumPathWeight(const std::vector<std::vector<int>>& triangle)
+{
+    if (triangle.empty()) return 0;
+    
+    std::vector<int> prev_row(triangle.front());
+    for (int i = 1; i < triangle.size(); i++)
+    {
+        std::vector<int> current_row(triangle[i]);
+        current_row[0] += prev_row[0];
+        
+        for (size_t j = 1; j < current_row.size() - 1; j++)
+        {
+            current_row[j] += std::min(prev_row[j - 1], prev_row[j]);
+        }
+        current_row.back() += prev_row.back();
+        prev_row.swap(current_row);        
+    }
+    
+    return *std::min_element(prev_row.cbegin(), prev_row.cend());
+}
