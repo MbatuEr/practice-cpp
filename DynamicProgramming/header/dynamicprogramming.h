@@ -6,11 +6,15 @@
 #include <algorithm>
 #include <functional>
 #include <unordered_set>
+#include <limits>
 
 class Dp
 {
     private:
         int computeXChooseY(int x, int y, std::vector<std::vector<int>>& x_choose_y);
+
+        int ComputeMaximumRevenueForRange(const std::vector<int>& coins, int a, int b, 
+                            std::vector<std::vector<int>>& maximum_revenue_for_range);
 
     public:
         // Computes the number of different combinations to reach the final score with the given scores.
@@ -26,17 +30,26 @@ class Dp
         int binomial_coefficient(int n, int k);
 
         // Looks for the given pattern in the given grid.
-        bool findPattern(const std::vector<std::vector<int>>& grid, const std::vector<int>& pattern);
+        bool findPattern(const std::vector<std::vector<int>>& grid, 
+                                    const std::vector<int>& pattern);
 
         // Computes the best way to fill a knapsack with a capacity.
         int knapsack(int cap, std::vector<int> weights, std::vector<int> values);
 
         // Finds the decomposed words in a given dictionary.
         std::vector<std::string> decomposeIntoDictionaryWords(const std::string& domain, 
-                                                              const std::unordered_set<std::string>& dictionary);
+                                        const std::unordered_set<std::string>& dictionary);
         
         // Finds the minimum weighted path top to bottom in a triangle.
         int minimumPathWeight(const std::vector<std::vector<int>>& triangle);
+        
+        // Wrapper function for computing maximum revenue for range.
+        int MaximumRevenue(const std::vector<int>& coins);
+        
+        // Arranges words in the fixed size line to get min size blanks.
+        int MinimumMessiness(const std::vector<std::string>& words, int line_length);
+        
+        int LongestNondecreasingSubsequenceLength(const std::vector<int>& A);
 
 };
 

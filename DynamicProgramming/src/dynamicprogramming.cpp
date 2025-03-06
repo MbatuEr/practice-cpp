@@ -92,32 +92,34 @@ bool Dp::findPattern(const std::vector<std::vector<int>>& grid, const std::vecto
     int rows = grid.size();
     if (rows == 0) return pattern.empty();
     int cols = grid[0].size();
-
-    std::vector<std::vector<bool>> visited(rows, std::vector<bool>(cols, false));
     
     std::vector<std::vector<std::vector<int>>> dp(rows, 
                 std::vector<std::vector<int>>(cols, std::vector<int>(pattern.size(), -1)));
 
-    std::function<bool(int, int, int)> search = [&](int row, int col, int pattern_index) 
+    std::function<bool(int, int, int)> dfs = [&](int row, int col, int pattern_index) 
     {
         if (pattern_index == pattern.size()) return true;
 
         if (row < 0 || row >= rows || col < 0 || col >= cols || 
-            visited[row][col] || grid[row][col] != pattern[pattern_index]) 
+            grid[row][col] != pattern[pattern_index]) 
         {
             return false;
         }
 
-        if (dp[row][col][pattern_index] != -1) return dp[row][col][pattern_index] == 1;
+        if (dp[row][col][pattern_index] != -1) 
+        {
+            return dp[row][col][pattern_index] == 1;
+        }
+        
+        int temp = grid[row][col];
+        const_cast<std::vector<std::vector<int>>&>(grid)[row][col] = -1;
 
-        visited[row][col] = true;
+        bool found = dfs(row + 1, col, pattern_index + 1) ||
+                     dfs(row - 1, col, pattern_index + 1) ||
+                     dfs(row, col + 1, pattern_index + 1) ||
+                     dfs(row, col - 1, pattern_index + 1);
 
-        bool found = search(row + 1, col, pattern_index + 1) ||
-                     search(row - 1, col, pattern_index + 1) ||
-                     search(row, col + 1, pattern_index + 1) ||
-                     search(row, col - 1, pattern_index + 1);
-
-        visited[row][col] = false;
+        const_cast<std::vector<std::vector<int>>&>(grid)[row][col] = temp; 
         dp[row][col][pattern_index] = found;
         return found;
     };
@@ -126,7 +128,7 @@ bool Dp::findPattern(const std::vector<std::vector<int>>& grid, const std::vecto
     {
         for (int j = 0; j < cols; ++j) 
         {
-            if (search(i, j, 0)) return true;
+            if (dfs(i, j, 0)) return true;
         }
     }
 
@@ -206,7 +208,7 @@ int Dp::minimumPathWeight(const std::vector<std::vector<int>>& triangle)
         std::vector<int> current_row(triangle[i]);
         current_row[0] += prev_row[0];
         
-        for (size_t j = 1; j < current_row.size() - 1; j++)
+        for (int j = 1; j < current_row.size() - 1; j++)
         {
             current_row[j] += std::min(prev_row[j - 1], prev_row[j]);
         }
@@ -215,4 +217,79 @@ int Dp::minimumPathWeight(const std::vector<std::vector<int>>& triangle)
     }
     
     return *std::min_element(prev_row.cbegin(), prev_row.cend());
+}
+
+int Dp::ComputeMaximumRevenueForRange(const std::vector<int>& coins, int a, int b, 
+                                      std::vector<std::vector<int>>& max_revenue_for_range)
+{
+    if(a > b) return 0;
+
+    if (max_revenue_for_range[a][b] == 0)
+    {
+        int max_revenue_a = coins[a] + 
+        std::min(ComputeMaximumRevenueForRange(coins, a + 2, b, max_revenue_for_range),
+                 ComputeMaximumRevenueForRange(coins, a + 1, b - 1, max_revenue_for_range));
+
+        int max_revenue_b = coins[b] + 
+        std::min(ComputeMaximumRevenueForRange(coins, a + 1, b - 1, max_revenue_for_range),
+                 ComputeMaximumRevenueForRange(coins, a, b - 2, max_revenue_for_range));
+
+        max_revenue_for_range[a][b] = std::max(max_revenue_a, max_revenue_b);
+    }
+
+    return max_revenue_for_range[a][b];
+}
+
+int Dp::MaximumRevenue(const std::vector<int>& coins)
+{
+    std::vector<std::vector<int>> max_revenue_for_range(coins.size(), 
+                                    std::vector<int>(coins.size(), 0));
+    return ComputeMaximumRevenueForRange(coins, 0, coins.size() - 1, max_revenue_for_range);        
+}
+
+int Dp::MinimumMessiness(const std::vector<std::string>& words, int line_length) 
+{
+    std::vector<int> min_messiness(words.size(), std::numeric_limits<int>::max());
+    int num_remaining_blanks = line_length - words[0].size();
+    min_messiness[0] = num_remaining_blanks * num_remaining_blanks;
+
+    for (int i = 1; i < words.size(); i++)
+    {
+        num_remaining_blanks = line_length - words[i].size();
+        min_messiness[i] = min_messiness[i - 1] + 
+                           num_remaining_blanks * num_remaining_blanks;
+
+        for (int j = i - 1; j >= 0; j--)
+        {
+            num_remaining_blanks -= (words[j].size() + 1);
+            if (num_remaining_blanks < 0)
+            {
+                break;
+            }
+            
+            int first_j_messiness = j - 1 < 0 ? 0 : min_messiness[j - 1];
+            int current_line_messiness = num_remaining_blanks * num_remaining_blanks;
+
+            min_messiness[i] = std::min(min_messiness[i], 
+                                        first_j_messiness + current_line_messiness);
+        }        
+    }
+    return min_messiness.back();
+}
+
+int Dp::LongestNondecreasingSubsequenceLength(const std::vector<int>& A) 
+{
+    std::vector<int> max_length(A.size(), 1);
+    for (int i = 1; i < A.size(); i++)
+    {
+        for (int j = 0; j < i; j++)
+        {
+            if (A[i] >= A[j])
+            {
+                max_length[i] = std::max(max_length[i], max_length[j] + 1);
+            }            
+        }        
+    }
+
+    return *std::max_element(max_length.begin(), max_length.end());
 }
