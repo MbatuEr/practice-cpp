@@ -4,7 +4,7 @@ int main()
 {
     // Tower of Hanoi.
     Recursion rec;
-    int numDisks = 4;
+    int numDisks = 3;
 
     if (numDisks <= 0) 
     {

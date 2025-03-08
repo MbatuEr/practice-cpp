@@ -49,7 +49,7 @@ int main()
     std::vector<int> weights = {5, 3, 4, 1};
     std::vector<int> values = {70, 50, 40, 10};
     int max_profit = dp.knapsack(cap, weights, values);
-    std::cout << "The max profit that can fill in the knapsaack is: " << max_profit << std::endl;
+    std::cout << "The max profit that can fill in the knapsack is: " << max_profit << std::endl;
     std::cout << "--------------------------------------------------------" << std::endl;
 
     // THE BEDBATHANDBEYOND.com problem.
@@ -87,20 +87,20 @@ int main()
 
     // Max revenue
     std::vector<int> coins = {25, 5, 10, 5, 10, 5, 10, 25, 1, 25, 1, 25, 1, 25, 5, 10};
-    int maxRevenue = dp.MaximumRevenue(coins);
+    int maxRevenue = dp.maximumRevenue(coins);
     std::cout << "Maximum revenue: " << maxRevenue << std::endl;
     std::cout << "--------------------------------------------------------" << std::endl;
 
     // Min messiness
     std::vector<std::string> words = {"aaa", "bbb", "c", "d", "ee", "ff", "ggggggg"};
     int line_length = 11;
-    int messiness = dp.MinimumMessiness(words, line_length);
+    int messiness = dp.minimumMessiness(words, line_length);
     std::cout << "Minimum messiness: " << messiness << std::endl;
     std::cout << "--------------------------------------------------------" << std::endl;
 
     // Longest nondecreasing sunsequence
     std::vector<int> A = {0, 8, 4, 12, 2, 10, 6, 14, 1, 9};
-    int length = dp.LongestNondecreasingSubsequenceLength(A);
+    int length = dp.longestNondecreasingSubsequenceLength(A);
     std::cout << "Length of longest nondecreasing subsequence: " << length << std::endl;
     std::cout << "--------------------------------------------------------" << std::endl;
     return 0;

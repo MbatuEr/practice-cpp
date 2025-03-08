@@ -6,7 +6,7 @@ void Recursion::towerOfHanoi(int n, char source, char destination, char auxiliar
 {
     if (n == 1)
     {
-        std::cout << "Move disk 1 from " << source << "to " << destination << std::endl;
+        std::cout << "Move disk 1 from " << source << " to " << destination << std::endl;
         return;
     }
 
@@ -94,8 +94,10 @@ void Recursion::generatePowerSetRecursive(const std::vector<int>& set, int index
         return;
     }
 
-    generatePowerSetRecursive(set, index + 1, current_subset, power_set);
     current_subset.push_back(set[index]);
+    generatePowerSetRecursive(set, index + 1, current_subset, power_set);
+
+    current_subset.pop_back();
     generatePowerSetRecursive(set, index + 1, current_subset, power_set);
 }
 
