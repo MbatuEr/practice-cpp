@@ -1,7 +1,5 @@
 #include "../header/array.h"
 
-using namespace std;
-
 void Array::DutchNationalFlag(int pivot, std::vector<int>& nums)
 {
     int low = 0, mid = 0, high = nums.size() - 1;
@@ -25,9 +23,9 @@ void Array::DutchNationalFlag(int pivot, std::vector<int>& nums)
     }
 }
 
-string Array::AddBinary(string s1, string s2)
+std::string Array::AddBinary(std::string s1, std::string s2)
 {
-    string result;
+    std::string result;
     int carry = 0;
     int i = s1.size() - 1;
     int j = s2.size() - 1;
@@ -48,16 +46,16 @@ string Array::AddBinary(string s1, string s2)
         --i;
         --j; 
     }
-    reverse(result.begin(), result.end());
+    std::reverse(result.begin(), result.end());
     return result;
 }
 
-vector<int> Array::Multiply(const vector<int>& v1, const vector<int>& v2)
+std::vector<int> Array::Multiply(const std::vector<int>& v1, const std::vector<int>& v2)
 {
     int n = size(v1);
     int m = size(v2);
     const int sign = v1.front() < 0 ^ v2.front() < 0 ? -1 : 1;
-    vector<int> result(n + m, 0);
+    std::vector<int> result(n + m, 0);
    
     for (int i = n - 1; i >= 0; --i)
     {
@@ -76,7 +74,7 @@ vector<int> Array::Multiply(const vector<int>& v1, const vector<int>& v2)
     return result;
 }
 
-bool Array::CanReachEnd(const vector<int>& vec)
+bool Array::CanReachEnd(const std::vector<int>& vec)
 {
     int counter = 0;
     int furthest_reach = 0;
@@ -84,7 +82,7 @@ bool Array::CanReachEnd(const vector<int>& vec)
     for (int i = 0; i <= furthest_reach && furthest_reach < last_index; i++)
     {
         int temp = furthest_reach;
-        furthest_reach = max(furthest_reach, vec[i] + i);
+        furthest_reach = std::max(furthest_reach, vec[i] + i);
         if (temp != furthest_reach)
         {
             ++counter;
@@ -92,12 +90,12 @@ bool Array::CanReachEnd(const vector<int>& vec)
     }
     if (furthest_reach >= last_index)
     {
-        cout << "The minimum number of steps to reach the end : " << counter << endl;
+        std::cout << "The minimum number of steps to reach the end : " << counter << std::endl;
     }
     return furthest_reach >= last_index;
 }
 
-void Array::DeleteDuplicates(vector <int>& vec)
+void Array::DeleteDuplicates(std::vector <int>& vec)
 {
     int s = size(vec);
     for (int i = 0; i < s; i++)
@@ -113,10 +111,10 @@ void Array::DeleteDuplicates(vector <int>& vec)
     }
 }
 
-int Array::ProfitFromStock(const vector<int>& stocklist)
+int Array::ProfitFromStock(const std::vector<int>& stocklist)
 {
     int highest_profit = 0;
-    int lowest_price = numeric_limits<int>::max();
+    int lowest_price = std::numeric_limits<int>::max();
     for (int price : stocklist)
     {
         if (price < lowest_price)
@@ -124,14 +122,14 @@ int Array::ProfitFromStock(const vector<int>& stocklist)
             lowest_price = price;
         }
         int temp = price - lowest_price;
-        highest_profit = max(highest_profit, temp);
+        highest_profit = std::max(highest_profit, temp);
     }
     return highest_profit;
 }
 
-vector <int> Array::FindPrimeValues(int key_value)
+std::vector <int> Array::FindPrimeValues(int key_value)
 {
-    vector<int> primes;
+    std::vector<int> primes;
     for (int i = key_value - 1; i > 2; --i)
     {
         bool is_prime = true;
@@ -152,17 +150,17 @@ vector <int> Array::FindPrimeValues(int key_value)
     return primes;
 }
 
-void Array::PermutingElements(vector<int>& vec1, vector<int>& vec2)
+void Array::PermutingElements(std::vector<int>& vec1, std::vector<int>& vec2)
 {
     for (int i = 0; i < vec1.size(); i++)
     {
-        swap(vec1[i],vec1[vec2[i]]);
+        std::swap(vec1[i],vec1[vec2[i]]);
         int temp = vec2[i];
-        swap(vec2[i],vec2[temp]);
+        std::swap(vec2[i],vec2[temp]);
     }
 }
 
-void Array::FindNextPermutation(vector<int>& vec)
+void Array::FindNextPermutation(std::vector<int>& vec)
 {
     int s = size(vec) - 2;
     while (s >= 0 && vec[s] >= vec[s+1])
@@ -171,13 +169,13 @@ void Array::FindNextPermutation(vector<int>& vec)
     }
     if (s == -1)
     {
-        cout << "Original is the last permutation." << endl;
+        std::cout << "Original is the last permutation." << std::endl;
     }
-    swap(*find_if(vec.rbegin(), vec.rend(), [&](int a) {return a > vec[s];}), vec[s]);  
-    reverse(vec.begin() + s + 1, vec.end());
+    std::swap(*find_if(vec.rbegin(), vec.rend(), [&](int a) {return a > vec[s];}), vec[s]);  
+    std::reverse(vec.begin() + s + 1, vec.end());
 }
 
-void Array::OfflineRandomSampling(int key, vector<int>& vec)
+void Array::OfflineRandomSampling(int key, std::vector<int>& vec)
 {
     std::random_device rd;
     std::mt19937 g(rd());
@@ -185,19 +183,19 @@ void Array::OfflineRandomSampling(int key, vector<int>& vec)
     vec.erase(vec.begin() + key,vec.end());
 }
 
-void Array::UpdateArrayWithProbabilities(int size, vector<int>& input_array, vector<double>& probabilities)
+void Array::UpdateArrayWithProbabilities(int size, std::vector<int>& input_array, std::vector<double>& probabilities)
 {
     if (input_array.size() != probabilities.size())
     {
-        cerr << "Error: The array and probabilities size do not match!" << endl;
+        std::cerr << "Error: The array and probabilities size do not match!" << std::endl;
     }
 
-    vector<int> counts(input_array.size(),0);
+    std::vector<int> counts(input_array.size(),0);
     for (size_t i = 0; i < probabilities.size() ; i++)
     {
         counts[i] = round(probabilities[i] * size);
     }
-    vector<int> updated_array;
+    std::vector<int> updated_array;
     updated_array.reserve(size);
     for (size_t i = 0; i < counts.size(); i++)
     {
@@ -206,7 +204,7 @@ void Array::UpdateArrayWithProbabilities(int size, vector<int>& input_array, vec
     input_array = move(updated_array);
 }
 
-bool Array::IsValidSudoku(vector<vector<int>>& board)
+bool Array::IsValidSudoku(std::vector<std::vector<int>>& board)
 {
     int row = board.size();
     int column = board.size();
@@ -216,7 +214,7 @@ bool Array::IsValidSudoku(vector<vector<int>>& board)
     // Check rows
     for (size_t i = 0; i < column; i++)
     {
-        unordered_set<int> checker;
+        std::unordered_set<int> checker;
         for (size_t j = 0; j < row; j++)
         {
             int temp = board[i][j];
@@ -231,7 +229,7 @@ bool Array::IsValidSudoku(vector<vector<int>>& board)
     // Check columns
     for (size_t j = 0; j < row; j++)
     {
-        unordered_set<int> checker;
+        std::unordered_set<int> checker;
         for (size_t i = 0; i < column; i++)
         {
             int temp = board[i][j];
@@ -245,13 +243,13 @@ bool Array::IsValidSudoku(vector<vector<int>>& board)
     return true;  
 }
 
-vector<int> Array::SpiralOrderOfArray(vector<vector<int>>& vec)
+std::vector<int> Array::SpiralOrderOfArray(std::vector<std::vector<int>>& vec)
 {
     int row = vec.size();
     if (row == 0) return {};
 
     int column = vec[0].size();
-    vector<int> arr;
+    std::vector<int> arr;
 
     int top = 0, bottom = row - 1;
     int left = 0, right = column - 1;
@@ -291,12 +289,12 @@ vector<int> Array::SpiralOrderOfArray(vector<vector<int>>& vec)
     return arr;
 }
 
-vector<vector<int>> Array::Rotating2DArray(vector<vector<int>>& vec)
+std::vector<std::vector<int>> Array::Rotating2DArray(std::vector<std::vector<int>>& vec)
 {
     int row = vec.size();
     int column = vec[0].size();
 
-    vector<vector<int>> rotated(column, vector<int>(row));
+    std::vector<std::vector<int>> rotated(column, std::vector<int>(row));
     for (int i = 0; i < row; i++)
     {
         for (int j = 0; j < column; j++)
@@ -307,10 +305,10 @@ vector<vector<int>> Array::Rotating2DArray(vector<vector<int>>& vec)
     return rotated;        
 }
 
-vector<int> Array::GeneratePascalTriangle(int n, int row, int column)
+std::vector<int> Array::GeneratePascalTriangle(int n, int row, int column)
 {
-    vector<vector<int>> pascal_triangle(row, vector<int>(column, 0));
-    vector<int> result(column);
+    std::vector<std::vector<int>> pascal_triangle(row, std::vector<int>(column, 0));
+    std::vector<int> result(column);
     pascal_triangle[0][row - 1] = 1;
     for (int i = 0; i < row - 1; i++)
     {
@@ -326,7 +324,7 @@ vector<int> Array::GeneratePascalTriangle(int n, int row, int column)
     return result;
 }
 
-string Array::ReplaceSpaces(string& str, int truelength)
+std::string Array::ReplaceSpaces(std::string& str, int truelength)
 {
     int space_count = 0;
     for (int i = 0; i < truelength; i++)
@@ -357,9 +355,9 @@ string Array::ReplaceSpaces(string& str, int truelength)
     return str;
 }
 
-string Array::StringCompression(string& str)
+std::string Array::StringCompression(std::string& str)
 {
-    string result;
+    std::string result;
     int count = 1;
     for (int i = 0; i < str.size(); i++)
     {
@@ -369,19 +367,19 @@ string Array::StringCompression(string& str)
         }
         else
         {
-            result += str[i] + to_string(count);
+            result += str[i] + std::to_string(count);
             count = 1;
         }
     }
     return result.size() < str.size() ? result : str;
 }
 
-bool Array::IsSubString(string& s1, string& s2)
+bool Array::IsSubString(std::string& s1, std::string& s2)
 {
     if (s1.size() != s2.size())
     {
         return false;
     }
-    string temp = s1 + s1;
-    return temp.find(s2) != string::npos;
+    std::string temp = s1 + s1;
+    return temp.find(s2) != std::string::npos;
 }

@@ -26,7 +26,7 @@ int main()
 
     // Binomial coefficient
     int num1 = 5, num2 = 2;
-    int binomial = dp.binomial_coefficient(num1, num2);
+    int binomial = dp.binomialCoefficient(num1, num2);
     std::cout << num1 << " choose " << num2 << " = " << binomial << std::endl;
     std::cout << "--------------------------------------------------------" << std::endl;
 

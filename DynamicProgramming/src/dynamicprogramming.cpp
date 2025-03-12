@@ -81,7 +81,7 @@ int Dp::computeXChooseY(int x, int y, std::vector<std::vector<int>>& x_choose_y)
     return x_choose_y[x][y];
 }
 
-int Dp::binomial_coefficient(int n, int k)
+int Dp::binomialCoefficient(int n, int k)
 {
     std::vector<std::vector<int>> x_choose_y(n + 1, std::vector<int>(k + 1, 0));
     return computeXChooseY(n, k, x_choose_y);

@@ -45,10 +45,10 @@ int main()
     std::cout << "The end is reachable?" << std::endl;
     if (final)
     {
-        cout << "true" << endl;
+        std::cout << "true" << std::endl;
     }
     else {
-        cout << "false" << endl;
+        std::cout << "false" << std::endl;
     }
     std::cout << "------------------------------------------------------" << std::endl;
 

@@ -14,7 +14,7 @@ class Dp
         int computeXChooseY(int x, int y, std::vector<std::vector<int>>& x_choose_y);
 
         int computeMaximumRevenueForRange(const std::vector<int>& coins, int a, int b, 
-                            std::vector<std::vector<int>>& maximum_revenue_for_range);
+                            std::vector<std::vector<int>>& max_revenue_for_range);
 
     public:
         // Computes the number of different combinations to reach the final score with the given scores.
@@ -27,7 +27,7 @@ class Dp
         int traversing2DArray(int n);
         
         // Wrapper function for x choose y.
-        int binomial_coefficient(int n, int k);
+        int binomialCoefficient(int n, int k);
 
         // Looks for the given pattern in the given grid.
         bool findPattern(const std::vector<std::vector<int>>& grid, 
@@ -46,7 +46,7 @@ class Dp
         // Wrapper function for computing maximum revenue for range.
         int maximumRevenue(const std::vector<int>& coins);
         
-        // Arranges words in the fixed size line to get min size blanks.
+        // Arranges words in the fixed size line to get min size of blanks.
         int minimumMessiness(const std::vector<std::string>& words, int line_length);
         
         int longestNondecreasingSubsequenceLength(const std::vector<int>& A);
