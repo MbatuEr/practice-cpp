@@ -3,14 +3,14 @@
 
 bool HashTables::hasAllUniqueCharacters(std::string& str)
 {
-    uniqchar.clear();
+    uniq_char.clear();
     for (char c : str)
     {
-        if (uniqchar.find(c) != uniqchar.end())
+        if (uniq_char.find(c) != uniq_char.end())
         {
             return false;
         }
-        uniqchar[c] = true;
+        uniq_char[c] = true;
     }
     return true;
 }
@@ -22,20 +22,20 @@ bool HashTables::arePermutations(const std::string& str1, const std::string& str
         return false; // Different lengths cannot be permutations
     }
 
-    charcount.clear();
+    char_count.clear();
     
     for (char c : str1)
     {
-        charcount[c]++;
+        char_count[c]++;
     }
 
     for (char c : str2)
     {
-        if (charcount.find(c) == charcount.end() || charcount[c] == 0)
+        if (char_count.find(c) == char_count.end() || char_count[c] == 0)
         {
             return false;
         }
-        charcount[c]--;
+        char_count[c]--;
     }
 
     return true;
@@ -43,25 +43,25 @@ bool HashTables::arePermutations(const std::string& str1, const std::string& str
 
 bool HashTables::isPalindromePermutation(const std::string& str)
 {
-    charcount.clear();
-    int oddCount = 0;
+    char_count.clear();
+    int odd_count = 0;
     for (char c : str)
     {
         if (c == ' ')
         {
             continue;
         }
-        charcount[c]++;
-        if (charcount[c] % 2 == 0)
+        char_count[c]++;
+        if (char_count[c] % 2 == 0)
         {
-            oddCount--;
+            odd_count--;
         }
         else
         {
-            oddCount++;
+            odd_count++;
         }
     }
-    return oddCount <= 1;
+    return odd_count <= 1;
 } 
 
 bool HashTables::isOneAway(const std::string& str1, const std::string& str2)
@@ -71,73 +71,73 @@ bool HashTables::isOneAway(const std::string& str1, const std::string& str2)
         return false;   
     }
 
-    charcount.clear();
-    int diffCount = 0;
+    char_count.clear();
+    int diff_count = 0;
 
     const std::string& shorter = str1.size() <= str2.size() ? str1 : str2;
     const std::string& longer = str1.size() <= str2.size() ? str2 : str1;
 
     for (char c : shorter)
     {
-        charcount[c]++;
+        char_count[c]++;
     }
 
     for (char c : longer)
     {
-        if (charcount.find(c) != charcount.end() && charcount[c] > 0)
+        if (char_count.find(c) != char_count.end() && char_count[c] > 0)
         {
-            charcount[c]--;
+            char_count[c]--;
         }
         else
         {
-            diffCount++;
+            diff_count++;
         }
     }
-    return diffCount <= 1;
+    return diff_count <= 1;
 }
 
 std::unordered_map<char, int> HashTables::mostFrequentWord(const std::string& str)
 {
-    charcount.clear();
+    char_count.clear();
     for (char c : str)
     {
-        charcount[c]++;
+        char_count[c]++;
     }
 
-    int maxCount = 0;
-    char maxChar = ' ';
-    for (auto& it : charcount)
+    int max_count = 0;
+    char max_char = ' ';
+    for (auto& it : char_count)
     {
-        if (it.second > maxCount)
+        if (it.second > max_count)
         {
-            maxCount = it.second;
-            maxChar = it.first;
+            max_count = it.second;
+            max_char = it.first;
         }
     }
-    return {{maxChar, maxCount}};
+    return {{max_char, max_count}};
 }    
 
 std::unordered_map<int, std::string> HashTables::nearestRepetition(const std::vector<std::string>& str)
 {
-    wordIndex.clear();
-    int minDist = __INT_MAX__;
+    word_index.clear();
+    int min_dist = __INT_MAX__;
     int dist = 0;
     std::string word;
     for (int i = 0; i < str.size(); i++)
     {
-        if (wordIndex.find(str[i]) != wordIndex.end())
+        if (word_index.find(str[i]) != word_index.end())
         {
-            dist = i - wordIndex[str[i]];
-            if (dist < minDist)
+            dist = i - word_index[str[i]];
+            if (dist < min_dist)
             {
-                minDist = dist;
+                min_dist = dist;
                 word = str[i];
             }
         }
-        wordIndex[str[i]] = i;
+        word_index[str[i]] = i;
     }
     
-    return {{minDist, word}};
+    return {{min_dist, word}};
 }    
 
 std::pair<int, int> HashTables::findShortestSequentialSubarray(const std::vector<std::string>& paragraph, const std::unordered_set<std::string>& keywords) 
@@ -152,8 +152,8 @@ std::pair<int, int> HashTables::findShortestSequentialSubarray(const std::vector
         const std::string& word = paragraph[end]; 
         if (keywords.count(word)) 
         { 
-            wordIndex[word]++;
-            if (wordIndex[word] == 1) 
+            word_index[word]++;
+            if (word_index[word] == 1) 
             { 
                 ++matched_keywords;
             }
@@ -170,8 +170,8 @@ std::pair<int, int> HashTables::findShortestSequentialSubarray(const std::vector
             const std::string& start_word = paragraph[start]; 
             if (keywords.count(start_word)) 
             { 
-                wordIndex[start_word]--;
-                if (wordIndex[start_word] == 0) 
+                word_index[start_word]--;
+                if (word_index[start_word] == 0) 
                 { 
                     --matched_keywords;
                 }
@@ -184,23 +184,23 @@ std::pair<int, int> HashTables::findShortestSequentialSubarray(const std::vector
 
 std::pair<int,int> HashTables::longestSubarrayWithDistinctEntries(const std::vector<std::string>& arr)
 {
-    wordIndex.clear();
+    word_index.clear();
     int start = 0;
     std::pair<int, int> result = {-1, -1};
     for (int end = 0; end < arr.size(); end++)
     {
-        if (wordIndex.find(arr[end]) == wordIndex.end())
+        if (word_index.find(arr[end]) == word_index.end())
         {
-            wordIndex[arr[end]]++; 
+            word_index[arr[end]]++; 
         }
         else
         {
-            while (wordIndex.find(arr[end]) != wordIndex.end())
+            while (word_index.find(arr[end]) != word_index.end())
             {
-                wordIndex.erase(arr[start]);
+                word_index.erase(arr[start]);
                 start++;
             }
-            wordIndex[arr[end]]++;
+            word_index[arr[end]]++;
         }
         if (end - start > result.second - result.first)
         {
@@ -210,20 +210,20 @@ std::pair<int,int> HashTables::longestSubarrayWithDistinctEntries(const std::vec
     return result;
 }
 
-int HashTables::longestContainedInterval(const std::vector<int>& arr)
+int HashTables::lengthOfLongestContainedInterval(const std::vector<int>& arr)
 {
-    lengthIndex.clear();
+    length_index.clear();
     int max_length = 0;
     for (int num : arr)
     {
-        if (lengthIndex.find(num) == lengthIndex.end())
+        if (length_index.find(num) == length_index.end())
         {
-            int left = lengthIndex.find(num - 1) != lengthIndex.end() ? lengthIndex[num - 1] : 0;
-            int right = lengthIndex.find(num + 1) != lengthIndex.end() ? lengthIndex[num + 1] : 0;
+            int left = length_index.find(num - 1) != length_index.end() ? length_index[num - 1] : 0;
+            int right = length_index.find(num + 1) != length_index.end() ? length_index[num + 1] : 0;
             int length = left + right + 1;
-            lengthIndex[num] = length;
-            lengthIndex[num - left] = length;
-            lengthIndex[num + right] = length;
+            length_index[num] = length;
+            length_index[num - left] = length;
+            length_index[num + right] = length;
             max_length = std::max(max_length, length);
         }
     }
@@ -233,21 +233,21 @@ int HashTables::longestContainedInterval(const std::vector<int>& arr)
 std::unordered_map<std::string, double> HashTables::averageOfTopThreeScores( std::vector<std::pair<std::string, int>>& scores)
 {
     std::unordered_map<std::string, double> result;
-    int maxScore = 0;
+    int max_score = 0;
 
     for (auto& score : scores)
     {
-        wordIndex[score.first] += score.second;
+        word_index[score.first] += score.second;
         notes[score.first]++;
     }
     
-    for (auto& it : wordIndex)
+    for (auto& it : word_index)
     {
-        if(notes[it.first] >= 3 && wordIndex[it.first] > maxScore)
+        if(notes[it.first] >= 3 && word_index[it.first] > max_score)
         {
             result.clear();
-            maxScore = it.second;
-            result[it.first] = maxScore / 3.0;
+            max_score = it.second;
+            result[it.first] = max_score / 3.0;
         }
     }
     return result;
@@ -261,30 +261,30 @@ int HashTables::allStringDecompositions(const std::string& sentence, const std::
         return result;
     }
 
-    int wordLength = words[0].size();              
-    int wordCount = words.size();                  
-    int totalLength = wordLength * wordCount;      
+    int word_length = words[0].size();              
+    int word_count = words.size();                  
+    int total_length = word_length * word_count;      
     
     for (const std::string& word : words) {
-        wordIndex[word]++;
+        word_index[word]++;
     }
 
-    for (int i = 0; i <= (int)sentence.size() - totalLength; ++i) 
+    for (int i = 0; i <= (int)sentence.size() - total_length; ++i) 
     {
-        std::unordered_map<std::string, int> seenWords;
+        std::unordered_map<std::string, int> seen_words;
         int j = 0;
 
-        while (j < wordCount) 
+        while (j < word_count) 
         {
-            std::string currentWord = sentence.substr(i + j * wordLength, wordLength);
+            std::string current_word = sentence.substr(i + j * word_length, word_length);
 
-            if (wordIndex.find(currentWord) == wordIndex.end()) 
+            if (word_index.find(current_word) == word_index.end()) 
             {
                 break;
             }
 
-            seenWords[currentWord]++;
-            if (seenWords[currentWord] > wordIndex[currentWord]) 
+            seen_words[current_word]++;
+            if (seen_words[current_word] > word_index[current_word]) 
             {
                 break;
             }
@@ -292,7 +292,7 @@ int HashTables::allStringDecompositions(const std::string& sentence, const std::
             j++;
         }
 
-        if (j == wordCount) 
+        if (j == word_count) 
         {
             result = i;
         }
@@ -317,7 +317,7 @@ bool HashTables::collatzSequence(long long n)
 {
     if (n == 1) 
     {
-        return true; // Reached 1
+        return true;
     }
     if (cache.find(n) != cache.end()) 
     {

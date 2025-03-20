@@ -2,13 +2,13 @@
 
 int main() 
 {
+    Array obj;
     // Dutch National Flag problem.
     std::vector<int> nums = {3, 5, 2, 1, 7, 3};
     int i =0;
     int pivot = 3;
-    Array obj;
     obj.DutchNationalFlag(pivot,nums);
-    std::cout << "Sorted array: ";
+    std::cout << "The array that sorted around a pivot: ";
     for (int num : nums) 
     {
         std::cout << num << " ";
@@ -187,16 +187,9 @@ int main()
 
     // Generate pascal triangle.
     int n;
-    int row;
-    int column;
-    std::cout << std::endl;
     std::cout << "Enter the which row you wanna see of the pascal triangle: " << std::endl;
     std::cin >> n;
-    std::cout << "Enter the row number of the pascal triangle: " << std::endl;
-    std::cin >> row;
-    std::cout << "Enter the column number of the pascal triangle: " << std::endl;
-    std::cin >> column;
-    std::vector<int> nth_row_of_pascal_triangle = obj.GeneratePascalTriangle(n, row, column);
+    std::vector<int> nth_row_of_pascal_triangle = obj.GeneratePascalTriangle(n);
     for (size_t value : nth_row_of_pascal_triangle)
     {
         if (value != 0)

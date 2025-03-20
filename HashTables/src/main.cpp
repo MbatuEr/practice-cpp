@@ -110,7 +110,7 @@ int main()
 
     // Longest contained interval.
     std::vector<int> intArr = {3, -2, 7, 9, 8, 1, 6, 0, -1, 5, 4};
-    int length = hashTable.longestContainedInterval(intArr);
+    int length = hashTable.lengthOfLongestContainedInterval(intArr);
     std::cout << "Input: ";
     for (auto& num : intArr)
     {

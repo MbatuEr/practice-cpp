@@ -40,7 +40,7 @@ class Array
 
         std::vector<std::vector<int>> Rotating2DArray(std::vector<std::vector<int>>& vec);
 
-        std::vector<int> GeneratePascalTriangle(int n, int row, int column);
+        std::vector<int> GeneratePascalTriangle(int n);
         
         static std::string ReplaceSpaces(std::string& str, int truelength);
   

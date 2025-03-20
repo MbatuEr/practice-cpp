@@ -117,12 +117,8 @@ int Array::ProfitFromStock(const std::vector<int>& stocklist)
     int lowest_price = std::numeric_limits<int>::max();
     for (int price : stocklist)
     {
-        if (price < lowest_price)
-        {
-            lowest_price = price;
-        }
-        int temp = price - lowest_price;
-        highest_profit = std::max(highest_profit, temp);
+        lowest_price = std::min(lowest_price, price);
+        highest_profit = std::max(highest_profit, (price - lowest_price));
     }
     return highest_profit;
 }
@@ -305,39 +301,36 @@ std::vector<std::vector<int>> Array::Rotating2DArray(std::vector<std::vector<int
     return rotated;        
 }
 
-std::vector<int> Array::GeneratePascalTriangle(int n, int row, int column)
+std::vector<int> Array::GeneratePascalTriangle(int n)
 {
-    std::vector<std::vector<int>> pascal_triangle(row, std::vector<int>(column, 0));
-    std::vector<int> result(column);
-    pascal_triangle[0][row - 1] = 1;
-    for (int i = 0; i < row - 1; i++)
+    std::vector<int> prev_row(1, 1);
+    for (int i = 1; i < n; i++)
     {
-        for (int j = 0; j < column - 1; j++)
+        std::vector<int> current_row(i + 1, 1);
+        for (int j = 1; j < i; j++)
         {
-            pascal_triangle[i+1][j] = pascal_triangle[i][j] + pascal_triangle[i][j+1];
+            current_row[j] = prev_row[j - 1] + prev_row[j];
         }
+        prev_row = current_row;
     }
-    for (size_t i = 0; i < column; i++)
-    {
-        result[i] = pascal_triangle[n][i];
-    }
-    return result;
+    
+    return prev_row;
 }
 
-std::string Array::ReplaceSpaces(std::string& str, int truelength)
+std::string Array::ReplaceSpaces(std::string& str, int true_length)
 {
     int space_count = 0;
-    for (int i = 0; i < truelength; i++)
+    for (int i = 0; i < true_length; i++)
     {
         if (str[i] == ' ')
         {
             space_count++;
         }
     }
-    int newlength = truelength + space_count * 2;
-    str.resize(newlength);
-    int index = newlength - 1;
-    for (int i = truelength - 1; i >= 0; i--)
+    int new_length = true_length + space_count * 2;
+    str.resize(new_length);
+    int index = new_length - 1;
+    for (int i = true_length - 1; i >= 0; i--)
     {
         if (str[i] == ' ')
         {
