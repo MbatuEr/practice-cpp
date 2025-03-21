@@ -12,8 +12,8 @@
 struct Element 
 {
     int value;
-    int arrayIndex;
-    int elementIndex;
+    int array_index;
+    int element_index;
     
     bool operator>(const Element& other) const;
 };
@@ -23,10 +23,8 @@ class Star
     public:
         double x, y, z;
 
-        // Constructor.
         Star(double x, double y, double z);
 
-        // Computes the distance from Earth (0, 0, 0).
         double distanceToEarth() const;
 };
 
@@ -50,36 +48,28 @@ class PriorityQueues
 {
     private:
         std::vector<int> data;
-        std::priority_queue<Element, std::vector<Element>, std::greater<Element>> minHeap;
-        std::priority_queue<int, std::vector<int>, std::greater<int>> ksorted;
+        std::priority_queue<Element, std::vector<Element>, std::greater<Element>> min_heap;
+        std::priority_queue<int, std::vector<int>, std::greater<int>> k_sorted;
         std::priority_queue<int> left; 
         std::priority_queue<int, std::vector<int>, std::greater<int>> right; 
-        std::priority_queue<int> maxElement;
-        std::priority_queue<Pair, std::vector<Pair>, std::greater<Pair>> mostFrequent; 
+        std::priority_queue<int> max_element;
+        std::priority_queue<Pair, std::vector<Pair>, std::greater<Pair>> most_frequent; 
 
-        // Splits the array into k sorted subarrays.
         std::vector<std::vector<int>> splitIntoSortedSubarrays(const std::vector<int>& arr);
         
     public:
-        // Merges k sorted arrays.
-        std::vector<int> mergeSortedArrays(const std::vector<std::vector<int>>& sortedArrays);
+        std::vector<int> mergeSortedArrays(const std::vector<std::vector<int>>& sorted_arrays);
 
-        // Sorts an increasing-decreasing array.
         std::vector<int> sortIncreasingDecreasingArray(const std::vector<int>& arr);
-        
-        // Sorts an array that elements of it k away at most from its correct sorted position. 
+
         std::vector<int> sortKSortedArray(const std::vector<int>& arr, int k);
 
-        // Finds the k closest stars to Earth.
         static std::vector<Star> findKClosestStars(const std::vector<Star>& stars, int k);
 
-        // Inserts a number into the data structure.
         void insertForMedian(int num);
 
-        // Returns the current running median.
         double getMedian() const;
 
-        // Finds the k number of highest elements in a heap.
         std::vector<int> findkLargestElements(const std::vector<int>& arr, int k);
 
         std::vector<std::string> mostFrequentStrings(const std::vector<std::string>& strs, int k);

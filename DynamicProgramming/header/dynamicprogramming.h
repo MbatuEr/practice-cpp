@@ -36,14 +36,11 @@ class Dp
         // Computes the best way to fill a knapsack with a capacity.
         int knapsack(int cap, const std::vector<int>& weights, const std::vector<int>& values);
 
-        // Finds the decomposed words in a given dictionary.
         std::vector<std::string> decomposeIntoDictionaryWords(const std::string& domain, 
                                         const std::unordered_set<std::string>& dictionary);
-        
-        // Finds the minimum weighted path top to bottom in a triangle.
+
         int minimumPathWeight(const std::vector<std::vector<int>>& triangle);
-        
-        // Wrapper function for computing maximum revenue for range.
+
         int maximumRevenue(const std::vector<int>& coins);
         
         // Arranges words in the fixed size line to get min size of blanks.

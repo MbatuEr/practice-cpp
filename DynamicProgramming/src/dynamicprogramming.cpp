@@ -110,19 +110,15 @@ bool Dp::findPattern(const std::vector<std::vector<int>>& grid, const std::vecto
         {
             return dp[row][col][pattern_index] == 1;
         }
-        
-        int temp = grid[row][col];
-        const_cast<std::vector<std::vector<int>>&>(grid)[row][col] = -1;
 
         bool found = dfs(row + 1, col, pattern_index + 1) ||
                      dfs(row - 1, col, pattern_index + 1) ||
                      dfs(row, col + 1, pattern_index + 1) ||
                      dfs(row, col - 1, pattern_index + 1);
 
-        const_cast<std::vector<std::vector<int>>&>(grid)[row][col] = temp; 
-        dp[row][col][pattern_index] = found;
+        dp[row][col][pattern_index] = found ? 1 : 0;
         return found;
-    };
+    };    
 
     for (int i = 0; i < rows; ++i) 
     {
