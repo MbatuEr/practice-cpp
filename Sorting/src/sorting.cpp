@@ -66,7 +66,7 @@ void Sorting::groupAnagrams(std::vector<std::string>& strs)
     reverse(strs.begin(), strs.end());
 }
 
-int Sorting::findInRotatedArray(const std::vector<int>& arr, int target) 
+int Sorting::findInRotatedArray(const std::vector<int>& arr, int target)
 {
     int left = 0;
     int right = arr.size() - 1;
@@ -76,24 +76,24 @@ int Sorting::findInRotatedArray(const std::vector<int>& arr, int target)
         int mid = left + (right - left) / 2;
         if(arr[mid] == target) return mid;
 
-        if(arr[left] < arr[mid])
+        if (arr[left] < arr[mid])
         {
-            if (arr[left] <= target && target <= arr[mid])
+            if (arr[left] <= target <= arr[mid])
             {
                 right = mid - 1;
             }
             else {
                 left = mid + 1;
-            }
+            }            
         }
         else {
-            if (arr[mid] <= target && target <= arr[right])
+            if (arr[mid] <= target <= arr[right])
             {
                 left = mid + 1;
             }
             else {
                 right = mid - 1;
-            }
+            }            
         }
     }
     return -1;
@@ -109,7 +109,7 @@ int Sorting::elementAt(int i) const
 int Sorting::findElement(int x) const
 {
     int index = 1;
-    while (elementAt(index) != 1 && elementAt(index) < x) index *= 2;
+    while (elementAt(index) != -1 && elementAt(index) < x) index *= 2;
 
     int left = index / 2;
     int right = index;
@@ -121,33 +121,38 @@ int Sorting::findElement(int x) const
 
         if(element == x) return mid;
 
-        else if(element != 1 && element > x) right = mid - 1;
+        else if(element != -1 && element > x) right = mid - 1;
         
         else  left = mid + 1;
     }
     return -1;
 }
 
-std::vector<std::vector<std::string>> Sorting::splitIntoChunks(const std::vector<std::string>& data, int chunk_size) 
+std::vector<std::vector<std::string>> Sorting::splitIntoChunks(
+                                const std::vector<std::string>& data, int chunk_size)
 {
     std::vector<std::vector<std::string>> chunks;
     for (size_t i = 0; i < data.size(); i += chunk_size)
     {
-        std::vector<std::string> chunk(data.begin() + i, data.begin() + std::min(i + chunk_size, data.size()));
+        std::vector<std::string> chunk(data.begin() + i, 
+                                       data.begin() + std::min(i + chunk_size, data.size()));
         std::sort(chunk.begin(), chunk.end());
         chunks.push_back(chunk);    
     }
 
     return chunks;
-}    
+}
 
-std::vector<std::string> Sorting::mergeChunks(const std::vector<std::vector<std::string>>& chunks) 
+std::vector<std::string> Sorting::mergeChunks(
+            const std::vector<std::vector<std::string>>& chunks)
 {
     auto cmp = [] (const std::pair<std::string, int>& a, const std::pair<std::string, int>& b) {
         return a.first > b.first;
     };
 
-    std::priority_queue<std::pair<std::string, int>, std::vector<std::pair<std::string, int>>, decltype(cmp)> min_heap(cmp);
+    std::priority_queue<std::pair<std::string, int>, 
+        std::vector<std::pair<std::string, int>>, decltype(cmp)> min_heap(cmp);
+
     std::vector<int> indices(chunks.size(), 0);
 
     for(int i = 0; i < chunks.size(); i++)
@@ -202,10 +207,11 @@ int Sorting::maxConcurrentEvents(std::vector<Event> events)
 std::vector<Event> Sorting::computeUnion(const std::vector<Event>& intervals)
 {
     std::vector<Event> sorted_intervals = intervals;
-    std::sort(sorted_intervals.begin(), sorted_intervals.end(), [](const Event& a, const Event& b) {
-                return (a.start < b.start && a.end < b.end) ||
-                        (a.start == b.start && a.end < b.end);
-            });
+    std::sort(sorted_intervals.begin(), sorted_intervals.end(), []
+        (const Event& a, const Event& b) {
+            return (a.start < b.start && a.end < b.end) ||
+                   (a.start == b.start && a.end < b.end);
+    });
 
     std::vector<Event> result;
     Event current = sorted_intervals[0];
@@ -262,42 +268,38 @@ void Sorting::teamPhoto(std::vector<Team>& team1, std::vector<Team>& team2)
    std::sort(team2.begin(), team2.end());
 
    int team1_order = 0, team2_order = 0;
-   while (team1_order < team1.size() && team2_order < team2.size() && front_line.size() < team1.size())
+   while (team1_order < team1.size() && team2_order < team2.size() && 
+                                        front_line.size() < team1.size())
    {
         if (team1[team1_order] < team2[team2_order])
         {
-            front_line.push_back(team1[team1_order]);
-            team1_order++;
+            front_line.push_back(team1[team1_order++]);
         }
         else {
-            front_line.push_back(team2[team2_order]);
-            team2_order++;
+            front_line.push_back(team2[team2_order++]);
         }
    }
 
-   while (team1_order < team1.size() && team2_order < team2.size() && back_line.size() < team1.size())
+   while (team1_order < team1.size() && team2_order < team2.size() && 
+                                        back_line.size() < team1.size())
    {
         if (team1[team1_order] < team2[team2_order])
         {
-            back_line.push_back(team1[team1_order]);
-            team1_order++;
+            back_line.push_back(team1[team1_order++]);
         }
         else {
-            back_line.push_back(team2[team2_order]);
-            team2_order++;
+            back_line.push_back(team2[team2_order++]);
         }
    }
 
    while (team1_order < team1.size())
    {
-        back_line.push_back(team1[team1_order]);
-        team1_order++;
+        back_line.push_back(team1[team1_order++]);
    }
 
    while (team2_order < team2.size())
    {
-        back_line.push_back(team2[team2_order]);
-        team2_order++;
+        back_line.push_back(team2[team2_order++]);
    }
 
    printLine(front_line, back_line); 
@@ -380,11 +382,6 @@ void Sorting::bucketSort(std::vector<float>& arr)
     }
 }
 
-int Sorting::getMax(const std::vector<int>& arr) 
-{
-    return *std::max_element(arr.begin(), arr.end());
-}
-
 void Sorting::countingSort(std::vector<int>& arr, int exp) 
 {
     int n = arr.size();
@@ -418,7 +415,7 @@ void Sorting::countingSort(std::vector<int>& arr, int exp)
 
 void Sorting::radixSort(std::vector<int>& arr) 
 {
-    int maxVal = getMax(arr);
+    int maxVal = *std::max_element(arr.begin(), arr.end());
     for (int exp = 1; maxVal / exp > 0; exp *= 10) 
     {
         countingSort(arr, exp);

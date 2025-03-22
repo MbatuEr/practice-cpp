@@ -77,7 +77,10 @@ int main()
     std::cout << "\n----------------------------------------------" << std::endl;
 
     // Max number of concurrent events.
-    std::vector<Event> events = {{1, 3}, {2, 4}, {5, 8}, {6, 7}, {8, 9}, {14, 17}, {4, 6}, {1, 5}, {13, 15}};
+    std::vector<Event> events = {
+        {1, 3}, {2, 4}, {5, 8}, {6, 7}, {8, 9}, 
+        {14, 17}, {4, 6}, {1, 5}, {13, 15}
+    };
 
     int result_of_events = sort.maxConcurrentEvents(events);
     std::cout << "Maximum number of concurrent events: " << result_of_events << std::endl;
@@ -85,7 +88,8 @@ int main()
 
     // Union of intervals. 
     std::vector<Event> intervals = {
-        {0, 3}, {1, 1}, {2, 4}, {3, 4}, {5, 7}, {7, 8}, {8, 11}, {9, 11}, {12, 14}, {12, 16}, {13, 15}, {16, 17}
+        {0, 3}, {1, 1}, {2, 4}, {3, 4}, {5, 7}, {7, 8}, {8, 11}, 
+        {9, 11}, {12, 14}, {12, 16}, {13, 15}, {16, 17}
     };
 
     std::vector<Event> unions = sort.computeUnion(intervals);
@@ -98,7 +102,8 @@ int main()
 
     // Sorting string & int pairs by integers.
     std::vector<Student> students = {
-        {"Alice", 20}, {"Bob", 22}, {"Charlie", 20}, {"David", 21}, {"Eve", 22}, {"Frank", 21}
+        {"Alice", 20}, {"Bob", 22}, {"Charlie", 20}, 
+        {"David", 21}, {"Eve", 22}, {"Frank", 21}
     };
 
     std::cout << "Input vector: " << std::endl;
@@ -118,13 +123,15 @@ int main()
     
     // Sorting into two different arrays.
     std::vector<Team> Fenerbahce = {
-        {"Livakovic", 190}, {"Kadioglu", 180}, {"Djiku", 188}, {"Becao", 194}, {"Osayi", 184}, {"Ismail", 183}, {"Fred", 173},
-        {"Kahveci", 180}, {"Szymanski", 174}, {"Tadic", 181}, {"Dzeko", 193}
+        {"Livakovic", 190}, {"Kadioglu", 180}, {"Djiku", 188}, {"Becao", 194}, 
+        {"Osayi", 184}, {"Ismail", 183}, {"Fred", 173}, {"Kahveci", 180},
+        {"Szymanski", 174}, {"Tadic", 181}, {"Dzeko", 193}
     };
 
     std::vector<Team> Galatasaray = {
-        {"Muslera", 188}, {"Baris", 183}, {"Davinson", 192}, {"Nelsson", 187}, {"Boey", 181}, {"Torreira", 169}, {"Demirbay", 182},
-        {"Ziyech", 182}, {"Mertens", 170}, {"Akturkoglu", 179}, {"Icardi", 185}
+        {"Muslera", 188}, {"Baris", 183}, {"Davinson", 192}, {"Nelsson", 187}, 
+        {"Boey", 181}, {"Torreira", 169}, {"Demirbay", 182}, {"Ziyech", 182}, 
+        {"Mertens", 170}, {"Akturkoglu", 179}, {"Icardi", 185}
     };
 
     sort.teamPhoto(Fenerbahce, Galatasaray);
@@ -142,7 +149,9 @@ int main()
     std::cout << "\n----------------------------------------------" << std::endl;
     
     // Perform Bucket sort.
-    std::vector<float> bucket_arr = {0.78, 0.17, 0.39, 0.26, 0.72, 0.94, 0.21, 0.12, 0.23, 0.68};
+    std::vector<float> bucket_arr = {
+        0.78, 0.17, 0.39, 0.26, 0.72, 0.94, 0.21, 0.12, 0.23, 0.68
+    };
 
     std::cout << "Original array: \n";
     for (float num : bucket_arr) 
