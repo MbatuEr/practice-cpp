@@ -10,7 +10,8 @@ bool Edge::operator<(const Edge& other) const
 }
 
 template <typename T>
-Graph<T>::Graph(std::vector<std::vector<T>>& adjacency_matrix) : adjacency_matrix(adjacency_matrix) 
+Graph<T>::Graph(std::vector<std::vector<T>>& adjacency_matrix) : 
+                                            adjacency_matrix(adjacency_matrix)
 {
     rows = adjacency_matrix.size();
     cols = adjacency_matrix[0].size();
@@ -79,114 +80,90 @@ void Graph<T>::printMatrix(const std::vector<std::vector<T>>& matrix)
 }
 
 template <typename T>
-void Graph<T>::flipRegion(int x, int y) 
+void Graph<T>::flipRegion(int x, int y)
 {
     T target_color = adjacency_matrix[x][y];
 
-    std::function<void(int, int)> dfs = [&](int i, int j) 
+    // Lambda function for DFS traversal
+    std::function<void(int, int)> dfs = [&](int i, int j)
     {
         if (!isValid(i, j) || adjacency_matrix[i][j] != target_color) return;
 
         adjacency_matrix[i][j] = !target_color;
 
-        dfs(i + 1, j);
-        dfs(i - 1, j);
-        dfs(i, j + 1);
-        dfs(i, j - 1);
+        // Explore all four directions
+        dfs(i - 1, j);   // Down
+        dfs(i + 1, j);   // Up 
+        dfs(i, j - 1);   // Right
+        dfs(i, j + 1);   // Left
     };
-    
-    dfs(x, y);
+
+    dfs(x,y);
 }
 
 template <typename T>
 void Graph<T>::computeEnclosedRegions() 
 {
-    std::vector<std::vector<bool>> reachable(rows, std::vector<bool>(cols, false));
-    std::queue<Point> q;
+    if(rows == 0 || cols == 0) return;
+
+    // Lambda function for DFS traversal
+    std::function<void(int, int)> dfs = [&] (int x, int y)
+    {
+        if(!isValid(x, y) || adjacency_matrix[x][y] != 'W') return;
+
+        // Mark as temporary to indicate it is connected to the border
+        adjacency_matrix[x][y] = 'T';
+
+        // Explore all four directions
+        dfs(x - 1, y); // Up
+        dfs(x + 1, y); // Down
+        dfs(x, y - 1); // Left
+        dfs(x, y + 1); // Right
+    };
 
     for (int i = 0; i < rows; i++)
     {
-        if (adjacency_matrix[i][0] == 'W' && !reachable[i][0])
-        {
-            q.push({i, 0});
-            reachable[i][0] = true;
-        }
-        if (adjacency_matrix[i][cols - 1] == 'W' && !reachable[i][cols - 1])
-        {
-            q.push({i, cols - 1});
-            reachable[i][cols - 1] = true;
-        }        
+        if (adjacency_matrix[i][0] == 'W') dfs(i, 0);
+        if(adjacency_matrix[i][cols- 1] == 'W') dfs(i, cols - 1);        
     }
-    
+
     for (int j = 0; j < cols; j++)
     {
-        if (adjacency_matrix[0][j] == 'W' && !reachable[0][j])
-        {
-            q.push({0, j});
-            reachable[0][j] = true;
-        }
-        if (adjacency_matrix[rows - 1][j] == 'W' && !reachable[rows - 1][j])
-        {
-            q.push({rows - 1, j});
-            reachable[rows - 1][j] = true;
-        }
+        if (adjacency_matrix[0][j] == 'W') dfs(0, j);
+        if(adjacency_matrix[rows - 1][j] == 'W') dfs(rows - 1, j);        
     }
 
-    // BFS to find all reachable cells.
-    while (!q.empty())
-    {
-        Point current_point = q.front();
-        q.pop();
-
-        int dx[] = {-1, 1, 0, 0};
-        int dy[] = {0, 0, -1, 1};
-
-        for (int i = 0; i < 4; i++)
-        {
-            int nx = current_point.x + dx[i];
-            int ny = current_point.y + dy[i];
-
-            if (isValid(nx, ny) && adjacency_matrix[nx][ny] == 'W' && !reachable[nx][ny])
-            {
-                q.push({nx, ny});
-                reachable[nx][ny] = true;
-            }
-        }
-    }
-    
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < cols; j++)
         {
-            if (adjacency_matrix[i][j] == 'W' && !reachable[i][j])
+            if (adjacency_matrix[i][j] == 'W')
             {
                 adjacency_matrix[i][j] = 'B';
             }
-        }
-    }
+            else if (adjacency_matrix[i][j] == 'T')
+            {
+                adjacency_matrix[i][j] = 'W';
+            }           
+        }       
+    }    
 }    
 
 template <typename T>
 bool Graph<T>::hasCycle()
 {
     std::vector<int> visited(rows, 0);
-    
+
     std::function<bool(int)> dfs = [&](int node)
     {
         visited[node] = 1;
-        for(int neighbor : adjacency_matrix[node])
+        for (int neighbor : adjacency_matrix[node])
         {
-            if (visited[neighbor] == 1)
-            {
-                return true;
-            }
+            if (visited[neighbor] == 1) return true;
             if (visited[neighbor] == 0)
             {
-                if (dfs(neighbor))
-                {
-                    return true;
-                }
-            }
+                if(dfs(neighbor)) return true;
+            }            
         }
         visited[node] = 2;
         return false;
@@ -196,10 +173,7 @@ bool Graph<T>::hasCycle()
     {
         if (visited[i] == 0)
         {
-            if (dfs(i))
-            {
-                return true;
-            }
+            if (dfs(i)) return true;
         }
     }
     return false;
@@ -208,35 +182,31 @@ bool Graph<T>::hasCycle()
 template <typename T>
 bool Graph<T>::isBipartite() 
 {
-    std::vector<int> color(rows, -1); // -1; uncolored, 0 or 1; colored.
-    
-    for (int  start_node = 0; start_node < rows; start_node++)
-    {
-        if (color[start_node == -1])
-        {
-            std::queue<int> q;
-            q.push(start_node);
-            color[start_node] = 0;
-            
-            while (!q.empty())
-            {
-                int u = q.front();
-                q.pop();
+    std::vector<int> color(rows, -1);
 
-                for (int v : adjacency_matrix[u])
-                {
-                    if (color[v] == -1)
-                    {
-                        color[v] = 1 - color[u];
-                        q.push(v);
-                    }
-                    else if(color[v] == color[u])
-                    {
-                        return false;
-                    }
-                }
+    std::function<bool(int, int)> dfs = [&](int u, int c)
+    {
+        color[u] = c;
+        for (int v : adjacency_matrix[u])
+        {
+            if (color[v] == -1)
+            {
+                if(!dfs(v, 1 - c)) return false;
             }
+            else if (color[v] == color[u])
+            {
+                return false;
+            }            
         }
+        return true;
+    };
+
+    for (int start_node = 0; start_node < rows; start_node++)
+    {
+        if (color[start_node] == -1 && !dfs(start_node, 0))
+        {
+            return false;
+        }        
     }
     return true;
 }
@@ -249,15 +219,16 @@ int Graph<T>::maxTeams()
         sort(team.begin(), team.end());
     }
 
-    sort(adjacency_matrix.begin(), adjacency_matrix.end(), [](const std::vector<T>& a, const std::vector<T>& b)
+    sort(adjacency_matrix.begin(), adjacency_matrix.end(), []
+                                    (const std::vector<T>& a, const std::vector<T>& b)
     {
         return a.back() < b.back();
     });
-    
+
     int max_team_count = 0;
     std::vector<T> last_row;
 
-    for(const auto& team : adjacency_matrix)
+    for (const auto& team : adjacency_matrix)
     {
         bool can_add = true;
         for (size_t i = 0; i < cols; i++)
@@ -300,7 +271,7 @@ void Graph<T>::floydWarshall()
     {
         if (adjacency_matrix[i][i] < 0)
         {
-            std::cout << "Graph contains a negative weoghted cycle!" << std::endl;
+            std::cout << "Graph contains a negative weighted cycle!" << std::endl;
             return;
         }
     }
@@ -311,18 +282,16 @@ Vertex* GraphBase::cloneGraph(Vertex* u, std::unordered_map<Vertex*, Vertex*>& v
 {
     if (u == nullptr) return nullptr;
 
-    if(visited.count(u)) return visited[u];
+    if (visited.count(u)) return visited[u];
 
     Vertex* u_copy = new Vertex;
     u_copy->label = u->label;
-
     visited[u] = u_copy;
 
     for (Vertex* neighbor : u->neighbors)
     {
         u_copy->neighbors.push_back(cloneGraph(neighbor, visited));
     }
-    
     return u_copy;
 }
 
@@ -342,9 +311,10 @@ bool GraphBase::differByOne(const std::string& a, const std::string& b)
     return diff_count == 1;
 }
 
-int GraphBase::shortestProductionSequence(const std::string& s, const std::string& t, const std::unordered_set<std::string>& dict)
+int GraphBase::shortestProductionSequence(const std::string& s, const std::string& t,
+                                          const std::unordered_set<std::string>& dict)
 {
-    if(s == t) return 0;
+    if (s == t) return 0;
 
     std::queue<std::pair<std::string, int>> q;
     q.push({s, 1});
@@ -374,7 +344,8 @@ int GraphBase::shortestProductionSequence(const std::string& s, const std::strin
     return -1;
 }
 
-std::vector<int> GraphBase::shortestPathWithFewestEdges(int n, std::vector<std::vector<pid>>& adj, int s, int t)
+std::vector<int> GraphBase::shortestPathWithFewestEdges(int n, 
+    std::vector<std::vector<pid>>& adj, int s, int t)
 {
     // modify edge costs: c'(e) = c(e) + EPSILON
     for (int i = 0; i < n; i++)
@@ -385,7 +356,7 @@ std::vector<int> GraphBase::shortestPathWithFewestEdges(int n, std::vector<std::
         }
     }
     
-    // Dijkstra's Algorithm.
+    // Dijkstra's Algorithm
     std::vector<double> dist(n, INF);
     std::vector<int> parent(n, -1);
     std::priority_queue<pdi, std::vector<pdi>, std::greater<pdi>> pq;
@@ -438,7 +409,7 @@ void GraphBase::bellmanFord(int n, std::vector<Edge>& edges, int source)
 
     for (int i = 0; i <= n - 1; i++)
     {
-        for(const auto& edge : edges)
+        for (const auto& edge : edges)
         {
             int u = edge.source;
             int v = edge.destination;
@@ -459,7 +430,7 @@ void GraphBase::bellmanFord(int n, std::vector<Edge>& edges, int source)
 
         if (distance[u] != INT_MAX && distance[u] + w < distance[v])
         {
-            std::cout << "Graph contains a negative weight cycle!" << std::endl;
+            std::cout << "Graph contain a negative weighted cycle!" << std::endl;
             return;
         }
     }
@@ -474,7 +445,6 @@ void GraphBase::bellmanFord(int n, std::vector<Edge>& edges, int source)
 int GraphBase::findParent(std::vector<int>& parent, int i) 
 {
     if(parent[i] == i) return i;
-
     return findParent(parent, parent[i]); 
 }
 
@@ -493,7 +463,7 @@ void GraphBase::unionSets(std::vector<int>& parent, std::vector<int>& rank, int 
         {
             parent[i_id] = j_id;
         }
-        else{
+        else {
             parent[j_id] = i_id;
             rank[i_id]++;
         }
